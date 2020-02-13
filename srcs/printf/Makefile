@@ -6,11 +6,11 @@
 #    By: glaurent <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 17:12:19 by glaurent          #+#    #+#              #
-#    Updated: 2019/11/18 23:04:41 by glaurent         ###   ########.fr        #
+#    Updated: 2020/02/14 00:09:07 by glaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := libftprintf.a
+NAME := ../libftprintf.a
 SRCS :=	ft_case_c.c \
 		ft_case_dni.c \
 		ft_case_indetermination.c \
@@ -24,25 +24,30 @@ SRCS :=	ft_case_c.c \
 		ft_utils.c \
 		ft_utils2.c
 
-INCLUDES = ./
-OBJS = $(SRCS:.c=.o)
+INCLUDES = ../../includes/
+
+OBJ_PATH = ./.objs
+OBJ_NAME = $(SRCS:.c=.o)
+OBJS      =  $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
+
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -I $(INCLUDES) 
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
 
-%.o : %.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+$(OBJ_PATH)/%.o : %.c
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean :
-	rm -rf $(OBJS)
+	@rm -rf $(OBJ_PATH) $(OBJS)
 
 fclean : clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re : fclean all
 
-.PHONY :	clean	all	fclean	re	test
+.PHONY :	clean	all	fclean	re

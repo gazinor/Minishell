@@ -6,11 +6,11 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/13 22:45:21 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/14 00:30:09 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	init_env(t_env **env, char **envp)
 {

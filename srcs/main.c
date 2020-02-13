@@ -6,13 +6,11 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/13 22:43:22 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/14 00:29:55 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf/ft_printf.h"
-#include "gnl/get_next_line.h"
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 char	*get_option(char *str)
 {
