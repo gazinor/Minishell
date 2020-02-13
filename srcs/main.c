@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/13 10:57:53 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/13 19:56:44 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ int		main(int ac, char **av, char **envp)
 	data.here = where_am_i();
 	data.paths = get_paths(&data);
 	ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data.here);
-	while ((ret = get_next_line(0, &line)) > 0)
+	while ((ret = get_next_line(1, &line)) > 0)
 	{
 		if (is_builtin(line, &data) == 1)
 			;
