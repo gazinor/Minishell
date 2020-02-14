@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/14 00:30:09 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/14 06:02:19 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	init_env(t_env **env, char **envp)
 			{
 				(*env)->key = ft_substr(envp[i], 0, j);
 				(*env)->value = ft_strdup(envp[i] + j + 1);
+				(*env)->next = NULL;
 				env = &(*env)->next;
 				break ;
 			}

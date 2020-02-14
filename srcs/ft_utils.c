@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:09:28 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/14 03:02:32 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/14 06:29:06 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ int		check_char(char *str, char c)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i] && str[i] != c)
 		++i;
 	if (str[i] == c)
-		return (1);
+		return (i);
 	return (0);
 }
 

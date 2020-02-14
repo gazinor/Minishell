@@ -25,7 +25,8 @@ TMP		 =	main.c \
 			ft_split.c \
 			ft_builtins.c \
 		 	ft_utils.c \
-			ft_env.c
+			ft_env.c \
+			ft_builtins2.c
 SRC_NAME =	$(TMP) $(GNL)
 SRC      =	$(addprefix $(SRC_PATH)/,$(SRC_NAME))
 
@@ -67,7 +68,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	@printf "\e[1;30m$(CC): \e[1;37m./%-51s\e[1;0m" "$<"
 	@printf "\e[32mcheck\e[1;0m\n"
 
-debug : $(OBJ)
+debug : fclean $(OBJ)
 	@make -C $(P_PATH)
 	@$(CC) $(CFLAGS) $(DEBUG) $(P_LIB) $(OBJ) -o $@
 

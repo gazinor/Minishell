@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 04:15:01 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/14 04:45:41 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/14 07:49:43 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,8 @@ int					check_char(char *str, char c);
 char				**get_paths(t_data *data);
 char				*find_key_value(t_env *env, char *key);
 char				**ft_split_env(t_env *env);
+void				ft_export(char *str, t_env **env, t_data *data);
+void				add_new_elem(t_env **env, char *key, char *value);
+void				ft_unset(char *str, t_data *data);
 
 #endif
