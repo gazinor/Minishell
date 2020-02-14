@@ -4,7 +4,7 @@ NAME     =	Minishell
 CC       =	gcc
 
 #	Flags     #
-CFLAGS   =	-Wall #-Wextra -Werror 
+CFLAGS   =	-Wall -Wextra -Werror 
 DEBUG	 = -g3 -fsanitize=address
 
 # 	Headers   #
@@ -66,6 +66,10 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	@$(CC) $(CFLAGS) -MMD -I$(HEADER_P) -o $@ -c $<
 	@printf "\e[1;30m$(CC): \e[1;37m./%-51s\e[1;0m" "$<"
 	@printf "\e[32mcheck\e[1;0m\n"
+
+debug : $(OBJ)
+	@make -C $(P_PATH)
+	@$(CC) $(CFLAGS) $(DEBUG) $(P_LIB) $(OBJ) -o $@
 
 clean :
 	@make -C $(P_PATH) clean
