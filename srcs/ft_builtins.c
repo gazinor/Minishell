@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/14 03:17:10 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/14 04:50:59 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ void	ft_env(t_data *data)
 	}
 }
 
+void	ft_exit(t_data *data)
+{
+	(void)data;
+	ft_printf("exit\n");
+	exit(0);
+}
+
 int		is_builtin(char *str, t_data *data)
 {
 	int i;
@@ -72,11 +79,24 @@ int		is_builtin(char *str, t_data *data)
 			str[i + 2] == 'd' && (str[i + 3] == ' ' ||
 				str[i + 3] == '\t' || str[i + 3] == '\0'))
 		ft_pwd(str + 3);
-	else if (str[i] == 'e' && str[i + 1] == 'n' && str[i + 3] == 'v' &&
-			(str[i + 4] == ' ' ||
-				str[i + 4] == '\t' || str[i + 4] == '\0'))
+	else if (str[i] == 'e' && str[i + 1] == 'n' && str[i + 2] == 'v' &&
+			(str[i + 3] == ' ' ||
+				str[i + 3] == '\t' || str[i + 3] == '\0'))
 		ft_env(data);
-	else
+	else if (str[i] == 'e' && str[i + 1] == 'x' && str[i + 2] == 'i' &&
+			str[i + 3] == 't' && (str[i + 4] == ' ' ||
+				str[i + 4] == '\t' || str[i + 4] == '\0'))
+		ft_exit(data);
+/*	else if (str[i] == 'e' && str[i + 1] == 'x' && str[i + 2] == 'p' &&
+			str[i + 3] == 'o' && str[i + 4] == 'r' && str[i + 5] == 't' &&
+			(str[i + 6] == ' ' || str[i + 6] == '\t' ||
+			 str[i + 6] == '\0'))
+		ft_export(str, &data->env);
+	else if (str[i] == 'u' && str[i + 1] == 'n' && str[i + 2] == 's' &&
+			str[i + 3] == 'e' && str[i + 4] == 't' && (str[i + 5] == ' ' ||
+			str[i + 5] == '\t' || str[i + 5] == '\0'))
+		ft_unset(str, &data->env);
+*/	else
 		return (0);
 	return (1);
 }
