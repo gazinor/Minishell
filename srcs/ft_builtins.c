@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/14 07:49:26 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/16 20:59:43 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ int		is_builtin(char *str, t_data *data)
 			str[i + 3] == 'e' && str[i + 4] == 't' && (str[i + 5] == ' ' ||
 			str[i + 5] == '\t' || str[i + 5] == '\0'))
 		ft_unset(str, data);
+	else if (str[i] == 'e' && str[i + 1] == 'c' && str[i + 2] == 'h' &&
+			str[i + 3] == 'o' && (str[i + 4] == ' ' ||
+				str[i + 4] == '\t' || str[i + 4] == '\0'))
+		ft_echo(str, data);
 	else
 		return (0);
 	return (1);

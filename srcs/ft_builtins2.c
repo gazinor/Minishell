@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/16 19:33:06 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/16 21:08:03 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,33 @@ void	ft_unset(char *str, t_data *data)
 		prev = copy;
 		copy = copy->next;
 	}
+}
+
+void	ft_echo(char *str, t_data *data)
+{
+	int i;
+	int j;
+	(void)data;
+
+	i = 0;
+	j = 0;
+	while (str[i] != ' ' && str[i] != '\t' && str[i])
+		i++;
+	while ((str[i] == ' ' || str[i] == '\t') && str[i])
+		i++;
+	if (str[i] == '-' && str[i + 1] == 'n' && (str[i+ 2] == ' ' || str[i + 2] == '\0'))
+	{
+		j = 1;
+		i += 3;
+	}
+	while ((str[i] == ' ' || str[i] == '\t') && str[i])
+		i++;
+	while (str[i])
+	{
+		if (str[i] != '"' || str[i] != ''')
+			write(1, &str[i], 1);
+		i++;
+	}
+	if (j == 0)
+		write(1,"\n", 1);
 }

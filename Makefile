@@ -83,12 +83,14 @@ clean :
 	@sleep 0.5
 
 save : fclean
+	rm -rf debug
 	git add .
 	git commit -m "$m"
 	git push
 
 fclean : clean
 	@rm -rf $(NAME)
+	@rm -rf debug
 	@make -C $(P_PATH) fclean
 
 re : fclean all
