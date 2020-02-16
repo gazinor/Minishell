@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/14 05:03:48 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/16 18:47:12 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	try_exec(t_data *data, char *str)
 	{
 		errno = 0;
 		if ((ret = execve(data->binary, data->option, envp)) != 0)
-			ft_printf("Mon premier shell: %s: %s\n",
+			ft_printf("Minishell: %s: %s\n",
 					strerror(errno), data->exec);
 		exit(ret);
 	}

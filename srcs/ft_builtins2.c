@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/14 08:48:01 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/16 19:33:06 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,14 @@ void	ft_export(char *str, t_env **env, t_data *data)
 		key = ft_substr(data->option[1], 0, egal);
 		value = ft_strdup(data->option[1] + egal + 1);
 	}
+	else
+	{
+		ft_printf("Minishell: Bad assignement.\n");
+		return ;
+	}
 	while (*env)
 	{
-		if (ft_strcmp((*env)->key, key) == 0 && key && value)
+		if (key && value && ft_strcmp((*env)->key, key) == 0)
 		{
 			free((*env)->value);
 			(*env)->value = value;
@@ -55,12 +60,20 @@ void	ft_unset(char *str, t_data *data)
 	char	*key;
 
 	data->option = ft_split(str, ' ');
-	if (data->option)
+	if (data->option[1])
 		key = ft_strdup(data->option[1]);
+	else
+		return ;
 	prev = NULL;
 	copy = data->env;
 	while (copy)
 	{
+		if (check_char(data->option[1], '=') != 0)
+		{
+			ft_printf("Minishell: unset: '%s': not a valid identifier\n",
+					data->option[1]);
+			return ;
+		}
 		if (ft_strcmp(copy->key, key) == 0 && key)
 		{
 			free(copy->value);
