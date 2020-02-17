@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/17 03:10:40 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/17 03:32:47 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	ft_sort_list(t_env **copy)
 	head = (*copy);
 	while ((*copy) && (*copy)->next)
 	{
-		if (ft_strcmp((*copy)->key, (*copy)->next->key) < 0)
+		if (ft_strcmp((*copy)->key, (*copy)->next->key) > 0)
 		{
 			tmp = (*copy)->key;
 			(*copy)->key = (*copy)->next->key;
-			(*copy)->key = tmp;
+			(*copy)->next->key = tmp;
 			tmp = (*copy)->value;
 			(*copy)->value = (*copy)->next->value;
-			(*copy)->value = tmp;
+			(*copy)->next->value = tmp;
 			(*copy) = head;
 		}
 		else
@@ -52,6 +52,7 @@ void	display_sort(t_data *data)
 	t_env	*cpy;
 	t_env	*head;
 
+	cpy = NULL;
 	head = data->env;
 	while (data->env)
 	{
@@ -63,7 +64,7 @@ void	display_sort(t_data *data)
 	ft_sort_list(&cpy);
 	while (cpy)
 	{
-		ft_printf("declare -x %s=%s", cpy->key, cpy->value);
+		ft_printf("declare -x %s=%s\n", cpy->key, cpy->value);
 		cpy = cpy->next;
 	}
 }
@@ -76,7 +77,10 @@ void	ft_export(char *str, t_env **env, t_data *data)
 
 	data->option = ft_split(str, ' ');
 	if (!data->option[1])
+	{
 		display_sort(data);
+		return ;
+	}
 	if (data->option && (egal = check_char(data->option[1], '=')) != 0)
 	{
 		key = ft_substr(data->option[1], 0, egal);
