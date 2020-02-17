@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/14 06:02:19 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/16 23:06:34 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*find_key_value(t_env *env, char *key)
 	while (env)
 	{
 		if (ft_strcmp(env->key, key) == 0)
-			return (env->value);
+			return (ft_strdup(env->value));
 		env = env->next;
 	}
 	return (NULL);

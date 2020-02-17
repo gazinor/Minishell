@@ -75,22 +75,21 @@ debug : fclean $(OBJ)
 clean :
 	@make -C $(P_PATH) clean
 	@rm -rf $(OBJ_PATH) 
-	@printf "Cleaning files ."
+	@printf "Cleaning files . "
 	@sleep 0.5
-	@printf "\rCleaning files . ."
+	@printf "\rCleaning files . . "
 	@sleep 0.5
-	@printf "\rCleaning files . . .\r"
+	@printf "\rCleaning files . . . "
 	@sleep 0.5
+	@printf "\r"
 
 save : fclean
-	rm -rf debug
 	git add .
 	git commit -m "$m"
 	git push
 
 fclean : clean
 	@rm -rf $(NAME)
-	@rm -rf debug
 	@make -C $(P_PATH) fclean
 
 re : fclean all
