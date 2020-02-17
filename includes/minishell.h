@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 04:15:01 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/16 20:45:05 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/17 02:34:32 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_data
 {
 	char			*here;
 	t_env			*env;
+	t_env			*cpy;
 	int				pid;
 	char			**paths;
 	char			**option;

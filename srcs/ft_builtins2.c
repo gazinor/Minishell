@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/17 01:10:53 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/17 03:10:40 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,51 @@ void	add_new_elem(t_env **env, char *key, char *value)
 	(*env)->next = NULL;
 }
 
+void	ft_sort_list(t_env **copy)
+{
+	t_env	*head;
+	char	*tmp;
+
+	head = (*copy);
+	while ((*copy) && (*copy)->next)
+	{
+		if (ft_strcmp((*copy)->key, (*copy)->next->key) < 0)
+		{
+			tmp = (*copy)->key;
+			(*copy)->key = (*copy)->next->key;
+			(*copy)->key = tmp;
+			tmp = (*copy)->value;
+			(*copy)->value = (*copy)->next->value;
+			(*copy)->value = tmp;
+			(*copy) = head;
+		}
+		else
+			(*copy) = (*copy)->next;
+	}
+	(*copy) = head;
+}
+
+void	display_sort(t_data *data)
+{
+	t_env	*cpy;
+	t_env	*head;
+
+	head = data->env;
+	while (data->env)
+	{
+		add_new_elem(&cpy, ft_strdup(data->env->key),
+				ft_strdup(data->env->value));
+		data->env = data->env->next;
+	}
+	data->env = head;
+	ft_sort_list(&cpy);
+	while (cpy)
+	{
+		ft_printf("declare -x %s=%s", cpy->key, cpy->value);
+		cpy = cpy->next;
+	}
+}
+
 void	ft_export(char *str, t_env **env, t_data *data)
 {
 	char	*key;
@@ -30,6 +75,8 @@ void	ft_export(char *str, t_env **env, t_data *data)
 	int		egal;
 
 	data->option = ft_split(str, ' ');
+	if (!data->option[1])
+		display_sort(data);
 	if (data->option && (egal = check_char(data->option[1], '=')) != 0)
 	{
 		key = ft_substr(data->option[1], 0, egal);
