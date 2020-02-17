@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/16 18:47:12 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/17 02:17:02 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,13 @@ int		check_ls(char *str)
 	return (0);
 }
 
+void    handle_sigint(int signum)
+{
+    (void)signum;
+    ft_printf("\e[D\e[D  ");
+    ft_printf("\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
+}
+
 int		main(int ac, char **av, char **envp)
 {
 	int		ret;
@@ -115,6 +122,7 @@ int		main(int ac, char **av, char **envp)
 	data.here = where_am_i();
 	data.paths = get_paths(&data);
 	ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data.here);
+	signal(SIGINT, handle_sigint);
 	while ((ret = get_next_line(0, &line)) > 0)
 	{
 		if (is_builtin(line, &data) == 1)

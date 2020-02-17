@@ -46,6 +46,7 @@ SCRIPT_P =	./scripts
 ################################################################################
 
 all : $(NAME)
+#	@sh test.sh
 
 f : $(NAME)
 
@@ -90,6 +91,7 @@ save : fclean
 
 fclean : clean
 	@rm -rf $(NAME)
+	@rm -rf debug
 	@make -C $(P_PATH) fclean
 
 re : fclean all
