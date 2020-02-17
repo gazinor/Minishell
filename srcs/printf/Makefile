@@ -6,7 +6,7 @@
 #    By: glaurent <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 17:12:19 by glaurent          #+#    #+#              #
-#    Updated: 2020/02/14 00:09:07 by glaurent         ###   ########.fr        #
+#    Updated: 2020/02/17 06:34:42 by glaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJ_NAME = $(SRCS:.c=.o)
 OBJS      =  $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -I $(INCLUDES) 
+CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address -I $(INCLUDES) 
 
 all : $(NAME)
 

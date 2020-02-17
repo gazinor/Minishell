@@ -6,11 +6,13 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/17 03:04:06 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/17 07:21:29 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_data g_data;
 
 char	*get_option(char *str)
 {
@@ -83,7 +85,7 @@ char	*is_exec(char *str, t_data *data)
 				if (ft_strcmp(entry->d_name, data->exec) == 0)
 					return (ft_strjoin(ft_strjoin(data->paths[i], "/"),
 								data->exec));
-					closedir(dir);
+			closedir(dir);
 		}
 	}
 	return (NULL);
@@ -105,42 +107,101 @@ int		check_ls(char *str)
 
 void    handle_sigint(int signum)
 {
-    (void)signum;
-    ft_printf("\e[D\e[D  ");
-    ft_printf("\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
+	(void)signum;
+	ft_printf("\e[D\e[D  ");
+	ft_printf("\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
+	g_data.flag = 1;
+}
+
+int		loop(t_data *data)
+{
+	char	*tmp;
+	char	*old;
+	int		ret;
+
+	tmp = NULL;
+	old = NULL;
+	while ((ret = get_next_line(0, &data->line)) == 0)
+	{
+		old = tmp ? ft_strjoin(tmp, data->line) : ft_strdup(data->line);
+		free(tmp);
+		free(data->line);
+		data->line = NULL;
+		if (old[0] == 0)
+		{
+			free(old);
+			ft_printf("  \e[D\e[D");
+			return (-1);
+		}
+		if (data->flag == 1)
+		{
+			if (data->line)
+			{
+				free(data->line);
+				data->line = NULL;
+			}
+		}
+		tmp = old;
+	}
+	if (data->flag == 1)
+	{
+		if (old)
+			free(old);
+		if (data->line)
+		{
+			free(data->line);
+			data->line = NULL;
+		}
+		return (0);
+	}
+	if (ret > 0)
+	{
+		old = tmp ? ft_strjoin(tmp, data->line) : ft_strdup(data->line);
+		free(tmp);
+		free(data->line);
+		data->line = old;
+	}
+	return (ret);
 }
 
 int		main(int ac, char **av, char **envp)
 {
+	t_data	*data;
 	int		ret;
-	char	*line;
-	t_data	data;
 
 	(void)ac;
 	(void)av;
-	init_env(&data.env, envp);
-	data.here = where_am_i();
-	data.paths = get_paths(&data);
-	ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data.here);
+	data = &g_data;
+	data->line = NULL;
+	data->flag = 0;
+	init_env(&data->env, envp);
+	data->here = where_am_i();
+	data->paths = get_paths(data);
 	signal(SIGINT, handle_sigint);
-	while ((ret = get_next_line(0, &line)) > 0)
+	while (1)
 	{
-		if (is_builtin(line, &data) == 1)
+		ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+		if ((ret = loop(data)) == -1)
+			break ;
+		if (ret == 0)
+			data->flag = 0;
+		else if (is_builtin(data->line, data) == 1)
 			;
-		else if ((data.binary = is_exec(line, &data)) != NULL)
+		else if ((data->binary = is_exec(data->line, data)) != NULL)
 		{
-			if (check_ls(line) == 1)
-				data.option = ft_split(ft_strjoin(line, " -G"), ' ');
+			if (check_ls(data->line) == 1)
+				data->option = ft_split(ft_strjoin(data->line, " -G"), ' ');
 			else
-				data.option = ft_split(line, ' ');
-			try_exec(&data, line);
+				data->option = ft_split(data->line, ' ');
+			try_exec(data, data->line);
 		}
-		else if (line[0])
+		else if (data->line[0])
 		{
-			data.option = ft_split(line, ' ');
-			ft_printf("Minishell: command not found: %s\n", data.option[0]);
+			data->option = ft_split(data->line, ' ');
+			ft_printf("Minishell: command not found: %s\n", data->option[0]);
 		}
-		ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data.here);
-		free(line);
 	}
+	ft_exit(data);
+
+	return (0);
 }
