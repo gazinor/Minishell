@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/18 21:30:19 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/18 23:45:55 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,12 @@ int		is_builtin(char *str, t_data *data)
 			str[i + 3] == 'o' && (str[i + 4] == ' ' ||
 				str[i + 4] == '\t' || str[i + 4] == '\0'))
 		ft_echo(str, data);
+	else if (str[i] == '.' && (str[i + 1] == '/'))
+	{
+		data->binary = ft_strdup(str + 2);
+		data->option = ft_split(str, ' ');
+		try_exec(data, str);
+	}
 	else
 		return (0);
 	return (1);

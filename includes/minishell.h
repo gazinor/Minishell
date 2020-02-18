@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/18 19:18:57 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/18 23:46:18 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void				ft_unset(char *str, t_data *data);
 void				ft_echo(char *str, t_data *data);
 void				ft_exit(t_data *data);
 void				init_data(t_data *data);
+void				try_exec(t_data *data, char *str);
 
 #endif
