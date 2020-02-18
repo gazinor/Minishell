@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:09:28 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/17 02:33:27 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/18 18:40:26 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@ char	*where_am_i(void)
 
 	str = NULL;
 	str = getcwd(str, 0);
-	i = ft_strlen(str) - 1;
-	while (str[i] != '/' && str[i])
-		i--;
-	here = ft_strdup(str + i + 1);
-	return (here);
+	if (str)
+	{
+		i = ft_strlen(str) - 1;
+		while (str[i] != '/' && str[i])
+			i--;
+		here = ft_strdup(str + i + 1);
+		return (here);
+	}
+	return (NULL);
 }
 
 int		ft_strcmp(const char *s1, const char *s2)

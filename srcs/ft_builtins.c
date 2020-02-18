@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/17 02:35:51 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/18 18:46:07 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,10 @@ void	ft_pwd(char *line)
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
-	if (line[i] != '\0')
-		ft_printf("pwd: too many arguments\n");
-	else
-	{
-		str = NULL;
-		str = getcwd(str, 0);
-		ft_printf("%s\n", str);
-		free(str);
-	}
+	str = NULL;
+	str = getcwd(str, 0);
+	ft_printf("%s\n", str);
+	free(str);
 }
 
 void	ft_cd(char *str, char **here)
@@ -77,11 +72,21 @@ int		is_builtin(char *str, t_data *data)
 		i++;
 	if (str[i] == 'c' && str[i + 1] == 'd' && (str[i + 2] == ' ' ||
 				str[i + 2] == '\t' || str[i + 2] == '\0'))
-		ft_cd(str + i + 2, &data->here);
+	{
+		if (where_am_i() != NULL)
+			ft_cd(str + i + 2, &data->here);
+		else
+			;
+	}
 	else if (str[i] == 'p' && str[i + 1] == 'w' &&
 			str[i + 2] == 'd' && (str[i + 3] == ' ' ||
 				str[i + 3] == '\t' || str[i + 3] == '\0'))
-		ft_pwd(str + 3);
+	{
+		if (where_am_i() != NULL)
+			ft_pwd(str + 3);
+		else
+			ft_printf(data->here);
+	}
 	else if (str[i] == 'e' && str[i + 1] == 'n' && str[i + 2] == 'v' &&
 			(str[i + 3] == ' ' ||
 				str[i + 3] == '\t' || str[i + 3] == '\0'))

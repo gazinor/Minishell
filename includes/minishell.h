@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 04:15:01 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/17 02:34:32 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/17 04:38:47 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ void				ft_export(char *str, t_env **env, t_data *data);
 void				add_new_elem(t_env **env, char *key, char *value);
 void				ft_unset(char *str, t_data *data);
 void				ft_echo(char *str, t_data *data);
+void				ft_exit(t_data *data);
 
 #endif
