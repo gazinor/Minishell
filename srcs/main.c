@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/17 05:44:17 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/18 19:18:33 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,43 +110,6 @@ void    handle_sigint(int signum)
     ft_printf("\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
 }
 
-void	test(t_data *data, char **line)
-{
-	int ret;
-//	static char	*memory = NULL;
-
-	while ((ret = get_next_line(0, line)) > 0)
-	{
-		if (is_builtin(*line, data) == 1)
-			;
-		else if ((data->binary = is_exec(*line, data)) != NULL)
-		{
-			if (check_ls(*line) == 1)
-				data->option = ft_split(ft_strjoin(*line, " -G"), ' ');
-			else
-				data->option = ft_split(*line, ' ');
-			try_exec(data, *line);
-		}
-		else if (*line[0])
-		{
-			data->option = ft_split(*line, ' ');
-			ft_printf("Minishell: command not found: %s\n", data->option[0]);
-		}
-		ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
-//		memory = ft_strjoin(memory, *line);
-		free(*line);
-	}
-//	if (ret == 0 && memory)
-//	{
-//		ft_printf("  \e[D\e[D");
-//		memory = ft_strjoin(memory, *line);
-//		test(data, &memory);
-//	}
-	if (ret == 0)
-		ft_exit(data);
-}
-
-
 int		main(int ac, char **av, char **envp)
 {
 	int		ret;
@@ -157,13 +120,15 @@ int		main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	init_env(&data.env, envp);
+	init_data(&data);
 	data.here = where_am_i();
 	data.paths = get_paths(&data);
 	ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data.here);
 	signal(SIGINT, handle_sigint);
-//	test(&data, &line);
 	while ((ret = get_next_line(0, &line)) > 0)
 	{
+		if (data.pwd == NULL)
+			ft_pwd(line, &data);
 		if (is_builtin(line, &data) == 1)
 			;
 		else if ((data.binary = is_exec(line, &data)) != NULL)

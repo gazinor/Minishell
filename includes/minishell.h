@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/13 04:15:01 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/17 04:38:47 by gaefourn         ###   ########.fr       */
+/*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
+/*   Updated: 2020/02/18 19:18:57 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ typedef struct		s_data
 	char			**option;
 	char			*exec;
 	char			*binary;
+	char			*pwd;
 }					t_data;
 
 char				**ft_split(const char *s, char c);
-void				ft_pwd(char *line);
+void				ft_pwd(char *line, t_data *data);
 int					is_builtin(char *str, t_data *data);
 void				init_env(t_env **env, char **envp);
 char				*where_am_i(void);
@@ -61,5 +62,6 @@ void				add_new_elem(t_env **env, char *key, char *value);
 void				ft_unset(char *str, t_data *data);
 void				ft_echo(char *str, t_data *data);
 void				ft_exit(t_data *data);
+void				init_data(t_data *data);
 
 #endif

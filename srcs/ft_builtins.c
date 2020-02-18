@@ -6,15 +6,16 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/18 18:46:07 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/18 19:45:13 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_pwd(char *line)
+void	ft_pwd(char *line, t_data *data)
 {
 	char *str;
+	static int j = 0;
 	int i;
 
 	i = 0;
@@ -22,8 +23,15 @@ void	ft_pwd(char *line)
 		i++;
 	str = NULL;
 	str = getcwd(str, 0);
-	ft_printf("%s\n", str);
-	free(str);
+	if (str != NULL)
+	{
+		free(data->pwd);
+		data->pwd = ft_strdup(str);
+		if (j != 0)
+			ft_printf("%s\n", data->pwd);
+		free(str);
+		j++;
+	}
 }
 
 void	ft_cd(char *str, char **here)
@@ -75,17 +83,21 @@ int		is_builtin(char *str, t_data *data)
 	{
 		if (where_am_i() != NULL)
 			ft_cd(str + i + 2, &data->here);
+		else if (str[i + 2] == ' ' && str[i + 3] == '.' && (str[i + 4] == '\0'
+					|| str[i + 4] == ' '))
+			ft_cd(ft_strjoin(ft_strjoin(data->pwd, "/"), data->here),
+					&data->here);
 		else
-			;
+			ft_cd(data->pwd, &data->here);
 	}
 	else if (str[i] == 'p' && str[i + 1] == 'w' &&
 			str[i + 2] == 'd' && (str[i + 3] == ' ' ||
 				str[i + 3] == '\t' || str[i + 3] == '\0'))
 	{
 		if (where_am_i() != NULL)
-			ft_pwd(str + 3);
+			ft_pwd(str + 3, data);
 		else
-			ft_printf(data->here);
+			ft_printf("%s/%s\n", data->pwd, data->here);
 	}
 	else if (str[i] == 'e' && str[i + 1] == 'n' && str[i + 2] == 'v' &&
 			(str[i + 3] == ' ' ||
