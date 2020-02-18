@@ -6,11 +6,13 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/18 22:39:52 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/19 00:35:24 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_data	g_data;
 
 char	*get_option(char *str)
 {
@@ -108,51 +110,60 @@ void    handle_sigint(int signum)
     (void)signum;
     ft_printf("\e[D\e[D  ");
     ft_printf("\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
+	g_data.token = 1;
 }
 
 int		main(int ac, char **av, char **envp)
 {
 	int		ret;
-	char	*line;
-	t_data	data;
+	t_data	*data;
 
-	line = NULL;
+	data = &g_data;
+	data->token = 0;
+	data->line = NULL;
 	(void)ac;
 	(void)av;
-	init_env(&data.env, envp);
-	init_data(&data);
-	data.here = where_am_i();
-	data.paths = get_paths(&data);
-	ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data.here);
+	init_env(&data->env, envp);
+	init_data(data);
+	data->here = where_am_i();
+	data->paths = get_paths(data);
+	ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	signal(SIGINT, handle_sigint);
-	while ((ret = get_next_line(0, &line)) > 0)
+	while ((ret = get_next_line(0, &data->line)) > 0)
 	{
+		if (g_data.token == 1)
+		{
+			if (g_data.line)
+				free(g_data.line);
+			g_data.line = ft_strdup("");;
+			g_data.token = 0;
+		}
 		if (ret != 2)
 		{
-			if (data.pwd == NULL)
-				ft_pwd(line, &data);
-			if (is_builtin(line, &data) == 1)
+			if (data->pwd == NULL)
+				ft_pwd(data->line, data);
+			if (is_builtin(data->line, data) == 1)
 				;
-			else if ((data.binary = is_exec(line, &data)) != NULL)
+			else if ((data->binary = is_exec(data->line, data)) != NULL)
 			{
-				if (check_ls(line) == 1)
-					data.option = ft_split(ft_strjoin(line, " -G"), ' ');
+				if (check_ls(data->line) == 1)
+					data->option = ft_split(ft_strjoin(data->line, " -G"), ' ');
 				else
-					data.option = ft_split(line, ' ');
-				try_exec(&data, line);
+					data->option = ft_split(data->line, ' ');
+				try_exec(data, data->line);
 			}
-			else if (line[0])
+			else if (data->line[0])
 			{
-				data.option = ft_split(line, ' ');
-				ft_printf("Minishell: command not found: %s\n", data.option[0]);
+				data->option = ft_split(data->line, ' ');
+				ft_printf("Minishell: command not found: %s\n", data->option[0]);
 			}
-			ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data.here);
-			free(line);
+			ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+			free(data->line);
 		}
 		else
 			ft_printf("  \e[D\e[D");
 	}
 	if (ret == 0)
-		ft_exit(&data);
+		ft_exit(data);
 	return (0);
 }

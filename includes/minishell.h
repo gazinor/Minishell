@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/18 23:46:18 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/19 00:23:50 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct		s_data
 	char			*exec;
 	char			*binary;
 	char			*pwd;
+	char			*line;
+	int				token;
 }					t_data;
 
 char				**ft_split(const char *s, char c);
