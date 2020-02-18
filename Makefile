@@ -46,9 +46,7 @@ SCRIPT_P =	./scripts
 ################################################################################
 
 all : $(NAME)
-
-n :
-	@sh new_window.sh
+	@sh test.sh
 
 f : $(NAME)
 
@@ -67,7 +65,7 @@ $(NAME) : $(OBJ)
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	@mkdir -p $(OBJ_PATH)
 	@mkdir -p $(OBJ_PATH)/$(GNL_PATH)
-	@$(CC) $(CFLAGS) $(DEBUG) -MMD -I$(HEADER_P) -o $@ -c $<
+	@$(CC) $(CFLAGS) -MMD -I$(HEADER_P) -o $@ -c $<
 	@printf "\e[1;30m$(CC): \e[1;37m./%-51s\e[1;0m" "$<"
 	@printf "\e[32mcheck\e[1;0m\n"
 

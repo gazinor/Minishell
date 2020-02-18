@@ -6,13 +6,11 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/17 07:21:29 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/18 22:39:52 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_data g_data;
 
 char	*get_option(char *str)
 {
@@ -85,7 +83,7 @@ char	*is_exec(char *str, t_data *data)
 				if (ft_strcmp(entry->d_name, data->exec) == 0)
 					return (ft_strjoin(ft_strjoin(data->paths[i], "/"),
 								data->exec));
-			closedir(dir);
+					closedir(dir);
 		}
 	}
 	return (NULL);
@@ -107,101 +105,54 @@ int		check_ls(char *str)
 
 void    handle_sigint(int signum)
 {
-	(void)signum;
-	ft_printf("\e[D\e[D  ");
-	ft_printf("\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
-	g_data.flag = 1;
-}
-
-int		loop(t_data *data)
-{
-	char	*tmp;
-	char	*old;
-	int		ret;
-
-	tmp = NULL;
-	old = NULL;
-	while ((ret = get_next_line(0, &data->line)) == 0)
-	{
-		old = tmp ? ft_strjoin(tmp, data->line) : ft_strdup(data->line);
-		free(tmp);
-		free(data->line);
-		data->line = NULL;
-		if (old[0] == 0)
-		{
-			free(old);
-			ft_printf("  \e[D\e[D");
-			return (-1);
-		}
-		if (data->flag == 1)
-		{
-			if (data->line)
-			{
-				free(data->line);
-				data->line = NULL;
-			}
-		}
-		tmp = old;
-	}
-	if (data->flag == 1)
-	{
-		if (old)
-			free(old);
-		if (data->line)
-		{
-			free(data->line);
-			data->line = NULL;
-		}
-		return (0);
-	}
-	if (ret > 0)
-	{
-		old = tmp ? ft_strjoin(tmp, data->line) : ft_strdup(data->line);
-		free(tmp);
-		free(data->line);
-		data->line = old;
-	}
-	return (ret);
+    (void)signum;
+    ft_printf("\e[D\e[D  ");
+    ft_printf("\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
 }
 
 int		main(int ac, char **av, char **envp)
 {
-	t_data	*data;
 	int		ret;
+	char	*line;
+	t_data	data;
 
+	line = NULL;
 	(void)ac;
 	(void)av;
-	data = &g_data;
-	data->line = NULL;
-	data->flag = 0;
-	init_env(&data->env, envp);
-	data->here = where_am_i();
-	data->paths = get_paths(data);
+	init_env(&data.env, envp);
+	init_data(&data);
+	data.here = where_am_i();
+	data.paths = get_paths(&data);
+	ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data.here);
 	signal(SIGINT, handle_sigint);
-	while (1)
+	while ((ret = get_next_line(0, &line)) > 0)
 	{
-		ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
-		if ((ret = loop(data)) == -1)
-			break ;
-		if (ret == 0)
-			data->flag = 0;
-		else if (is_builtin(data->line, data) == 1)
-			;
-		else if ((data->binary = is_exec(data->line, data)) != NULL)
+		if (ret != 2)
 		{
-			if (check_ls(data->line) == 1)
-				data->option = ft_split(ft_strjoin(data->line, " -G"), ' ');
-			else
-				data->option = ft_split(data->line, ' ');
-			try_exec(data, data->line);
+			if (data.pwd == NULL)
+				ft_pwd(line, &data);
+			if (is_builtin(line, &data) == 1)
+				;
+			else if ((data.binary = is_exec(line, &data)) != NULL)
+			{
+				if (check_ls(line) == 1)
+					data.option = ft_split(ft_strjoin(line, " -G"), ' ');
+				else
+					data.option = ft_split(line, ' ');
+				try_exec(&data, line);
+			}
+			else if (line[0])
+			{
+				data.option = ft_split(line, ' ');
+				ft_printf("Minishell: command not found: %s\n", data.option[0]);
+			}
+			ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data.here);
+			free(line);
 		}
-		else if (data->line[0])
-		{
-			data->option = ft_split(data->line, ' ');
-			ft_printf("Minishell: command not found: %s\n", data->option[0]);
-		}
+		else
+			ft_printf("  \e[D\e[D");
 	}
-	ft_exit(data);
-
+	if (ret == 0)
+		ft_exit(&data);
 	return (0);
 }

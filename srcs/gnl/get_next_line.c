@@ -6,13 +6,12 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:28:45 by glaurent          #+#    #+#             */
-/*   Updated: 2019/11/19 04:51:52 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/18 22:28:10 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
 #include "get_next_line.h"
+#include "minishell.h"
 
 int			ft_find_char(char *str, char c)
 {
@@ -62,6 +61,11 @@ int			ft_add_line(char **buff, char **line)
 int			ft_out(char **buff, char **line, char **buff_read, int ret)
 {
 	free(*buff_read);
+	if (ret == 0 && buff[0])
+	{
+		*line = ft_strdup(*buff);
+		return (2);
+	}
 	if (ret < 0)
 		return (-1);
 	else if (ret == 0 && *buff == NULL)
