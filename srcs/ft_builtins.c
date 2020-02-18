@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/18 19:45:13 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/18 21:30:19 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,13 @@ int		is_builtin(char *str, t_data *data)
 			ft_cd(str + i + 2, &data->here);
 		else if (str[i + 2] == ' ' && str[i + 3] == '.' && (str[i + 4] == '\0'
 					|| str[i + 4] == ' '))
-			ft_cd(ft_strjoin(ft_strjoin(data->pwd, "/"), data->here),
+		{
+			if (data->pwd == data->here)
+				ft_cd(data->pwd, &data->here);
+			else
+				ft_cd(ft_strjoin(ft_strjoin(data->pwd, "/"), data->here),
 					&data->here);
+		}
 		else
 			ft_cd(data->pwd, &data->here);
 	}
@@ -97,7 +102,12 @@ int		is_builtin(char *str, t_data *data)
 		if (where_am_i() != NULL)
 			ft_pwd(str + 3, data);
 		else
-			ft_printf("%s/%s\n", data->pwd, data->here);
+		{
+			if (data->pwd == data->here)
+				ft_printf("%s\n", data->pwd);
+			else
+				ft_printf("%s/%s\n", data->pwd, data->here);
+		}
 	}
 	else if (str[i] == 'e' && str[i + 1] == 'n' && str[i + 2] == 'v' &&
 			(str[i + 3] == ' ' ||
