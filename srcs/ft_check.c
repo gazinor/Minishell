@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/19 02:55:02 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/19 04:57:15 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	ft_dollar(t_data *data, int ret)
 	int		i;
 	int		len;
 
+	if (data->line[ret + 1])
+		return ;
 	cpy = NULL;
 	cpy2 = NULL;
 	i = ret;

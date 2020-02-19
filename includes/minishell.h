@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/19 02:30:27 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/19 04:51:09 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <dirent.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <sys/types.h>
 # include "../srcs/gnl/get_next_line.h"
 # include "../srcs/printf/ft_printf.h"
 

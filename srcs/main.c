@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/19 02:28:16 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/19 05:00:44 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,13 @@ char	*get_exec(char *str)
 void	try_exec(t_data *data, char *str)
 {
 	int		ret;
-	char **envp;
+	char	**envp;
+	int		status;
 
 	(void)str;
 	envp = ft_split_env(data->env);
 	data->pid = fork();
+	data->ret = 0;
 	if (data->pid == 0)
 	{
 		errno = 0;
@@ -64,7 +66,8 @@ void	try_exec(t_data *data, char *str)
 		exit(ret);
 	}
 	if (data->pid > 0)
-		wait(0);
+		wait(&status);
+	data->ret = WEXITSTATUS(status);
 	//fct_free_envp;
 }
 
@@ -122,6 +125,7 @@ int		main(int ac, char **av, char **envp)
 	data = &g_data;
 	data->token = 0;
 	data->line = NULL;
+	data->ret =0;
 	(void)ac;
 	(void)av;
 	init_env(&data->env, envp);
@@ -132,6 +136,13 @@ int		main(int ac, char **av, char **envp)
 	signal(SIGINT, handle_sigint);
 	while ((ret = get_next_line(0, &data->line)) > 0)
 	{
+		if (data->line[0] == '$' && data->line[1] == '?')
+		{
+			ft_printf("Minishell: %d command not found\n", data->ret);
+			data->ret = 127;
+			ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+			continue ;
+		}
 		if (g_data.token == 1)
 		{
 			if (g_data.line)
@@ -158,7 +169,6 @@ int		main(int ac, char **av, char **envp)
 			{
 				data->option = ft_split(data->line, ' ');
 				ft_printf("Minishell: command not found: %s\n", data->option[0]);
-				data->ret = 127;
 			}
 			ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 			free(data->line);
