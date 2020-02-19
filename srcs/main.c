@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/19 00:35:24 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/19 02:28:16 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	try_exec(t_data *data, char *str)
 		if ((ret = execve(data->binary, data->option, envp)) != 0)
 			ft_printf("Minishell: %s: %s\n",
 					strerror(errno), data->exec);
+		data->ret = ret;
 		exit(ret);
 	}
 	if (data->pid > 0)
@@ -140,6 +141,7 @@ int		main(int ac, char **av, char **envp)
 		}
 		if (ret != 2)
 		{
+			check_line(data);
 			if (data->pwd == NULL)
 				ft_pwd(data->line, data);
 			if (is_builtin(data->line, data) == 1)
@@ -156,6 +158,7 @@ int		main(int ac, char **av, char **envp)
 			{
 				data->option = ft_split(data->line, ' ');
 				ft_printf("Minishell: command not found: %s\n", data->option[0]);
+				data->ret = 127;
 			}
 			ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 			free(data->line);
@@ -165,5 +168,5 @@ int		main(int ac, char **av, char **envp)
 	}
 	if (ret == 0)
 		ft_exit(data);
-	return (0);
+	return (42);
 }

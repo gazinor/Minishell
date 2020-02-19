@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/17 03:32:47 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/19 02:54:28 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_export(char *str, t_env **env, t_data *data)
 		display_sort(data);
 		return ;
 	}
-	if (data->option && (egal = check_char(data->option[1], '=')) != 0)
+	if (data->option && (egal = check_char(data->option[1], '=')) != -1)
 	{
 		key = ft_substr(data->option[1], 0, egal);
 		value = ft_strdup(data->option[1] + egal + 1);
@@ -119,7 +119,7 @@ void	ft_unset(char *str, t_data *data)
 	copy = data->env;
 	while (copy)
 	{
-		if (check_char(data->option[1], '=') != 0)
+		if (check_char(data->option[1], '=') != -1)
 		{
 			ft_printf("Minishell: unset: '%s': not a valid identifier\n",
 					data->option[1]);
@@ -154,31 +154,30 @@ char	*get_next_word(char *str, int *i)
 	--*i;
 	j = 0;
 	while (str[++*i] && str[*i] != ' ' && str[*i] != '\t' &&
-			str[*i] != '"' && str[*i] != '\'')
+			str[*i] != '"' && str[*i] != '\'' && str[*i] != '/')
 		++j;
 	return (ft_substr(str, *i - j, j));
 }
 
-void	dollar_case(char *str, int *i, t_data *data)
+void	dollar_case(char *str, int *i, t_data *data, int check)
 {
-	char	*value;
 	char	*word;
 
 	word = get_next_word(str, i);
-	if (ft_strcmp(word, "$") == 0)
-		ft_printf("%s ", word);
-	if (!(value = find_key_value(data->env, word)))
+	if (check == 1)
+		if (ft_strcmp(word, "$") == 0)
+			ft_printf("%s ", word);
+	if (!(data->value = find_key_value(data->env, word)))
 	{
 		skip_white(str, i);
 		--*i;
 		return ;
 	}
 	else
-		ft_printf("%s ", value);
+		check == 1 ? ft_printf("%s ", data->value) : 1;
 	skip_white(str, i);
 	--*i;
 	free(word);
-	free(value);
 }
 
 int		simple_quote(char *str, int *i)
@@ -206,7 +205,7 @@ int		double_quote(char *str, int *i, t_data *data)
 			return (-1);
 		}
 		else if (str[*i] == '$')
-			dollar_case(str, i, data);
+			dollar_case(str, i, data, 1);
 		else
 			write(1, &str[*i], 1);
 	}
@@ -245,7 +244,7 @@ void	ft_echo(char *str, t_data *data)
 				return ;
 		}
 		else if (str[i] == '$')
-			dollar_case(str, &i, data);
+			dollar_case(str, &i, data, 1);
 		else if (str[i] == ' ' || str[i] == '\t')
 		{
 			write(1, " ", 1);

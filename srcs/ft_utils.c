@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:09:28 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/18 18:40:26 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/19 02:44:33 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int		check_char(char *str, char c)
 
 	i = 0;
 	if (!str)
-		return (0);
+		return (-1);
 	while (str[i] && str[i] != c)
 		++i;
 	if (str[i] == c)
 		return (i);
-	return (0);
+	return (-1);
 }
 
 char	**ft_split_env(t_env *env)

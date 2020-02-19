@@ -26,7 +26,8 @@ TMP		 =	main.c \
 			ft_builtins.c \
 		 	ft_utils.c \
 			ft_env.c \
-			ft_builtins2.c
+			ft_builtins2.c \
+			ft_check.c
 SRC_NAME =	$(TMP) $(GNL)
 SRC      =	$(addprefix $(SRC_PATH)/,$(SRC_NAME))
 
@@ -46,7 +47,7 @@ SCRIPT_P =	./scripts
 ################################################################################
 
 all : $(NAME)
-	@sh test.sh
+#	@sh scripts/test.sh
 
 f : $(NAME)
 
