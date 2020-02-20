@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/19 02:54:28 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:17:14 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,8 @@ void	dollar_case(char *str, int *i, t_data *data, int check)
 	char	*word;
 
 	word = get_next_word(str, i);
-	if (check == 1)
-		if (ft_strcmp(word, "$") == 0)
-			ft_printf("%s ", word);
+	if (check == 1 && ft_strcmp(word, "$") == 0)
+		ft_printf("%s ", word);
 	if (!(data->value = find_key_value(data->env, word)))
 	{
 		skip_white(str, i);
@@ -180,34 +179,31 @@ void	dollar_case(char *str, int *i, t_data *data, int check)
 	free(word);
 }
 
-int		simple_quote(char *str, int *i)
+int     simple_quote(char *str, int *i)
 {
-	while (str[++*i] != '\'')
+	if (check_char(str + *i + 1, '\'') == -1)
 	{
-		if (str[*i] == '\0')
-		{
-			ft_printf("Minishell: simple quote is missing\n");
-			return (-1);
-		}
-		else
-			write(1, &str[*i], 1);
+		ft_printf("\rMinishell: simple quote is missing\n");
+		return (-1);
 	}
+	while (str[++*i] != '\'')
+		ft_printf("%c", str[*i]);
 	return (0);
 }
 
-int		double_quote(char *str, int *i, t_data *data)
+int     double_quote(char *str, int *i, t_data *data)
 {
+	if (check_char(str + *i + 1, '"') == -1)
+	{
+		ft_printf("\rMinishell: double quote is missing\n");
+		return (-1);
+	}
 	while (str[++*i] != '"')
 	{
-		if (str[*i] == '\0')
-		{
-			ft_printf("Minishell: double quote is missing\n");
-			return (-1);
-		}
-		else if (str[*i] == '$')
+		if (str[*i] == '$')
 			dollar_case(str, i, data, 1);
 		else
-			write(1, &str[*i], 1);
+			ft_printf("%c", str[*i]);
 	}
 	return (0);
 }
@@ -216,8 +212,10 @@ void	ft_echo(char *str, t_data *data)
 {
 	int i;
 	int j;
+	char	*cpy;
 	(void)data;
 
+	cpy = NULL;
 	i = 0;
 	j = 0;
 	while (str[i] != ' ' && str[i] != '\t' && str[i])
@@ -252,9 +250,11 @@ void	ft_echo(char *str, t_data *data)
 			--i;
 		}
 		else
-			write(1, &str[i], 1);
+			cpy = ft_strjoin(cpy, &str[i]);
 		i++;
 	}
+	if (cpy)
+		ft_printf("%s\n", cpy);
 	if (j == 0)
 		write(1,"\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/19 05:00:44 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:42:40 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*is_exec(char *str, t_data *data)
 				if (ft_strcmp(entry->d_name, data->exec) == 0)
 					return (ft_strjoin(ft_strjoin(data->paths[i], "/"),
 								data->exec));
-					closedir(dir);
+			closedir(dir);
 		}
 	}
 	return (NULL);
@@ -111,9 +111,9 @@ int		check_ls(char *str)
 
 void    handle_sigint(int signum)
 {
-    (void)signum;
-    ft_printf("\e[D\e[D  ");
-    ft_printf("\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
+	(void)signum;
+	ft_printf("\e[D\e[D  ");
+	ft_printf("\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
 	g_data.token = 1;
 }
 
@@ -121,6 +121,8 @@ int		main(int ac, char **av, char **envp)
 {
 	int		ret;
 	t_data	*data;
+	int		i;
+	char	*tmp;
 
 	data = &g_data;
 	data->token = 0;
@@ -136,19 +138,22 @@ int		main(int ac, char **av, char **envp)
 	signal(SIGINT, handle_sigint);
 	while ((ret = get_next_line(0, &data->line)) > 0)
 	{
+		if (g_data.token == 1)
+		{
+			g_data.token = 0;
+			ret == 2 ? ft_exit(data) : 1;
+		}
+		i = 0;
+		skip_white(data->line, &i);
+		tmp = ft_strdup(data->line + i);
+		free(data->line);
+		data->line = tmp;
 		if (data->line[0] == '$' && data->line[1] == '?')
 		{
 			ft_printf("Minishell: %d command not found\n", data->ret);
 			data->ret = 127;
 			ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 			continue ;
-		}
-		if (g_data.token == 1)
-		{
-			if (g_data.line)
-				free(g_data.line);
-			g_data.line = ft_strdup("");;
-			g_data.token = 0;
 		}
 		if (ret != 2)
 		{
@@ -171,10 +176,10 @@ int		main(int ac, char **av, char **envp)
 				ft_printf("Minishell: command not found: %s\n", data->option[0]);
 			}
 			ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
-			free(data->line);
 		}
 		else
 			ft_printf("  \e[D\e[D");
+		free(data->line);
 	}
 	if (ret == 0)
 		ft_exit(data);

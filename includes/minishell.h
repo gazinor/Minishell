@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/19 04:51:09 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:43:04 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct		s_data
 	char			*value;
 }					t_data;
 
+extern t_data	g_data;
+
 char				**ft_split(const char *s, char c);
 void				ft_pwd(char *line, t_data *data);
 int					is_builtin(char *str, t_data *data);
@@ -72,5 +74,6 @@ void				try_exec(t_data *data, char *str);
 void				check_line(t_data *data);
 void				ft_dollar(t_data *data, int ret);
 void				dollar_case(char *str, int *i, t_data *data, int check);
+void				skip_white(char *str, int *i);
 
 #endif

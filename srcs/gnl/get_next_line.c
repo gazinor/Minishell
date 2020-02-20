@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:28:45 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/19 00:34:26 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:48:12 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ int			get_next_line(int fd, char **line)
 	while ((ret = read(fd, buff_read, BUFFER_SIZE)) > 0)
 	{
 		buff_read[ret] = '\0';
+		if (g_data.token == 1)
+		{
+			if (buff)
+				free(buff);
+			buff = ft_strdup("");
+		}
 		if (buff == NULL)
 			buff = ft_strdup(buff_read);
 		else
