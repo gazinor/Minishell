@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/20 21:42:40 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/20 22:50:45 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	try_exec(t_data *data, char *str)
 	{
 		errno = 0;
 		if ((ret = execve(data->binary, data->option, envp)) != 0)
-			ft_printf("Minishell: %s: %s\n",
-					strerror(errno), data->exec);
+			ft_printf("Minishell: %s: %s\n", data->exec,
+					strerror(errno));
 		data->ret = ret;
 		exit(ret);
 	}
@@ -157,7 +157,8 @@ int		main(int ac, char **av, char **envp)
 		}
 		if (ret != 2)
 		{
-			check_line(data);
+			while (check_line(data) != 0)
+				;
 			if (data->pwd == NULL)
 				ft_pwd(data->line, data);
 			if (is_builtin(data->line, data) == 1)

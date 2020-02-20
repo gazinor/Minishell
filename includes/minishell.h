@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/20 21:43:04 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/20 22:30:16 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void				ft_echo(char *str, t_data *data);
 void				ft_exit(t_data *data);
 void				init_data(t_data *data);
 void				try_exec(t_data *data, char *str);
-void				check_line(t_data *data);
-void				ft_dollar(t_data *data, int ret);
+int					check_line(t_data *data);
+int					ft_dollar(t_data *data, int ret);
 void				dollar_case(char *str, int *i, t_data *data, int check);
 void				skip_white(char *str, int *i);
 

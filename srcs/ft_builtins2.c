@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/20 21:17:14 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/20 22:23:27 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ char	*get_next_word(char *str, int *i)
 	--*i;
 	j = 0;
 	while (str[++*i] && str[*i] != ' ' && str[*i] != '\t' &&
-			str[*i] != '"' && str[*i] != '\'' && str[*i] != '/')
+			str[*i] != '"' && str[*i] != '\'' && str[*i] != '/' && str[*i] != '$')
 		++j;
 	return (ft_substr(str, *i - j, j));
 }
