@@ -27,7 +27,8 @@ TMP		 =	main.c \
 		 	ft_utils.c \
 			ft_env.c \
 			ft_builtins2.c \
-			ft_check.c
+			ft_check.c \
+			semicolon.c
 SRC_NAME =	$(TMP) $(GNL)
 SRC      =	$(addprefix $(SRC_PATH)/,$(SRC_NAME))
 

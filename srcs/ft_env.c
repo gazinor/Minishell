@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/18 19:17:39 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/21 05:02:30 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,5 @@ char	*find_key_value(t_env *env, char *key)
 void	init_data(t_data *data)
 {
 	data->pwd = NULL;
+	data->cmd_lst = NULL;
 }

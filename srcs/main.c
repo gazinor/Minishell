@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/21 03:46:53 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/21 05:33:55 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int		main(int ac, char **av, char **envp)
 	t_data	*data;
 	int		i;
 	char	*tmp;
+	t_cmd	*head;
 
 	data = &g_data;
 	data->token = 0;
@@ -136,6 +137,7 @@ int		main(int ac, char **av, char **envp)
 	data->paths = get_paths(data);
 	ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	signal(SIGINT, handle_sigint);
+	head = data->cmd_lst;
 	while ((ret = get_next_line(0, &data->line)) > 0)
 	{
 		if (g_data.token == 1)
@@ -159,24 +161,35 @@ int		main(int ac, char **av, char **envp)
 		{
 			while (check_line(data) != 0)
 				;
-			if (data->pwd == NULL)
-				ft_pwd(data->line, data);
-			if (is_builtin(data->line, data) == 1)
-				;
-			else if ((data->binary = is_exec(data->line, data)) != NULL)
+			ft_ptvirgule(data);
+			while (data->cmd_lst)
 			{
-				if (check_ls(data->line) == 1)
-					data->option = ft_split(ft_strjoin(data->line, " -G"), ' ');
-					else
-					data->option = ft_split(data->line, ' ');
-				try_exec(data, data->line);
-			}
-			else if (data->line[0])
-			{
-				data->option = ft_split(data->line, ' ');
-				ft_printf("Minishell: command not found: %s\n", data->option[0]);
+				i = 0;
+				skip_white(data->cmd_lst->cmd, &i);
+				tmp = ft_strdup(data->cmd_lst->cmd + i);
+				free(data->cmd_lst->cmd);
+				data->cmd_lst->cmd = tmp;
+				if (data->pwd == NULL)
+					ft_pwd(data->cmd_lst->cmd, data);
+				if (is_builtin(data->cmd_lst->cmd, data) == 1)
+					;
+				else if ((data->binary = is_exec(data->cmd_lst->cmd, data)) != NULL)
+				{
+					if (check_ls(data->cmd_lst->cmd) == 1)
+						data->option = ft_split(ft_strjoin(data->cmd_lst->cmd, " -G"), ' ');
+						else
+						data->option = ft_split(data->cmd_lst->cmd, ' ');
+					try_exec(data, data->cmd_lst->cmd);
+				}
+				else if (data->cmd_lst->cmd[0])
+				{
+					data->option = ft_split(data->cmd_lst->cmd, ' ');
+					ft_printf("Minishell: command not found: %s\n", data->option[0]);
+				}
+				data->cmd_lst = data->cmd_lst->next;
 			}
 			ft_printf("\r\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+			data->cmd_lst = head;
 		}
 		else
 			ft_printf("  \e[D\e[D");

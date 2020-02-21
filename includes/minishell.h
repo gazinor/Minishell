@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/20 22:30:16 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/21 04:47:37 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 # include "../srcs/printf/ft_printf.h"
 
 struct dirent		*readdir(DIR *dir);
+
+typedef struct      s_cmd
+{
+	char            *cmd;
+	struct s_cmd    *next;
+}                   t_cmd;
 
 typedef struct		s_env
 {
@@ -49,6 +55,7 @@ typedef struct		s_data
 	int				token;
 	int				ret;
 	char			*value;
+	t_cmd			*cmd_lst;
 }					t_data;
 
 extern t_data	g_data;
@@ -75,5 +82,6 @@ int					check_line(t_data *data);
 int					ft_dollar(t_data *data, int ret);
 void				dollar_case(char *str, int *i, t_data *data, int check);
 void				skip_white(char *str, int *i);
+void				ft_ptvirgule(t_data *data);
 
 #endif
