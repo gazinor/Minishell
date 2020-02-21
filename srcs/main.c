@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/21 02:03:46 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/21 03:46:53 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int		main(int ac, char **av, char **envp)
 			{
 				if (check_ls(data->line) == 1)
 					data->option = ft_split(ft_strjoin(data->line, " -G"), ' ');
-				else
+					else
 					data->option = ft_split(data->line, ' ');
 				try_exec(data, data->line);
 			}

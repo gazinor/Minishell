@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 04:32:29 by glaurent          #+#    #+#             */
-/*   Updated: 2019/11/14 21:42:45 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/21 03:04:09 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ void	ft_str(t_struct *p)
 		ft_less(p, chaine, h);
 	else
 		ft_putstr(chaine, p);
+	free(chaine);
 }

@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/21 01:35:39 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/21 03:46:51 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,6 @@ int     simple_quote(char *str, int *i)
 
 int     double_quote(char *str, int *i, t_data *data)
 {
-	(void)data;
 	if (check_char(str + *i + 1, '"') == -1)
 	{
 		ft_printf("\rMinishell: double quote is missing\n");
@@ -202,8 +201,11 @@ int     double_quote(char *str, int *i, t_data *data)
 	while (str[++*i] != '"')
 	{
 		if (str[*i] == '$')
-			ft_printf("$");
-
+		{
+			str[*i + 1] == '?' ? ft_printf("%d", data->ret) : ft_printf("$");
+			if (str[*i + 1] == '?')
+				++*i;
+		}
 		else
 			ft_printf("%c", str[*i]);
 	}
@@ -241,14 +243,19 @@ void	ft_echo(char *str, t_data *data)
 			if (simple_quote(str, &i) == -1)
 				return ;
 		}
-		else if (str[i] == '$')
-			dollar_case(str, &i, data, 1);
+		else if (str[i] == '$' && str[i + 1] == '?')
+		{
+			ft_printf("%d", data->ret);
+			i++;
+		}
 		else if (str[i] == ' ' || str[i] == '\t')
 		{
 			write(1, " ", 1);
 			skip_white(str, &i);
 			--i;
 		}
+		else if (str[i] == '$' && str[i + 1] == '?')
+			;
 		else
 			ft_printf("%c", str[i]);
 		i++;

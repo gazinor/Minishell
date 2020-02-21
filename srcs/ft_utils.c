@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:09:28 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/19 02:44:33 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/21 03:06:07 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*where_am_i(void)
 		while (str[i] != '/' && str[i])
 			i--;
 		here = ft_strdup(str + i + 1);
+		free(str);
 		return (here);
 	}
 	return (NULL);

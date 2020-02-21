@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/21 01:25:34 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/21 03:21:33 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int		is_builtin(char *str, t_data *data)
 			else
 				ft_cd(ft_strjoin(ft_strjoin(data->pwd, "/"), data->here),
 					&data->here);
+			//OMG FAUT FREE CETTE MERDE, MAIS COMMENT FAIRE ????????
 		}
 		else
 			ft_cd(data->pwd, &data->here);
