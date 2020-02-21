@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/20 22:23:27 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/21 01:35:39 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,11 +165,11 @@ void	dollar_case(char *str, int *i, t_data *data, int check)
 
 	word = get_next_word(str, i);
 	if (check == 1 && ft_strcmp(word, "$") == 0)
-		ft_printf("%s ", word);
+		ft_printf("%s", word);
 	if (!(data->value = find_key_value(data->env, word)))
 	{
-		skip_white(str, i);
-		--*i;
+		//skip_white(str, i);
+		//--*i;
 		return ;
 	}
 	else
@@ -193,6 +193,7 @@ int     simple_quote(char *str, int *i)
 
 int     double_quote(char *str, int *i, t_data *data)
 {
+	(void)data;
 	if (check_char(str + *i + 1, '"') == -1)
 	{
 		ft_printf("\rMinishell: double quote is missing\n");
@@ -201,7 +202,8 @@ int     double_quote(char *str, int *i, t_data *data)
 	while (str[++*i] != '"')
 	{
 		if (str[*i] == '$')
-			dollar_case(str, i, data, 1);
+			ft_printf("$");
+
 		else
 			ft_printf("%c", str[*i]);
 	}
@@ -212,10 +214,8 @@ void	ft_echo(char *str, t_data *data)
 {
 	int i;
 	int j;
-	char	*cpy;
 	(void)data;
 
-	cpy = NULL;
 	i = 0;
 	j = 0;
 	while (str[i] != ' ' && str[i] != '\t' && str[i])
@@ -250,11 +250,9 @@ void	ft_echo(char *str, t_data *data)
 			--i;
 		}
 		else
-			cpy = ft_strjoin(cpy, &str[i]);
+			ft_printf("%c", str[i]);
 		i++;
 	}
-	if (cpy)
-		ft_printf("%s\n", cpy);
 	if (j == 0)
 		write(1,"\n", 1);
 }

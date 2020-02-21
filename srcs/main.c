@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/20 22:50:45 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/21 02:03:46 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ int		main(int ac, char **av, char **envp)
 				data->option = ft_split(data->line, ' ');
 				ft_printf("Minishell: command not found: %s\n", data->option[0]);
 			}
-			ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+			ft_printf("\r\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 		}
 		else
 			ft_printf("  \e[D\e[D");
