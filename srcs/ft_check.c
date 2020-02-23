@@ -6,18 +6,49 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/21 03:23:25 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/23 20:01:38 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_line(t_data *data)
+int		ft_backslash(t_data *data, int ret)
+{
+	char	*cpy;
+	char	*tmp;
+
+	cpy = NULL;
+	cpy = ft_substr(data->line, 0, ret - 1);
+	tmp = ft_strjoin(cpy, &data->line[ret]);
+	free(cpy);
+	cpy = tmp;
+	data->line = ft_strdup(cpy);
+	free(cpy);
+	return (1);
+}
+
+int		check_line(t_data *data)
 {
 	int ret;
 
-	if ((ret = check_char(data->line, '$')) != -1)
-		return(ft_dollar(data, ret));
+	ret = -1;
+	if (check_char(data->line, '\\') != -1)
+		while (data->line[++ret])
+		{
+			if (data->line[ret] == '\\')
+				ft_backslash(data, ret + 1);
+		}
+	else if (check_char(data->line, '$') != -1)
+		while (data->line[++ret])
+		{
+			if (data->line[ret] == '\'')
+				while (data->line[++ret] && data->line[ret] != '\'')
+					;
+			if (data->line[ret] == '"')
+				while (data->line[++ret] && data->line[ret] != '"')
+					if (data->line[ret] == '$')
+						ft_dollar(data, ret);
+		}
 //	else if (check_char(data->line, ';') != -1)
 //		ft_ptvirgule(data);
 //	else if (check_char(data->line, '|') != -1)
@@ -25,7 +56,7 @@ int	check_line(t_data *data)
 	return (0);
 }
 
-int	ft_dollar(t_data *data, int ret)
+int		ft_dollar(t_data *data, int ret)
 {
 	char	*cpy;
 	char	*cpy2;
@@ -45,7 +76,7 @@ int	ft_dollar(t_data *data, int ret)
 	if (data->line[i] == '$')
 		i++;
 	while (data->line[i] && data->line[i] != ' ' && data->line[i] != '/'
-			&& data->line[i] != '$' && data->line[i] != '"')
+			&& data->line[i] != '$' && data->line[i] != '"' && data->line[i] != '\'')
 		i++;
 	cpy2 = ft_strdup(data->line + i);
 	tmp = ft_strjoin(cpy, data->value);

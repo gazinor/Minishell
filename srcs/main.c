@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/21 05:33:55 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/23 17:20:51 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int		main(int ac, char **av, char **envp)
 		{
 			while (check_line(data) != 0)
 				;
+			ft_printf("line : |%s|\n", data->line);
 			ft_ptvirgule(data);
 			while (data->cmd_lst)
 			{
