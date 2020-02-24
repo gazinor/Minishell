@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/21 03:21:33 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/24 18:53:20 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,6 @@ int		is_builtin(char *str, t_data *data)
 	}
 	else
 		return (0);
+	data->ret = 0;
 	return (1);
 }
