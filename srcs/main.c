@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/24 18:52:10 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/25 09:21:25 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,47 @@ void    handle_sigint(int signum)
 	g_data.token = 1;
 }
 
+void    handle_sigquit(int signum)
+{
+	ft_printf("\e[D\e[D  \e[D\e[D");
+	(void)signum;
+	g_data.token2 = 1;
+}
+
+void    handle_segv(int signum)
+{
+	ft_printf("\ec");
+	ft_printf("\e[1mMinishell: \e[38;5;124;1mSegmentation fault\e[0;1m: error: \
+\e[38;5;224;1mYOU\e[0m.\n");
+	ft_printf("\n%\r\e[38;5;92;1mUn segfault serieux ?                        \
+        ", sleep(1));
+	ft_printf("%\rMais t'es une merde en fait ?                        ",
+			sleep(1));
+	ft_printf("%\rEh mais tu segfault comme une grosse pute            ",
+			sleep(1));
+	ft_printf("%\rEh mais ouais en fait t'es une grosse pute c'est ca ?",
+			usleep(1500000));
+	ft_printf("%\rEh regardez c'est une grosse pute                    ",
+			usleep(1500000));
+	ft_printf("%\rAhhhh la grosse puuuuute                             ",
+			sleep(1));
+	ft_printf("%\r\e[38;5;202;1mCorrige ton code maintenant t'as pas de temps a\
+ perdre.\n\n", sleep(1));
+	exit(1);
+	(void)signum;
+}
+
+void    handle_sigabrt(int signum)
+{
+	ft_printf("\ec");
+	ft_printf("\e[1mMinishell: \e[38;5;124;1mSigabort\e[0;1m: error: \
+\e[38;5;224;1mDevine connard\e[0m.\n");
+	ft_printf("\n%\r\e[38;5;92;1mUn sigabort maintenant ?", sleep(2));
+	ft_printf("%\rEh tu sais quoi, me parle plus.        \n\n", sleep(2));
+	exit(1);
+	(void)signum;
+}
+
 int		main(int ac, char **av, char **envp)
 {
 	int		ret;
@@ -127,8 +168,9 @@ int		main(int ac, char **av, char **envp)
 
 	data = &g_data;
 	data->token = 0;
+	g_data.token2 = 0;
 	data->line = NULL;
-	data->ret =0;
+	data->ret = 0;
 	(void)ac;
 	(void)av;
 	init_env(&data->env, envp);
@@ -137,13 +179,16 @@ int		main(int ac, char **av, char **envp)
 	data->paths = get_paths(data);
 	ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
+	signal(SIGSEGV, handle_segv);
+	signal(SIGABRT, handle_sigabrt);
 	head = data->cmd_lst;
 	while ((ret = get_next_line(0, &data->line)) > 0)
 	{
 		if (g_data.token == 1)
 		{
 			g_data.token = 0;
-			ret == 2 ? ft_exit(data) : 1;
+			ret == 2 && data->line[0] == '\0' ? ft_exit(data) : 1;
 		}
 		i = 0;
 		skip_white(data->line, &i);

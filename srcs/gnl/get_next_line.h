@@ -6,14 +6,14 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 18:11:44 by glaurent          #+#    #+#             */
-/*   Updated: 2019/11/19 04:53:57 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/25 05:57:37 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 32
+#  define BUFFER_SIZE 1
 # endif
 # include <stddef.h>
 

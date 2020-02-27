@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/25 00:34:52 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/02/24 18:53:20 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_pwd(char *line, t_data *data)
 	}
 }
 
-void	ft_cd(char *str, char **here, t_data *data)
+void	ft_cd(char *str, char **here)
 {
 	int i;
 
@@ -43,13 +43,7 @@ void	ft_cd(char *str, char **here, t_data *data)
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
 	if (chdir(str + i) == -1)
-	{
-		if (str[i] != '\0')
-			ft_printf("cd: %s: %s\n", strerror(errno), *ft_split(str, ' '));
-		else
-			ft_printf("cd: %s\n", strerror(errno));
-		data->ret = 1;
-	}
+		ft_printf("cd: %s: %s\n", strerror(errno), *ft_split(str, ' '));
 	else
 	{
 		free(*here);
@@ -88,20 +82,19 @@ int		is_builtin(char *str, t_data *data)
 				str[i + 2] == '\t' || str[i + 2] == '\0'))
 	{
 		if (where_am_i() != NULL)
-			ft_cd(str + i + 2, &data->here, data);
+			ft_cd(str + i + 2, &data->here);
 		else if (str[i + 2] == ' ' && str[i + 3] == '.' && (str[i + 4] == '\0'
 					|| str[i + 4] == ' '))
 		{
 			if (data->pwd == data->here)
-				ft_cd(data->pwd, &data->here, data);
+				ft_cd(data->pwd, &data->here);
 			else
 				ft_cd(ft_strjoin(ft_strjoin(data->pwd, "/"), data->here),
-					&data->here, data);
+					&data->here);
 			//OMG FAUT FREE CETTE MERDE, MAIS COMMENT FAIRE ????????
 		}
 		else
-			ft_cd(data->pwd, &data->here, data);
-		return (1);
+			ft_cd(data->pwd, &data->here);
 	}
 	else if (str[i] == 'p' && str[i + 1] == 'w' &&
 			str[i + 2] == 'd' && (str[i + 3] == ' ' ||

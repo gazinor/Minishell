@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/24 18:50:27 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/25 00:13:58 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,22 @@ int		check_line(t_data *data)
 	int ret;
 
 	ret = -1;
-	if (check_char(data->line, '\\') != -1)
-		while (data->line[++ret])
-		{
-			if (data->line[ret] == '\\')
-				ft_backslash(data, ret + 1);
-		}
-	if (check_char(data->line, '$') != -1)
-		while (data->line[++ret])
-		{
-			if (data->line[ret] == '\'')
-				while (data->line[++ret] && data->line[ret] != '\'')
-					;
-			if (data->line[ret] == '"')
-				while (data->line[++ret] && data->line[ret] != '"')
-					if (data->line[ret] == '$')
-						ft_dollar(data, ret);
-			if (data->line[ret] == '$')
-				ft_dollar(data, ret);
-		}
+	while (data->line[++ret])
+		if (data->line[ret] == '\\')
+			ft_backslash(data, ret + 1);
+	ret = -1;
+	while (data->line[++ret])
+	{
+		if (data->line[ret] == '\'')
+			while (data->line[++ret] && data->line[ret] != '\'')
+				;
+		if (data->line[ret] == '"')
+			while (data->line[++ret] && data->line[ret] != '"')
+				if (data->line[ret] == '$')
+					ft_dollar(data, ret);
+		if (data->line[ret] == '$')
+			ft_dollar(data, ret);
+	}
 //	else if (check_char(data->line, ';') != -1)
 //		ft_ptvirgule(data);
 //	else if (check_char(data->line, '|') != -1)
