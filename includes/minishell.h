@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/21 04:47:37 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/02/27 02:32:31 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct		s_data
 	char			*pwd;
 	char			*line;
 	int				token;
+	int				token2;
 	int				ret;
 	char			*value;
 	t_cmd			*cmd_lst;
