@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/01 19:56:05 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:31:59 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*add_cmd(t_cmd **cmd_lst, char *str)
 	if (!((*cmd_lst) = malloc(sizeof(t_cmd))))
 		exit(-1);
 	(*cmd_lst)->cmd = str;
+	(*cmd_lst)->file = NULL;
 	(*cmd_lst)->next = NULL;
 	return ((*cmd_lst)->cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/27 02:32:31 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:43:33 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,17 @@
 
 struct dirent		*readdir(DIR *dir);
 
+typedef struct		s_file
+{
+	char			*name;
+	char			*redir;
+	struct s_file	*next;
+}					t_file;
+
 typedef struct      s_cmd
 {
 	char            *cmd;
+	t_file			*file;
 	struct s_cmd    *next;
 }                   t_cmd;
 

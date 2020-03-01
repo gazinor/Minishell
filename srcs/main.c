@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/01 19:59:21 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/01 20:07:48 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int		main(int ac, char **av, char **envp)
 				tmp = ft_strdup(data->cmd_lst->cmd + i);
 				free(data->cmd_lst->cmd);
 				data->cmd_lst->cmd = tmp;
-				ft_redir(&data);
+				ft_redir(&data, data->cmd_lst->cmd);
 				if (data->pwd == NULL)
 					ft_pwd(data->cmd_lst->cmd, data);
 				if (is_builtin(data->cmd_lst->cmd, data) == 1)
