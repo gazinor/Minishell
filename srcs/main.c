@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/01 19:08:01 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:59:21 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ int		main(int ac, char **av, char **envp)
 				tmp = ft_strdup(data->cmd_lst->cmd + i);
 				free(data->cmd_lst->cmd);
 				data->cmd_lst->cmd = tmp;
+				ft_redir(&data);
 				if (data->pwd == NULL)
 					ft_pwd(data->cmd_lst->cmd, data);
 				if (is_builtin(data->cmd_lst->cmd, data) == 1)
@@ -236,7 +237,7 @@ int		main(int ac, char **av, char **envp)
 //##################################################
 //				if (data->cmd_lst.file != NULL)
 //					fonction(file);
-//###################################################				
+//###################################################
 			}
 			ft_printf(1, "\r\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 			data->cmd_lst = head;
