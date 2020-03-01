@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 02:22:23 by glaurent          #+#    #+#             */
-/*   Updated: 2019/11/14 05:25:34 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/01 18:50:18 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	ft_pct(t_struct *p)
 	i = -1;
 	if (p->minus == TRUE)
 	{
-		ft_putchar('%', p);
+		ft_putchar('%', p, p->fd);
 		while (++i < p->width - 1)
-			ft_putchar(' ', p);
+			ft_putchar(' ', p, p->fd);
 	}
 	else
 	{
 		while (++i < p->width - 1)
-			ft_putchar(p->zero == TRUE ? '0' : ' ', p);
-		ft_putchar('%', p);
+			ft_putchar(p->zero == TRUE ? '0' : ' ', p, p->fd);
+		ft_putchar('%', p, p->fd);
 	}
 }

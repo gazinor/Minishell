@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 06:41:34 by glaurent          #+#    #+#             */
-/*   Updated: 2019/11/14 06:41:48 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/01 18:48:06 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	ft_indetermination(t_struct *p)
 	copy = p->format[p->i];
 	if (p->minus == TRUE)
 	{
-		ft_putchar(copy ? copy : '\0', p);
+		ft_putchar(copy ? copy : '\0', p, p->fd);
 		while (++i < p->width - 1)
-			ft_putchar(' ', p);
+			ft_putchar(' ', p, p->fd);
 	}
 	else
 	{
 		while (++i < p->width - 1)
-			ft_putchar(p->zero == TRUE ? '0' : ' ', p);
-		ft_putchar(copy ? copy : '\0', p);
+			ft_putchar(p->zero == TRUE ? '0' : ' ', p, p->fd);
+		ft_putchar(copy ? copy : '\0', p, p->fd);
 	}
 }

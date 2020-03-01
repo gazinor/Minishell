@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/21 06:09:42 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:03:26 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_ptvirgule(t_data *data)
 	{
 		if (data->line[i] == ';' && data->line[i + 1] == ';')
 		{
-			ft_printf("Minishell: syntax error near unexpected token `;;'\n");
+			ft_printf(2, "Minishell: syntax error near unexpected token `;;'\n");
 			return ;
 		}
 		else if (data->line[i] && data->line[i] == '\'')
@@ -48,7 +48,7 @@ void	ft_ptvirgule(t_data *data)
 			skip_char(data->line, &i, '\'');
 			if (data->line[i] == '\0')
 			{
-				printf("\rMinishell: simple quote is missing\n");
+				ft_printf(2, "\rMinishell: simple quote is missing\n");
 				return ;
 			}
 		}
@@ -58,7 +58,7 @@ void	ft_ptvirgule(t_data *data)
 			skip_char(data->line, &i, '"');
 			if (data->line[i] == '\0')
 			{
-				printf("\rMinishell: double quote is missing\n");
+				ft_printf(2, "\rMinishell: double quote is missing\n");
 				return ;
 			}
 		}
@@ -66,7 +66,7 @@ void	ft_ptvirgule(t_data *data)
 		{
 			if (!*add_cmd(&data->cmd_lst, ft_substr(data->line, 0, i)))
 			{
-				ft_printf("Minishell: syntax error near unexpected token `;'\n");
+				ft_printf(2, "Minishell: syntax error near unexpected token `;'\n");
 				return ;
 			}
 			tmp = ft_strdup(data->line + i + 1);

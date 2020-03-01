@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/21 05:02:30 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:02:10 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**get_paths(t_data *data)
 	char	*not_split;
 
 	if ((not_split = find_key_value(data->env, "PATH")) == NULL)
-		ft_printf("Sorry j'ai pas trouver le path.\n");
+		ft_printf(2, "Sorry j'ai pas trouver le path.\n");
 	return (ft_split(not_split, ':'));
 }
 

@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:28:45 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/25 09:27:21 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:07:37 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int			get_next_line(int fd, char **line)
 		if (ft_find_char(buff, '\n') != -1)
 			break ;
 		else
-			ft_printf("  \e[D\e[D");
+			ft_printf(1 ,"  \e[D\e[D");
 	}
 	return (ft_out(&buff, line, &buff_read, ret));
 }

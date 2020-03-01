@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 01:30:51 by glaurent          #+#    #+#             */
-/*   Updated: 2019/11/18 22:58:38 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/01 18:43:32 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,12 @@ void	ft_look(t_struct *p)
 		ft_indetermination(p);
 }
 
-int		ft_printf(const char *format, ...)
+int		ft_printf(int fd, const char *format, ...)
 {
 	t_struct	p;
 
 	ft_init_p(&p);
+	p.fd = fd;
 	p.format = format;
 	va_start(p.ap, format);
 	while (p.format[p.total])
@@ -101,7 +102,7 @@ int		ft_printf(const char *format, ...)
 			ft_look(&p);
 		}
 		else
-			ft_putchar(p.format[p.i], &p);
+			ft_putchar(p.format[p.i], &p, p.fd);
 		++p.i;
 	}
 	va_end(p.ap);

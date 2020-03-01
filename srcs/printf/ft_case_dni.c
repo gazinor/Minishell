@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 02:28:59 by glaurent          #+#    #+#             */
-/*   Updated: 2019/11/18 22:51:07 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/01 18:57:12 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void			ft_display_zero(t_struct *p, int signe)
 
 	i = -1;
 	while (++i < p->precision - p->len + signe)
-		ft_putchar('0', p);
+		ft_putchar('0', p, p->fd);
 }
 
 static void		ft_norme(t_struct *p, long copy, char c, int i)
@@ -27,23 +27,23 @@ static void		ft_norme(t_struct *p, long copy, char c, int i)
 
 	c_copy = copy < 0 ? -copy : copy;
 	if (p->zero == TRUE)
-		copy < 0 ? ft_putchar('-', p) : 1;
+		copy < 0 ? ft_putchar('-', p, p->fd) : 1;
 	while (++i < (p->width - (copy < 0 && p->precision >= p->len ? 1 : 0) +
 				(p->precision == 0 && copy == 0 && p->dot == TRUE ? 1 : 0) -
 				(p->precision > p->len ? p->precision : p->len)))
-		ft_putchar(c, p);
+		ft_putchar(c, p, p->fd);
 	if (p->len == 1 && p->width != 0 && p->precision == -1 &&
 			i <= p->width && p->dot == TRUE)
-		ft_putchar(' ', p);
+		ft_putchar(' ', p, p->fd);
 	if (p->zero == FALSE)
-		copy < 0 ? ft_putchar('-', p) : 1;
+		copy < 0 ? ft_putchar('-', p, p->fd) : 1;
 	if (copy < 0 && p->precision == p->len)
-		ft_putchar('0', p);
+		ft_putchar('0', p, p->fd);
 	if (p->precision > p->len)
 		ft_display_zero(p, copy <= 0 ? 1 : 0);
 	if (copy == 0 && p->dot == TRUE)
 	{
-		p->precision == 1 ? ft_putchar('0', p) : 1;
+		p->precision == 1 ? ft_putchar('0', p, p->fd) : 1;
 		return ;
 	}
 	ft_putnbr_base((long)c_copy, "0123456789", p);
@@ -53,23 +53,23 @@ static void		ft_norme_again_xd(t_struct *p, long copy, long c_copy)
 {
 	c_copy = copy < 0 ? -copy : copy;
 	if (copy < 0 && p->precision == p->len)
-		ft_putchar('0', p);
+		ft_putchar('0', p, p->fd);
 	if (p->precision > p->len)
 		ft_display_zero(p, copy <= 0 ? 1 : 0);
 	if (copy == 0 && p->dot == TRUE)
 	{
 		if (p->width == 0)
 		{
-			p->precision == 1 ? ft_putchar('0', p) : 1;
+			p->precision == 1 ? ft_putchar('0', p, p->fd) : 1;
 			return ;
 		}
-		p->precision == 1 ? ft_putchar('0', p) : 1;
+		p->precision == 1 ? ft_putchar('0', p, p->fd) : 1;
 	}
 	if (!(copy == 0 && p->dot == TRUE && p->width != 0))
 		ft_putnbr_base((long)c_copy, "0123456789", p);
 	else
 		p->precision <= 0 &&
-			p->precision >= p->len ? ft_putchar('0', p) : 1;
+			p->precision >= p->len ? ft_putchar('0', p, p->fd) : 1;
 }
 
 void			ft_width_num(t_struct *p, long copy, char c, int i)
@@ -79,13 +79,13 @@ void			ft_width_num(t_struct *p, long copy, char c, int i)
 	c_copy = copy < 0 ? -copy : copy;
 	if (p->minus == TRUE)
 	{
-		copy < 0 ? ft_putchar('-', p) : 1;
+		copy < 0 ? ft_putchar('-', p, p->fd) : 1;
 		ft_norme_again_xd(p, copy, c_copy);
 		if (copy == 0 && p->dot == TRUE && p->width != 0)
 			p->len = 0;
 		while (++i < (p->width - (copy < 0 && p->precision >= p->len ? 1 : 0) -
 					(p->precision > p->len ? p->precision : p->len)))
-			ft_putchar(c, p);
+			ft_putchar(c, p, p->fd);
 	}
 	else
 		ft_norme(p, copy, c, i);

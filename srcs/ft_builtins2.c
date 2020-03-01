@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/23 17:44:38 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:01:39 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	display_sort(t_data *data)
 	ft_sort_list(&cpy);
 	while (cpy)
 	{
-		ft_printf("declare -x %s=%s\n", cpy->key, cpy->value);
+		ft_printf(1, "declare -x %s=%s\n", cpy->key, cpy->value);
 		cpy = cpy->next;
 	}
 }
@@ -88,7 +88,7 @@ void	ft_export(char *str, t_env **env, t_data *data)
 	}
 	else
 	{
-		ft_printf("Minishell: Bad assignement.\n");
+		ft_printf(2, "Minishell: Bad assignement.\n");
 		return ;
 	}
 	while (*env)
@@ -121,7 +121,7 @@ void	ft_unset(char *str, t_data *data)
 	{
 		if (check_char(data->option[1], '=') != -1)
 		{
-			ft_printf("Minishell: unset: '%s': not a valid identifier\n",
+			ft_printf(2, "Minishell: unset: '%s': not a valid identifier\n",
 					data->option[1]);
 			return ;
 		}
@@ -165,7 +165,7 @@ void	dollar_case(char *str, int *i, t_data *data, int check)
 
 	word = get_next_word(str, i);
 	if (check == 1 && ft_strcmp(word, "$") == 0)
-		ft_printf("%s", word);
+		ft_printf(1, "%s", word);
 	if (!(data->value = find_key_value(data->env, word)))
 	{
 		//skip_white(str, i);
@@ -173,7 +173,7 @@ void	dollar_case(char *str, int *i, t_data *data, int check)
 		return ;
 	}
 	else
-		check == 1 ? ft_printf("%s ", data->value) : 1;
+		check == 1 ? ft_printf(1, "%s ", data->value) : 1;
 	skip_white(str, i);
 	--*i;
 	free(word);
@@ -193,11 +193,11 @@ int     simple_quote(char *str, int *i)
 {
 	if (check_char(str + *i + 1, '\'') == -1)
 	{
-		ft_printf("\rMinishell: simple quote is missing\n");
+		ft_printf(2, "\rMinishell: simple quote is missing\n");
 		return (-1);
 	}
 	while (str[++*i] != '\'')
-		ft_printf("%c", str[*i]);
+		ft_printf(1, "%c", str[*i]);
 	return (0);
 }
 
@@ -205,19 +205,19 @@ int     double_quote(char *str, int *i, t_data *data)
 {
 	if (check_char(str + *i + 1, '"') == -1)
 	{
-		ft_printf("\rMinishell: double quote is missing\n");
+		ft_printf(2, "\rMinishell: double quote is missing\n");
 		return (-1);
 	}
 	while (str[++*i] != '"')
 	{
 		if (str[*i] == '$')
 		{
-			str[*i + 1] == '?' ? ft_printf("%d", data->ret) : ft_printf("$");
+			str[*i + 1] == '?' ? ft_printf(1, "%d", data->ret) : ft_printf(1, "$");
 			if (str[*i + 1] == '?')
 				++*i;
 		}
 		else
-			ft_printf("%c", str[*i]);
+			ft_printf(1, "%c", str[*i]);
 	}
 	return (0);
 }
@@ -255,7 +255,7 @@ void	ft_echo(char *str, t_data *data)
 		}
 		else if (str[i] == '$' && str[i + 1] == '?')
 		{
-			ft_printf("%d", data->ret);
+			ft_printf(1, "%d", data->ret);
 			i++;
 		}
 		else if (str[i] == ' ' || str[i] == '\t')
@@ -267,7 +267,7 @@ void	ft_echo(char *str, t_data *data)
 		else if (str[i] == '$' && str[i + 1] == '?')
 			;
 		else
-			ft_printf("%c", str[i]);
+			ft_printf(1, "%c", str[i]);
 		i++;
 	}
 	if (j == 0)

@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/02/27 02:43:57 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:00:08 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_pwd(char *line, t_data *data)
 		free(data->pwd);
 		data->pwd = ft_strdup(str);
 		if (j != 0)
-			ft_printf("%s\n", data->pwd);
+			ft_printf(1, "%s\n", data->pwd);
 		free(str);
 		j++;
 	}
@@ -45,9 +45,9 @@ void	ft_cd(char *str, char **here, t_data *data)
 	if (chdir(str + i) == -1)
 	{
 		if (str[i] != '\0')
-			ft_printf("cd: %s: %s\n", strerror(errno), *ft_split(str, ' '));
+			ft_printf(2, "cd: %s: %s\n", strerror(errno), *ft_split(str, ' '));
 		else
-			ft_printf("cd: %s\n", strerror(errno));
+			ft_printf(2, "cd: %s\n", strerror(errno));
 		data->ret = 1;
 	}
 	else
@@ -65,7 +65,7 @@ void	ft_env(t_data *data)
 	copy = data->env;
 	while(copy)
 	{
-		ft_printf("%s=%s\n", copy->key, copy->value);
+		ft_printf(1, "%s=%s\n", copy->key, copy->value);
 		copy = copy->next;
 	}
 }
@@ -73,7 +73,7 @@ void	ft_env(t_data *data)
 void	ft_exit(t_data *data)
 {
 	(void)data;
-	ft_printf("exit\n");
+	ft_printf(1, "exit\n");
 	exit(0);
 }
 
@@ -112,9 +112,9 @@ int		is_builtin(char *str, t_data *data)
 		else
 		{
 			if (data->pwd == data->here)
-				ft_printf("%s\n", data->pwd);
+				ft_printf(1,"%s\n", data->pwd);
 			else
-				ft_printf("%s/%s\n", data->pwd, data->here);
+				ft_printf(1, "%s/%s\n", data->pwd, data->here);
 		}
 	}
 	else if (str[i] == 'e' && str[i + 1] == 'n' && str[i + 2] == 'v' &&
@@ -149,7 +149,7 @@ int		is_builtin(char *str, t_data *data)
 	{
 		if (str[i + 1] == '\0' || str[i + 1] == ' ')
 		{
-			ft_printf("Minishell: /: is a directory\n");
+			ft_printf(2, "Minishell: /: is a directory\n");
 			return (1);
 		}
 		data->binary = ft_strdup(str + 1);

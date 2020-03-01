@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 04:32:29 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/21 03:04:09 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/01 18:51:18 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ void	ft_less(t_struct *p, char *copy, char c)
 	len = ft_strlen(copy);
 	if (p->minus == TRUE)
 	{
-		copy ? ft_putstr(copy, p) : 1;
+		copy ? ft_putstr(copy, p, p->fd) : 1;
 		while (++i < (p->width - len))
-			ft_putchar(c, p);
+			ft_putchar(c, p, p->fd);
 	}
 	else
 	{
 		while (++i < (p->width - len))
-			ft_putchar(c, p);
-		copy ? ft_putstr(copy, p) : 1;
+			ft_putchar(c, p, p->fd);
+		copy ? ft_putstr(copy, p, p->fd) : 1;
 	}
 }
 
@@ -69,6 +69,6 @@ void	ft_str(t_struct *p)
 	if (p->width != 0)
 		ft_less(p, chaine, h);
 	else
-		ft_putstr(chaine, p);
+		ft_putstr(chaine, p, p->fd);
 	free(chaine);
 }

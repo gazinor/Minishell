@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/02/25 09:21:25 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:08:01 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	try_exec(t_data *data, char *str)
 	{
 		errno = 0;
 		if ((ret = execve(data->binary, data->option, envp)) != 0)
-			ft_printf("Minishell: %s: %s\n", data->exec,
+			ft_printf(2, "Minishell: %s: %s\n", data->exec,
 					strerror(errno));
 		data->ret = ret;
 		exit(ret);
@@ -112,36 +112,36 @@ int		check_ls(char *str)
 void    handle_sigint(int signum)
 {
 	(void)signum;
-	ft_printf("\e[D\e[D  ");
-	ft_printf("\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
+	ft_printf(1, "\e[D\e[D  ");
+	ft_printf(1, "\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
 	g_data.token = 1;
 }
 
 void    handle_sigquit(int signum)
 {
-	ft_printf("\e[D\e[D  \e[D\e[D");
+	ft_printf(1, "\e[D\e[D  \e[D\e[D");
 	(void)signum;
 	g_data.token2 = 1;
 }
 
 void    handle_segv(int signum)
 {
-	ft_printf("\ec");
-	ft_printf("\e[1mMinishell: \e[38;5;124;1mSegmentation fault\e[0;1m: error: \
+	ft_printf(2, "\ec");
+	ft_printf(2, "\e[1mMinishell: \e[38;5;124;1mSegmentation fault\e[0;1m: error: \
 \e[38;5;224;1mYOU\e[0m.\n");
-	ft_printf("\n%\r\e[38;5;92;1mUn segfault serieux ?                        \
+	ft_printf(2, "\n%\r\e[38;5;92;1mUn segfault serieux ?                        \
         ", sleep(1));
-	ft_printf("%\rMais t'es une merde en fait ?                        ",
+	ft_printf(2, "%\rMais t'es une merde en fait ?                        ",
 			sleep(1));
-	ft_printf("%\rEh mais tu segfault comme une grosse pute            ",
+	ft_printf(2, "%\rEh mais tu segfault comme une grosse pute            ",
 			sleep(1));
-	ft_printf("%\rEh mais ouais en fait t'es une grosse pute c'est ca ?",
+	ft_printf(2, "%\rEh mais ouais en fait t'es une grosse pute c'est ca ?",
 			usleep(1500000));
-	ft_printf("%\rEh regardez c'est une grosse pute                    ",
+	ft_printf(2, "%\rEh regardez c'est une grosse pute                    ",
 			usleep(1500000));
-	ft_printf("%\rAhhhh la grosse puuuuute                             ",
+	ft_printf(2, "%\rAhhhh la grosse puuuuute                             ",
 			sleep(1));
-	ft_printf("%\r\e[38;5;202;1mCorrige ton code maintenant t'as pas de temps a\
+	ft_printf(2, "%\r\e[38;5;202;1mCorrige ton code maintenant t'as pas de temps a\
  perdre.\n\n", sleep(1));
 	exit(1);
 	(void)signum;
@@ -149,11 +149,11 @@ void    handle_segv(int signum)
 
 void    handle_sigabrt(int signum)
 {
-	ft_printf("\ec");
-	ft_printf("\e[1mMinishell: \e[38;5;124;1mSigabort\e[0;1m: error: \
+	ft_printf(2, "\ec");
+	ft_printf(2, "\e[1mMinishell: \e[38;5;124;1mSigabort\e[0;1m: error: \
 \e[38;5;224;1mDevine connard\e[0m.\n");
-	ft_printf("\n%\r\e[38;5;92;1mUn sigabort maintenant ?", sleep(2));
-	ft_printf("%\rEh tu sais quoi, me parle plus.        \n\n", sleep(2));
+	ft_printf(2, "\n%\r\e[38;5;92;1mUn sigabort maintenant ?", sleep(2));
+	ft_printf(2, "%\rEh tu sais quoi, me parle plus.        \n\n", sleep(2));
 	exit(1);
 	(void)signum;
 }
@@ -177,7 +177,7 @@ int		main(int ac, char **av, char **envp)
 	init_data(data);
 	data->here = where_am_i();
 	data->paths = get_paths(data);
-	ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+	ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
 	signal(SIGSEGV, handle_segv);
@@ -197,9 +197,9 @@ int		main(int ac, char **av, char **envp)
 		data->line = tmp;
 		if (data->line[0] == '$' && data->line[1] == '?')
 		{
-			ft_printf("Minishell: %d command not found\n", data->ret);
+			ft_printf(2, "Minishell: %d command not found\n", data->ret);
 			data->ret = 127;
-			ft_printf("\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+			ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 			continue ;
 		}
 		if (ret != 2)
@@ -230,7 +230,7 @@ int		main(int ac, char **av, char **envp)
 				{
 					data->option = ft_split(data->cmd_lst->cmd, ' ');
 					data->ret = 127;
-					ft_printf("Minishell: command not found: %s\n", data->option[0]);
+					ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
 				}
 				data->cmd_lst = data->cmd_lst->next;
 //##################################################
@@ -238,11 +238,11 @@ int		main(int ac, char **av, char **envp)
 //					fonction(file);
 //###################################################				
 			}
-			ft_printf("\r\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+			ft_printf(1, "\r\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 			data->cmd_lst = head;
 		}
 		else
-			ft_printf("  \e[D\e[D");
+			ft_printf(1, "  \e[D\e[D");
 		free(data->line);
 	}
 	if (ret == 0)
