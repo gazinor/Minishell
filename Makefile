@@ -28,7 +28,9 @@ TMP		 =	main.c \
 			ft_env.c \
 			ft_builtins2.c \
 			ft_check.c \
-			semicolon.c
+			semicolon.c \
+			ft_redir.c \
+			ft_redir2.c
 SRC_NAME =	$(TMP) $(GNL)
 SRC      =	$(addprefix $(SRC_PATH)/,$(SRC_NAME))
 
@@ -69,7 +71,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	@mkdir -p $(OBJ_PATH)/$(GNL_PATH)
 	@$(CC) $(CFLAGS) -MMD -I$(HEADER_P) -o $@ -c $<
 	@printf "\e[1;30m$(CC): \e[1;37m./%-51s\e[1;0m" "$<"
-	@printf "\e[32mCompiled\e[1;0m\n"
+	@printf "\e[32mcheck\e[1;0m\n"
 
 debug : fclean $(OBJ)
 	@make -C $(P_PATH)

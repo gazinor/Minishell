@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/01 22:43:33 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/02 04:16:16 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <sys/types.h>
+# include <fcntl.h>
 # include "../srcs/gnl/get_next_line.h"
 # include "../srcs/printf/ft_printf.h"
 
@@ -29,15 +30,16 @@ struct dirent		*readdir(DIR *dir);
 
 typedef struct		s_file
 {
-	char			*name;
-	char			*redir;
-	struct s_file	*next;
+	char			*filename;
+	int				type;
+	int				fd;
+	struct	s_file	*next;
 }					t_file;
 
 typedef struct      s_cmd
 {
 	char            *cmd;
-	t_file			*file;
+	struct s_file	*file;
 	struct s_cmd    *next;
 }                   t_cmd;
 
@@ -65,6 +67,7 @@ typedef struct		s_data
 	int				ret;
 	char			*value;
 	t_cmd			*cmd_lst;
+	t_file			*head_file;
 }					t_data;
 
 extern t_data	g_data;
@@ -92,5 +95,10 @@ int					ft_dollar(t_data *data, int ret);
 void				dollar_case(char *str, int *i, t_data *data, int check);
 void				skip_white(char *str, int *i);
 void				ft_ptvirgule(t_data *data);
+int					ft_redir(t_data *data, char *str);
+int					true_redir(char *str, int check, int *i, int *fd);
+void				skip_char(char *str, int *i, char c);
+void				ft_free_and_reset(char **str, int i);
+void				ft_clear_file_lst(t_file **file);
 
 #endif

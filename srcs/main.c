@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/01 20:07:48 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/02 04:18:23 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,9 +214,10 @@ int		main(int ac, char **av, char **envp)
 				tmp = ft_strdup(data->cmd_lst->cmd + i);
 				free(data->cmd_lst->cmd);
 				data->cmd_lst->cmd = tmp;
-				ft_redir(&data, data->cmd_lst->cmd);
 				if (data->pwd == NULL)
 					ft_pwd(data->cmd_lst->cmd, data);
+				if (ft_redir(data, data->cmd_lst->cmd) == -1)
+					break ;
 				if (is_builtin(data->cmd_lst->cmd, data) == 1)
 					;
 				else if ((data->binary = is_exec(data->cmd_lst->cmd, data)) != NULL)
@@ -233,6 +234,7 @@ int		main(int ac, char **av, char **envp)
 					data->ret = 127;
 					ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
 				}
+				ft_clear_file_lst(&data->head_file);
 				data->cmd_lst = data->cmd_lst->next;
 //##################################################
 //				if (data->cmd_lst.file != NULL)
