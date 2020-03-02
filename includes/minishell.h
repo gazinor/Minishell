@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/02 04:16:16 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/02 09:34:36 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct		s_file
 	char			*filename;
 	int				type;
 	int				fd;
+	int				old_fd;
 	struct	s_file	*next;
 }					t_file;
 
@@ -97,8 +98,9 @@ void				skip_white(char *str, int *i);
 void				ft_ptvirgule(t_data *data);
 int					ft_redir(t_data *data, char *str);
 int					true_redir(char *str, int check, int *i, int *fd);
-void				skip_char(char *str, int *i, char c);
+int					skip_char(char *str, int *i, char c);
 void				ft_free_and_reset(char **str, int i);
-void				ft_clear_file_lst(t_file **file);
+void				ft_clear_file_lst(t_file **file, t_data *data);
+char				*join_n_free(char *s1, char *s2, int size);
 
 #endif

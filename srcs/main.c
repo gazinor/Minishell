@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/02 04:18:23 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/02 06:51:47 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,12 +176,13 @@ int		main(int ac, char **av, char **envp)
 	init_env(&data->env, envp);
 	init_data(data);
 	data->here = where_am_i();
+	data->head_file = NULL;
 	data->paths = get_paths(data);
 	ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
-	signal(SIGSEGV, handle_segv);
-	signal(SIGABRT, handle_sigabrt);
+//	signal(SIGSEGV, handle_segv);
+//	signal(SIGABRT, handle_sigabrt);
 	head = data->cmd_lst;
 	while ((ret = get_next_line(0, &data->line)) > 0)
 	{
@@ -217,7 +218,10 @@ int		main(int ac, char **av, char **envp)
 				if (data->pwd == NULL)
 					ft_pwd(data->cmd_lst->cmd, data);
 				if (ft_redir(data, data->cmd_lst->cmd) == -1)
+				{
+					ft_clear_file_lst(&data->head_file, data);
 					break ;
+				}
 				if (is_builtin(data->cmd_lst->cmd, data) == 1)
 					;
 				else if ((data->binary = is_exec(data->cmd_lst->cmd, data)) != NULL)
@@ -234,7 +238,7 @@ int		main(int ac, char **av, char **envp)
 					data->ret = 127;
 					ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
 				}
-				ft_clear_file_lst(&data->head_file);
+				ft_clear_file_lst(&data->head_file, data);
 				data->cmd_lst = data->cmd_lst->next;
 //##################################################
 //				if (data->cmd_lst.file != NULL)

@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/02 04:07:05 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/02 08:35:59 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@ char	*add_cmd(t_cmd **cmd_lst, char *str)
 	return ((*cmd_lst)->cmd);
 }
 
-void	skip_char(char *str, int *i, char c)
+int		skip_char(char *str, int *i, char c)
 {
 	while (str[*i] && str[*i] != c)
 		++*i;
+	if (!str[*i])
+		return (-1);
+	return (1);
 }
 
 void	ft_ptvirgule(t_data *data)

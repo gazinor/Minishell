@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/02 03:31:53 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/02 09:35:20 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,13 +179,15 @@ void	dollar_case(char *str, int *i, t_data *data, int check)
 	free(word);
 }
 
-char	*join_n_free(char *s1, char *s2)
+char	*join_n_free(char *s1, char *s2, int size)
 {
 	char	*cpy;
 
+	(void)size;
 	cpy = ft_strjoin(s1, s2);
 	if (s1)
 		free(s1);
+	free(s2);
 	return (cpy);
 }
 

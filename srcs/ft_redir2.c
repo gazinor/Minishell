@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:49:49 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/02 04:32:44 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/02 08:44:20 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		true_redir(char *str, int check, int *i, int *fd)
 		}
 		while ((ret = read(*fd, buf, 4096)) > 0)
 			write(0, buf, ret);
+		return (0);
 	}
 	if (*fd < 0)
 	{
@@ -43,22 +44,22 @@ int		true_redir(char *str, int check, int *i, int *fd)
 void	ft_free_and_reset(char **str, int i)
 {
 	char	*tmp;
+
 	tmp = ft_substr(*str, 0, i);
 	free(*str);
 	*str = tmp;
 }
 
-void	ft_clear_file_lst(t_file **file)
+void	ft_clear_file_lst(t_file **file, t_data *data)
 {
-	t_file *tmp;
-
 	while (*file)
 	{
 		free((*file)->filename);
 		(*file)->filename = NULL;
 		close((*file)->fd);
-		tmp = (*file);
+		dup2((*file)->old_fd, 1);
 		file = &(*file)->next;
-		free(tmp);
 	}
+	free(data->head_file);
+	data->head_file = NULL;;
 }

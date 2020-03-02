@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/01 19:53:14 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/02 09:03:52 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_backslash(t_data *data, int ret)
 
 int		check_line(t_data *data)
 {
-	int ret;
+	int		ret;
 
 	ret = -1;
 	while (data->line[++ret])
