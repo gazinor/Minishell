@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:58:32 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/02 09:46:10 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/02 20:10:45 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	*add_lstfile(t_file **file, t_data *data)
 	(*file)->filename = NULL;
 	(*file)->type = -1;
 	(*file)->fd = -1;
-	(*file)->old_fd = dup(1);
+	(*file)->old_fd[0] = dup(0);
+	(*file)->old_fd[1]= dup(1);
 	(*file)->next = NULL;
 	return (*file);
 }
@@ -70,7 +71,12 @@ int		ft_add_filename(t_data *data, char *str, int *i, int *j)
 		++*i;
 	++*i;
 	if (!(file->filename = get_filename(str, *i)))
+	{
+		ft_printf(2, "Minishell: syntax error near unexpected token `%c%c'\n",
+					str[*i] == '>' || str[*i] == '<' ? str[*i] : 0,
+				str[*i + 1] == '>' || str[*i + 1] == '<' ? str[*i + 1] : 0);
 		return (-1);
+	}
 	++*j;
 	return (1);;
 }
@@ -83,11 +89,10 @@ int		handle_redir(t_data *data)
 	data->cmd_lst->file = data->head_file;
 	while (data->cmd_lst->file)
 	{
-		ft_printf(2, "%d:%s\n", data->cmd_lst->file->type, data->cmd_lst->file->filename);
+		ft_printf(2, "%d:|%s|\n", data->cmd_lst->file->type, data->cmd_lst->file->filename);
 		if (true_redir(data->cmd_lst->file->filename, data->cmd_lst->file->type,
-				&i, &data->cmd_lst->file->fd) == -1)
+				&data->cmd_lst->file->fd) == -1)
 			return (-1);
-		++i;
 		data->cmd_lst->file = data->cmd_lst->file->next;
 	}
 	return (0);

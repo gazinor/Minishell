@@ -42,7 +42,11 @@ OBJ_PATH =	./.objs
 OBJ_NAME =	$(SRC_NAME:.c=.o)
 OBJ      =	$(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
+#  Some Vars  #
 DEP  = $(OBJ:%.o=%.d)
+COLOR = \e[38;5;88m
+RESET = \e[0m
+CHECK = 0
 
 # unecessary vars  #
 SCRIPT_P =	./scripts
@@ -61,23 +65,34 @@ f : $(NAME)
 #	@sh $(SCRIPT_P)/print_header2.sh
 
 
-$(NAME) : $(OBJ)
+$(NAME) : header $(OBJ)
 	@make -C $(P_PATH)
 	@$(CC) $(CFLAGS) $(P_LIB) $(OBJ) -o $@
+
+clear :
+	@printf "\ec"
+
+bottom :
+	@printf "$(COLOR)###############################################################$(RESET)\n\n"
+
+header : clear
+	@printf "$(COLOR)###############################################################\n"
+	@printf "#                          MINISHELL                          #\n"
+	@printf "###############################################################$(RESET)\n"
 
 -include $(DEP)
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	@mkdir -p $(OBJ_PATH)
 	@mkdir -p $(OBJ_PATH)/$(GNL_PATH)
 	@$(CC) $(CFLAGS) -MMD -I$(HEADER_P) -o $@ -c $<
-	@printf "\e[1;30m$(CC): \e[1;37m./%-51s\e[1;0m" "$<"
-	@printf "\e[32mcheck\e[1;0m\n"
+	@printf "$(COLOR)#$(RESET) \e[1;30m$(CC): \e[1;37m./%-42s\e[1;0m" "$<"
+	@printf "\e[32mCompiled √\e[1;0m $(COLOR)#$(RESET)\n"
 
-debug : fclean $(OBJ)
+debug : fclean header $(OBJ) bottom
 	@make -C $(P_PATH)
 	@$(CC) $(CFLAGS) $(DEBUG) $(P_LIB) $(OBJ) -o $@
 
-clean :
+clean : clear
 	@make -C $(P_PATH) clean
 	@rm -rf $(OBJ_PATH) 
 	@printf "Cleaning files . "
@@ -98,6 +113,6 @@ fclean : clean
 	@rm -rf debug
 	@make -C $(P_PATH) fclean
 
-re : fclean all
+re : fclean all bottom
 
 .PHONY: all clean fclean re
