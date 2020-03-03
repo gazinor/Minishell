@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:49:49 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/02 20:10:44 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/03 06:49:27 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int		true_redir(char *str, int check, int *fd)
 {
 	errno = 0;
-	ft_printf(2, "%s check : %d fd : %d\n",str, check, *fd);
 	if (check == 1)
 		*fd = open(str, O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	else if (check == 2)

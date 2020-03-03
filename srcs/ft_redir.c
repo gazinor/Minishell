@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:58:32 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/02 20:10:45 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/03 06:44:52 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int		handle_redir(t_data *data)
 	data->cmd_lst->file = data->head_file;
 	while (data->cmd_lst->file)
 	{
-		ft_printf(2, "%d:|%s|\n", data->cmd_lst->file->type, data->cmd_lst->file->filename);
 		if (true_redir(data->cmd_lst->file->filename, data->cmd_lst->file->type,
 				&data->cmd_lst->file->fd) == -1)
 			return (-1);

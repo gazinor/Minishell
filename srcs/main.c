@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/03 03:21:55 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/03 03:31:55 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ void	try_exec(t_data *data, char *str)
 	if (data->pid == 0)
 	{
 		errno = 0;
-		int i = -1;
-		while (data->option[++i])
-			ft_printf(2, "option[%d] : |%s|\n", i, data->option[i]);
 		if ((ret = execve(data->binary, data->option, envp)) != 0)
 			ft_printf(2, "Minishell: %s: %s\n", data->exec,
 					strerror(errno));
