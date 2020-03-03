@@ -44,7 +44,7 @@ OBJ      =	$(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
 #  Some Vars  #
 DEP  = $(OBJ:%.o=%.d)
-COLOR = \e[38;5;88m
+COLOR = \e[38;5;140m
 RESET = \e[0m
 CHECK = 0
 
@@ -65,7 +65,7 @@ f : $(NAME)
 #	@sh $(SCRIPT_P)/print_header2.sh
 
 
-$(NAME) : header $(OBJ)
+$(NAME) : header $(OBJ) bottom
 	@make -C $(P_PATH)
 	@$(CC) $(CFLAGS) $(P_LIB) $(OBJ) -o $@
 
@@ -73,11 +73,16 @@ clear :
 	@printf "\ec"
 
 bottom :
-	@printf "$(COLOR)###############################################################$(RESET)\n\n"
+	@printf "$(COLOR)#                                                             #\n"
+	@printf "#                             \e[1;36mDONE\e[0m$(COLOR)                            #\n"
+	@printf "#                                                             #\n"
+	@printf "###############################################################$(RESET)\n\n"
 
 header : clear
 	@printf "$(COLOR)###############################################################\n"
-	@printf "#                          MINISHELL                          #\n"
+	@printf "#                                                             #\n"
+	@printf "#                          \e[1;36mMINISHELL\e[0m$(COLOR)                          #\n"
+	@printf "#                                                             #\n"
 	@printf "###############################################################$(RESET)\n"
 
 -include $(DEP)
@@ -113,6 +118,6 @@ fclean : clean
 	@rm -rf debug
 	@make -C $(P_PATH) fclean
 
-re : fclean all bottom
+re : fclean all
 
 .PHONY: all clean fclean re
