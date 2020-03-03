@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/02 19:53:58 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/03 03:21:55 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	try_exec(t_data *data, char *str)
 	if (data->pid == 0)
 	{
 		errno = 0;
+		int i = -1;
+		while (data->option[++i])
+			ft_printf(2, "option[%d] : |%s|\n", i, data->option[i]);
 		if ((ret = execve(data->binary, data->option, envp)) != 0)
 			ft_printf(2, "Minishell: %s: %s\n", data->exec,
 					strerror(errno));
@@ -95,18 +98,17 @@ char	*is_exec(char *str, t_data *data)
 	return (NULL);
 }
 
-int		check_ls(char *str)
+char	**check_ls(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] == 'l' && str[i + 1] == 's')
-			return (1);
-		i++;
-	}
-	return (0);
+	skip_white(str, &i);
+	if (str[i] == 'l' && str[i + 1] == 's' &&
+			(str[i + 2] == ' ' || str[i + 2] == '\0'))
+		return (ft_split(ft_strjoin(
+			ft_strjoin(ft_substr(str, 0, i + 2), " -G"), str + i + 2), ' '));
+	return (ft_split(str, ' '));
 }
 
 void    handle_sigint(int signum)
@@ -226,10 +228,7 @@ int		main(int ac, char **av, char **envp)
 					;
 				else if ((data->binary = is_exec(data->cmd_lst->cmd, data)) != NULL)
 				{
-					if (check_ls(data->cmd_lst->cmd) == 1)
-						data->option = ft_split(ft_strjoin(data->cmd_lst->cmd, " -G"), ' ');
-						else
-						data->option = ft_split(data->cmd_lst->cmd, ' ');
+					data->option = check_ls(data->cmd_lst->cmd);
 					try_exec(data, data->cmd_lst->cmd);
 				}
 				else if (data->cmd_lst->cmd[0])

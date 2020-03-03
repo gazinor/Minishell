@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/01 19:00:08 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/03 01:36:24 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int		is_builtin(char *str, t_data *data)
 		ft_echo(str, data);
 	else if (str[i] == '.' && (str[i + 1] == '/'))
 	{
-		data->binary = ft_strdup(str + 2);
+		data->binary = ft_strdup(str);
 		data->exec = data->binary;
 		data->option = ft_split(str, ' ');
 		try_exec(data, str);
@@ -152,7 +152,7 @@ int		is_builtin(char *str, t_data *data)
 			ft_printf(2, "Minishell: /: is a directory\n");
 			return (1);
 		}
-		data->binary = ft_strdup(str + 1);
+		data->binary = ft_strdup(str);
 		data->exec = data->binary;
 		data->option = ft_split(str, ' ');
 		try_exec(data, str);
