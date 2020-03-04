@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:09:28 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/02 03:30:19 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/04 22:48:41 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ char	**ft_split_env(t_env *env)
 	i = 0;
 	while (head)
 	{
-		copy[i] = ft_strdup(ft_strjoin(ft_strjoin(head->key, "="),
-					head->value));
+		copy[i] = join_n_free(join_n_free(ft_strdup(head->key),
+				ft_strdup("="), 0), ft_strdup(head->value), 0);
 		i++;
 		head = head->next;
 	}

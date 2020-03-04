@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/04 01:04:11 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/04 22:47:58 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_option(char *str)
 	return (ft_substr(str, i, j));
 }
 
-char	*get_exec(char *str)
+void	get_exec(char *str, t_data *data)
 {
 	int		i;
 	int		j;
@@ -43,7 +43,7 @@ char	*get_exec(char *str)
 		i++;
 	while (str[i + j] && (str[i + j] != ' ' && str[i + j] != '\t'))
 		j++;
-	return (ft_substr(str, i, j));
+	data->exec = ft_substr(str, i, j);
 }
 
 void	try_exec(t_data *data, char *str)
@@ -51,11 +51,13 @@ void	try_exec(t_data *data, char *str)
 	int		ret;
 	char	**envp;
 	int		status;
+	int		i;
 
 	(void)str;
 	envp = ft_split_env(data->env);
 	data->pid = fork();
 	data->ret = 0;
+	i = -1;
 	if (data->pid == 0)
 	{
 		errno = 0;
@@ -67,8 +69,12 @@ void	try_exec(t_data *data, char *str)
 	}
 	if (data->pid > 0)
 		wait(&status);
+	while (envp[++i])
+		free(envp[i]);
+	free(envp);
+	free(data->binary);
+	data->binary = NULL;
 	data->ret = WEXITSTATUS(status);
-	//fct_free_envp;
 }
 
 char	*is_exec(char *str, t_data *data)
@@ -78,7 +84,7 @@ char	*is_exec(char *str, t_data *data)
 	int				i;
 
 	i = -1;
-	data->exec = get_exec(str);
+	get_exec(str, data);
 	while (data->paths[++i])
 	{
 		if ((dir = opendir(data->paths[i])) == NULL)
@@ -87,8 +93,8 @@ char	*is_exec(char *str, t_data *data)
 		{
 			while ((entry = readdir(dir)) != NULL)
 				if (ft_strcmp(entry->d_name, data->exec) == 0)
-					return (ft_strjoin(ft_strjoin(data->paths[i], "/"),
-								data->exec));
+					return (join_n_free(join_n_free(ft_strdup(data->paths[i]), ft_strdup("/"), 0),
+								ft_strdup(data->exec), 0));
 			closedir(dir);
 		}
 	}
@@ -103,8 +109,8 @@ char	**check_ls(char *str)
 	skip_white(str, &i);
 	if (str[i] == 'l' && str[i + 1] == 's' &&
 			(str[i + 2] == ' ' || str[i + 2] == '\0'))
-		return (ft_split(ft_strjoin(
-			ft_strjoin(ft_substr(str, 0, i + 2), " -G"), str + i + 2), ' '));
+		return (ft_split(join_n_free(
+						join_n_free(ft_substr(str, 0, i + 2), ft_strdup(" -G"), 0), ft_strdup(str + i + 2), 0), ' '));
 	return (ft_split(str, ' '));
 }
 
@@ -127,9 +133,9 @@ void    handle_segv(int signum)
 {
 	ft_printf(2, "\ec");
 	ft_printf(2, "\e[1mMinishell: \e[38;5;124;1mSegmentation fault\e[0;1m: error: \
-\e[38;5;224;1mYOU\e[0m.\n");
+			\e[38;5;224;1mYOU\e[0m.\n");
 	ft_printf(2, "\n%\r\e[38;5;92;1mUn segfault serieux ?                        \
-        ", sleep(1));
+			", sleep(1));
 	ft_printf(2, "%\rMais t'es une merde en fait ?                        ",
 			sleep(1));
 	ft_printf(2, "%\rEh mais tu segfault comme une grosse pute            ",
@@ -141,7 +147,7 @@ void    handle_segv(int signum)
 	ft_printf(2, "%\rAhhhh la grosse puuuuute                             ",
 			sleep(1));
 	ft_printf(2, "%\r\e[38;5;202;1mCorrige ton code maintenant t'as pas de temps a\
- perdre.\n\n", sleep(1));
+			perdre.\n\n", sleep(1));
 	exit(1);
 	(void)signum;
 }
@@ -150,7 +156,7 @@ void    handle_sigabrt(int signum)
 {
 	ft_printf(2, "\ec");
 	ft_printf(2, "\e[1mMinishell: \e[38;5;124;1mSigabort\e[0;1m: error: \
-\e[38;5;224;1mDevine connard\e[0m.\n");
+			\e[38;5;224;1mDevine connard\e[0m.\n");
 	ft_printf(2, "\n%\r\e[38;5;92;1mUn sigabort maintenant ?", sleep(2));
 	ft_printf(2, "%\rEh tu sais quoi, me parle plus.        \n\n", sleep(2));
 	exit(1);
@@ -176,12 +182,12 @@ int		main(int ac, char **av, char **envp)
 	init_data(data);
 	data->here = where_am_i();
 	data->head_file = NULL;
-	data->paths = get_paths(data);
+	get_paths(data);
 	ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
-//	signal(SIGSEGV, handle_segv);
-//	signal(SIGABRT, handle_sigabrt);
+	//	signal(SIGSEGV, handle_segv);
+	//	signal(SIGABRT, handle_sigabrt);
 	head = data->cmd_lst;
 	while ((ret = get_next_line(0, &data->line)) > 0)
 	{
@@ -235,13 +241,15 @@ int		main(int ac, char **av, char **envp)
 					ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
 				}
 				ft_clear_file_lst(&data->head_file, data);
+				free(data->cmd_lst->cmd);
 				data->cmd_lst = data->cmd_lst->next;
-//##################################################
-//				if (data->cmd_lst.file != NULL)
-//					fonction(file);
-//###################################################
+				i = -1;
+				while (data->option && data->option[++i])
+					free(data->option[i]);
+				free(data->option);
+				data->option = NULL;
 			}
-			ft_printf(1, "\r\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+			ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 			data->cmd_lst = head;
 		}
 		else

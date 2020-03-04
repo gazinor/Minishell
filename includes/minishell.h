@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 03:46:11 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/04 05:08:23 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char				*where_am_i(void);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, int n);
 int					check_char(char *str, char c);
-char				**get_paths(t_data *data);
+void				get_paths(t_data *data);
 char				*find_key_value(t_env *env, char *key);
 char				**ft_split_env(t_env *env);
 void				ft_export(char *str, t_env **env, t_data *data);
