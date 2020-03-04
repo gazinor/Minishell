@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/02 09:03:52 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/04 03:18:45 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,30 @@ int		check_line(t_data *data)
 		if (data->line[ret] == '$')
 			ft_dollar(data, ret);
 	}
-//	else if (check_char(data->line, ';') != -1)
-//		ft_ptvirgule(data);
-//	else if (check_char(data->line, '|') != -1)
-//		ft_pipe(data);
 	return (0);
+}
+
+void	norme_ft_dollar(t_data *data, char *cpy, char *cpy2, int i)
+{
+	char *tmp;
+	char *tmp2;
+
+	cpy2 = ft_strdup(data->line + i);
+	tmp = ft_strjoin(cpy, data->value);
+	free(cpy);
+	cpy = tmp;
+	tmp2 = ft_strjoin(cpy, cpy2);
+	free(cpy);
+	free(cpy2);
+	cpy = tmp2;
+	data->line = ft_strdup(cpy);
+	free(cpy);
 }
 
 int		ft_dollar(t_data *data, int ret)
 {
 	char	*cpy;
 	char	*cpy2;
-	char	*tmp;
-	char	*tmp2;
 	int		i;
 
 	cpy = NULL;
@@ -75,17 +86,9 @@ int		ft_dollar(t_data *data, int ret)
 	if (data->line[i] == '$')
 		i++;
 	while (data->line[i] && data->line[i] != ' ' && data->line[i] != '/'
-			&& data->line[i] != '$' && data->line[i] != '"' && data->line[i] != '\'')
+			&& data->line[i] != '$' && data->line[i] != '"' &&
+			data->line[i] != '\'')
 		i++;
-	cpy2 = ft_strdup(data->line + i);
-	tmp = ft_strjoin(cpy, data->value);
-	free(cpy);
-	cpy = tmp;
-	tmp2 = ft_strjoin(cpy, cpy2);
-	free(cpy);
-	free(cpy2);
-	cpy = tmp2;
-	data->line = ft_strdup(cpy);
-	free(cpy);
+	norme_ft_dollar(data, cpy, cpy2, i);
 	return (1);
 }

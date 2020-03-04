@@ -24,9 +24,13 @@ SRC_PATH =	./srcs
 TMP		 =	main.c \
 			ft_split.c \
 			ft_builtins.c \
+			ft_builtins_bis.c \
 		 	ft_utils.c \
 			ft_env.c \
 			ft_builtins2.c \
+			ft_builtins2_bis.c \
+			ft_builtins2_bis_bis.c \
+			ft_builtins2_bismillah.c \
 			ft_check.c \
 			semicolon.c \
 			ft_redir.c \

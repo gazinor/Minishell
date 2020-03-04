@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/02 19:33:02 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/04 03:46:11 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ typedef struct		s_file
 	int				type;
 	int				fd;
 	int				old_fd[2];
-	struct	s_file	*next;
+	struct s_file	*next;
 }					t_file;
 
-typedef struct      s_cmd
+typedef struct		s_cmd
 {
-	char            *cmd;
+	char			*cmd;
 	struct s_file	*file;
-	struct s_cmd    *next;
-}                   t_cmd;
+	struct s_cmd	*next;
+}					t_cmd;
 
 typedef struct		s_env
 {
@@ -102,5 +102,21 @@ int					skip_char(char *str, int *i, char c);
 void				ft_free_and_reset(char **str, int i);
 void				ft_clear_file_lst(t_file **file, t_data *data);
 char				*join_n_free(char *s1, char *s2, int size);
+int					ft_norme_builtins1(char *str, t_data *data, int i);
+int					ft_norme_builtins2(char *str, t_data *data, int i);
+int					ft_norme_builtins3(char *str, t_data *data, int i);
+int					ft_norme_builtins4(char *str, t_data *data, int i);
+void				ft_env(t_data *data);
+void				ft_cd(char *str, char **here, t_data *data);
+void				display_sort(t_data *data);
+char				*get_next_word(char *str, int *i);
+void				norme_ft_echo(char *str, int *i, t_data *data);
+int					simple_quote(char *str, int *i);
+int					double_quote(char *str, int *i, t_data *data);
+void				norme_ft_export(t_env **env, char *key, char *value);
+void				norme_ft_unset(t_data *data, t_env *copy, t_env *prev,
+		char *key);
+int					norme_ft_redir(t_data *data, char *str, int *i, int *j);
+int					ft_add_filename(t_data *data, char *str, int *i, int *j);
 
 #endif

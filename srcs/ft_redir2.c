@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:49:49 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/03 06:49:27 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/04 03:43:07 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,20 @@ void	ft_clear_file_lst(t_file **file, t_data *data)
 		file = &(*file)->next;
 	}
 	free(data->head_file);
-	data->head_file = NULL;;
+	data->head_file = NULL;
+}
+
+int		norme_ft_redir(t_data *data, char *str, int *i, int *j)
+{
+	while (str[++*i])
+	{
+		if (str[*i] == '\'' || str[*i] == '"')
+			if (++*i == -1 || skip_char(str, i, str[*i - 1]) == -1)
+				return (-1);
+		if ((str[*i] == '>' && str[*i + 1] == '>') || str[*i] == '>' ||
+				str[*i] == '<')
+			if (ft_add_filename(data, str, i, j) == -1)
+				return (-1);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/02 08:35:59 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/04 03:33:39 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,35 @@ int		skip_char(char *str, int *i, char c)
 	return (1);
 }
 
+void	norme_ft_ptvirgule(t_data *data, int *i)
+{
+	if (data->line[*i] == ';' && data->line[*i + 1] == ';')
+	{
+		ft_printf(2, "Minishell: syntax error near unexpected token `;;'\n");
+		return ;
+	}
+	else if (data->line[*i] && data->line[*i] == '\'')
+	{
+		++*i;
+		skip_char(data->line, i, '\'');
+		if (data->line[*i] == '\0')
+		{
+			ft_printf(2, "\rMinishell: simple quote is missing\n");
+			return ;
+		}
+	}
+	else if (data->line[*i] && data->line[*i] == '"')
+	{
+		++*i;
+		skip_char(data->line, i, '"');
+		if (data->line[*i] == '\0')
+		{
+			ft_printf(2, "\rMinishell: double quote is missing\n");
+			return ;
+		}
+	}
+}
+
 void	ft_ptvirgule(t_data *data)
 {
 	int		i;
@@ -41,36 +70,13 @@ void	ft_ptvirgule(t_data *data)
 	i = -1;
 	while (data->line[++i])
 	{
-		if (data->line[i] == ';' && data->line[i + 1] == ';')
-		{
-			ft_printf(2, "Minishell: syntax error near unexpected token `;;'\n");
-			return ;
-		}
-		else if (data->line[i] && data->line[i] == '\'')
-		{
-			++i;
-			skip_char(data->line, &i, '\'');
-			if (data->line[i] == '\0')
-			{
-				ft_printf(2, "\rMinishell: simple quote is missing\n");
-				return ;
-			}
-		}
-		else if (data->line[i] && data->line[i] == '"')
-		{
-			++i;
-			skip_char(data->line, &i, '"');
-			if (data->line[i] == '\0')
-			{
-				ft_printf(2, "\rMinishell: double quote is missing\n");
-				return ;
-			}
-		}
-		else if (data->line[i] == ';')
+		norme_ft_ptvirgule(data, &i);
+		if (data->line[i] == ';')
 		{
 			if (!*add_cmd(&data->cmd_lst, ft_substr(data->line, 0, i)))
 			{
-				ft_printf(2, "Minishell: syntax error near unexpected token `;'\n");
+				ft_printf(2,
+						"Minishell: syntax error near unexpected token `;'\n");
 				return ;
 			}
 			tmp = ft_strdup(data->line + i + 1);

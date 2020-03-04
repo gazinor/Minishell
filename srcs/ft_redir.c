@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:58:32 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/03 06:44:52 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/04 03:43:08 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*add_lstfile(t_file **file, t_data *data)
 	(*file)->type = -1;
 	(*file)->fd = -1;
 	(*file)->old_fd[0] = dup(0);
-	(*file)->old_fd[1]= dup(1);
+	(*file)->old_fd[1] = dup(1);
 	(*file)->next = NULL;
 	return (*file);
 }
@@ -78,7 +78,7 @@ int		ft_add_filename(t_data *data, char *str, int *i, int *j)
 		return (-1);
 	}
 	++*j;
-	return (1);;
+	return (1);
 }
 
 int		handle_redir(t_data *data)
@@ -97,23 +97,15 @@ int		handle_redir(t_data *data)
 	return (0);
 }
 
-int	ft_redir(t_data *data, char *str)
+int		ft_redir(t_data *data, char *str)
 {
 	int i;
 	int	j;
 
 	i = -1;
 	j = 0;
-	while (str[++i])
-	{
-		if (str[i] == '\'' || str[i] == '"')
-			if (++i == -1 || skip_char(str, &i, str[i - 1]) == -1)
-				return (-1);
-		if ((str[i] == '>' && str[i + 1] == '>') || str[i] == '>' ||
-				str[i] == '<')
-			if (ft_add_filename(data, str, &i, &j) == -1)
-				return (-1);
-	}
+	if (norme_ft_redir(data, str, &i, &j) == -1)
+		return (-1);
 	i = -1;
 	while (str[++i])
 	{
