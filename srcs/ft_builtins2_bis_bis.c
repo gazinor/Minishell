@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 01:08:47 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 21:47:52 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/05 02:09:34 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ char	*join_n_free(char *s1, char *s2, int size)
 
 	(void)size;
 	cpy = ft_strjoin(s1, s2);
-	if (s1)
-		free(s1);
+	free(s1);
 	free(s2);
+	s1 = NULL;
+	s2 = NULL;
 	return (cpy);
 }
 

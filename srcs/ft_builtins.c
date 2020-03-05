@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 01:04:03 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:37:06 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void	ft_pwd(char *line, t_data *data)
 	if (str != NULL)
 	{
 		free(data->pwd);
+		data->pwd = NULL;
 		data->pwd = ft_strdup(str);
 		if (j != 0)
 			ft_printf(1, "%s\n", data->pwd);
 		free(str);
+		str = NULL;
 		j++;
 	}
 }
@@ -48,14 +50,16 @@ void	ft_cd(char *str, char **here, t_data *data)
 			ft_printf(2, "cd: %s: %s\n", strerror(errno), *ft_split(str, ' '));
 		else
 			ft_printf(2, "cd: %s\n", strerror(errno));
+		if (data->here)
+		{
+			free(data->here);
+			data->here = NULL;
+		}
 		data->ret = 1;
 	}
 	else
-	{
-		free(*here);
-		*here = NULL;
-		*here = where_am_i();
-	}
+		where_am_i(data);
+	(void)here;
 }
 
 void	ft_env(t_data *data)

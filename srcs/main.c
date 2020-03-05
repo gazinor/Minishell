@@ -6,7 +6,7 @@
 /*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/04 22:47:58 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:34:45 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,30 @@ void	try_exec(t_data *data, char *str)
 		if ((ret = execve(data->binary, data->option, envp)) != 0)
 			ft_printf(2, "Minishell: %s: %s\n", data->exec,
 					strerror(errno));
+		i = -1;
+		while (data->option && data->option[++i])
+		{
+			free(data->option[i]);
+			data->option[i] = NULL;
+		}
+		free(data->option);
+		data->option = NULL;
 		data->ret = ret;
 		exit(ret);
 	}
 	if (data->pid > 0)
+	{
 		wait(&status);
+	}
+	i = -1;
 	while (envp[++i])
+	{
 		free(envp[i]);
+		envp[i] = NULL;
+	}
 	free(envp);
 	free(data->binary);
+	envp = NULL;
 	data->binary = NULL;
 	data->ret = WEXITSTATUS(status);
 }
@@ -101,24 +116,32 @@ char	*is_exec(char *str, t_data *data)
 	return (NULL);
 }
 
-char	**check_ls(char *str)
+void	check_ls(char *str, t_data *data)
 {
 	int	i;
+	char	*tmp;
 
 	i = 0;
 	skip_white(str, &i);
 	if (str[i] == 'l' && str[i + 1] == 's' &&
 			(str[i + 2] == ' ' || str[i + 2] == '\0'))
-		return (ft_split(join_n_free(
-						join_n_free(ft_substr(str, 0, i + 2), ft_strdup(" -G"), 0), ft_strdup(str + i + 2), 0), ' '));
-	return (ft_split(str, ' '));
+	{
+		tmp = join_n_free(join_n_free(ft_substr(str, i, i + 2),
+					ft_strdup(" -G"), 0), ft_strdup(str + i + 2), 0);
+		data->option = ft_split(tmp, ' ');
+		free(tmp);
+		return ;
+	}
+	else
+		data->option = ft_split(str, ' ');
+	return ;
 }
 
 void    handle_sigint(int signum)
 {
 	(void)signum;
 	ft_printf(1, "\e[D\e[D  ");
-	ft_printf(1, "\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", where_am_i());
+	ft_printf(1, "\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", g_data.here);
 	g_data.token = 1;
 }
 
@@ -180,7 +203,7 @@ int		main(int ac, char **av, char **envp)
 	(void)av;
 	init_env(&data->env, envp);
 	init_data(data);
-	data->here = where_am_i();
+	where_am_i(data);
 	data->head_file = NULL;
 	get_paths(data);
 	ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
@@ -231,7 +254,7 @@ int		main(int ac, char **av, char **envp)
 					;
 				else if ((data->binary = is_exec(data->cmd_lst->cmd, data)) != NULL)
 				{
-					data->option = check_ls(data->cmd_lst->cmd);
+					check_ls(data->cmd_lst->cmd, data);
 					try_exec(data, data->cmd_lst->cmd);
 				}
 				else if (data->cmd_lst->cmd[0])
@@ -242,12 +265,24 @@ int		main(int ac, char **av, char **envp)
 				}
 				ft_clear_file_lst(&data->head_file, data);
 				free(data->cmd_lst->cmd);
+				data->cmd_lst->cmd = NULL;
 				data->cmd_lst = data->cmd_lst->next;
 				i = -1;
 				while (data->option && data->option[++i])
+				{
 					free(data->option[i]);
-				free(data->option);
-				data->option = NULL;
+					data->option[i] = NULL;
+				}
+				if (data->option)
+				{
+					free(data->option);
+					data->option = NULL;
+				}
+				if (data->exec)
+				{
+					free(data->exec);
+					data->exec = NULL;
+				}
 			}
 			ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 			data->cmd_lst = head;

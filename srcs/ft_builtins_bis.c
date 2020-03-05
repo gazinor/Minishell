@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 00:21:06 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 20:31:11 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:47:27 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		ft_norme_builtins1(char *str, t_data *data, int i)
 	if (str[i] == 'c' && str[i + 1] == 'd' && (str[i + 2] == ' ' ||
 				str[i + 2] == '\t' || str[i + 2] == '\0'))
 	{
-		if (where_am_i() != NULL)
+		if (where_am_i(data) != -1)
 			ft_cd(str + i + 2, &data->here, data);
 		else if (str[i + 2] == ' ' && str[i + 3] == '.' && (str[i + 4] == '\0'
 					|| str[i + 4] == ' '))
@@ -42,7 +42,7 @@ int		ft_norme_builtins2(char *str, t_data *data, int i)
 			str[i + 2] == 'd' && (str[i + 3] == ' ' ||
 				str[i + 3] == '\t' || str[i + 3] == '\0'))
 	{
-		if (where_am_i() != NULL)
+		if (where_am_i(data) != -1)
 			ft_pwd(str + 3, data);
 		else
 		{

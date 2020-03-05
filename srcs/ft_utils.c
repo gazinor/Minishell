@@ -6,13 +6,13 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:09:28 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 22:48:41 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:47:30 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*where_am_i(void)
+int		where_am_i(t_data *data)
 {
 	char	*str;
 	char	*here;
@@ -27,9 +27,15 @@ char	*where_am_i(void)
 			i--;
 		here = ft_strdup(str + i + 1);
 		free(str);
-		return (here);
+		str = NULL;
+		if (data->here)
+			free(data->here);
+		data->here = ft_strdup(here);
+		free(here);
+		here = NULL;
+		return (1);
 	}
-	return (NULL);
+	return (-1);
 }
 
 int		ft_strcmp(const char *s1, const char *s2)

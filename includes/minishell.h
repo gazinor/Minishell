@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 05:08:23 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:29:32 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char				**ft_split(const char *s, char c);
 void				ft_pwd(char *line, t_data *data);
 int					is_builtin(char *str, t_data *data);
 void				init_env(t_env **env, char **envp);
-char				*where_am_i(void);
+int					where_am_i(t_data *data);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, int n);
 int					check_char(char *str, char c);
