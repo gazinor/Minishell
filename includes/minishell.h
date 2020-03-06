@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/05 18:29:32 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/05 22:45:39 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ void				norme_ft_unset(t_data *data, t_env *copy, t_env *prev,
 		char *key);
 int					norme_ft_redir(t_data *data, char *str, int *i, int *j);
 int					ft_add_filename(t_data *data, char *str, int *i, int *j);
+void				free_lst(t_file *file);
 
 #endif

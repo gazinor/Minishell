@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/05 19:34:45 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/06 02:51:05 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,14 @@ char	*is_exec(char *str, t_data *data)
 		{
 			while ((entry = readdir(dir)) != NULL)
 				if (ft_strcmp(entry->d_name, data->exec) == 0)
+				{
+					closedir(dir);
 					return (join_n_free(join_n_free(ft_strdup(data->paths[i]), ft_strdup("/"), 0),
 								ft_strdup(data->exec), 0));
+				}
 			closedir(dir);
+			free(entry);
+			entry = NULL;
 		}
 	}
 	return (NULL);
@@ -193,6 +198,7 @@ int		main(int ac, char **av, char **envp)
 	int		i;
 	char	*tmp;
 	t_cmd	*head;
+	t_cmd	*prev;
 
 	data = &g_data;
 	data->token = 0;
@@ -266,7 +272,9 @@ int		main(int ac, char **av, char **envp)
 				ft_clear_file_lst(&data->head_file, data);
 				free(data->cmd_lst->cmd);
 				data->cmd_lst->cmd = NULL;
+				prev = data->cmd_lst;
 				data->cmd_lst = data->cmd_lst->next;
+				free(prev);
 				i = -1;
 				while (data->option && data->option[++i])
 				{

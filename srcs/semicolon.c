@@ -33,12 +33,12 @@ int		skip_char(char *str, int *i, char c)
 	return (1);
 }
 
-void	norme_ft_ptvirgule(t_data *data, int *i)
+int	norme_ft_ptvirgule(t_data *data, int *i)
 {
 	if (data->line[*i] == ';' && data->line[*i + 1] == ';')
 	{
 		ft_printf(2, "Minishell: syntax error near unexpected token `;;'\n");
-		return ;
+		return (-1);
 	}
 	else if (data->line[*i] && data->line[*i] == '\'')
 	{
@@ -47,7 +47,7 @@ void	norme_ft_ptvirgule(t_data *data, int *i)
 		if (data->line[*i] == '\0')
 		{
 			ft_printf(2, "\rMinishell: simple quote is missing\n");
-			return ;
+			return (-1);
 		}
 	}
 	else if (data->line[*i] && data->line[*i] == '"')
@@ -57,9 +57,10 @@ void	norme_ft_ptvirgule(t_data *data, int *i)
 		if (data->line[*i] == '\0')
 		{
 			ft_printf(2, "\rMinishell: double quote is missing\n");
-			return ;
+			return(-1);
 		}
 	}
+	return (0);
 }
 
 void	ft_ptvirgule(t_data *data)
@@ -70,7 +71,8 @@ void	ft_ptvirgule(t_data *data)
 	i = -1;
 	while (data->line[++i])
 	{
-		norme_ft_ptvirgule(data, &i);
+		if (norme_ft_ptvirgule(data, &i) == -1)
+			return ;
 		if (data->line[i] == ';')
 		{
 			if (!*add_cmd(&data->cmd_lst, ft_substr(data->line, 0, i)))

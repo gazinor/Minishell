@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:49:49 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 03:43:07 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/05 22:53:12 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	ft_free_and_reset(char **str, int i)
 
 void	ft_clear_file_lst(t_file **file, t_data *data)
 {
+	t_file *prev;
+
 	while (*file)
 	{
 		free((*file)->filename);
@@ -58,8 +60,13 @@ void	ft_clear_file_lst(t_file **file, t_data *data)
 		dup2((*file)->old_fd[1], 1);
 		file = &(*file)->next;
 	}
-	free(data->head_file);
-	data->head_file = NULL;
+	while (data->head_file)
+	{
+		prev = data->head_file;
+		data->head_file = data->head_file->next;
+		free(prev);
+		prev = NULL;
+	}
 }
 
 int		norme_ft_redir(t_data *data, char *str, int *i, int *j)

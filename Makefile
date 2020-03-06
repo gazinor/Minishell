@@ -34,7 +34,8 @@ TMP		 =	main.c \
 			ft_check.c \
 			semicolon.c \
 			ft_redir.c \
-			ft_redir2.c
+			ft_redir2.c \
+			ft_free.c
 SRC_NAME =	$(TMP) $(GNL)
 SRC      =	$(addprefix $(SRC_PATH)/,$(SRC_NAME))
 

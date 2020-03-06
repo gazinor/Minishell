@@ -6,7 +6,7 @@
 /*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/05 19:37:06 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/05 22:23:39 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_cd(char *str, char **here, t_data *data)
 		{
 			free(data->here);
 			data->here = NULL;
+			where_am_i(data);
 		}
 		data->ret = 1;
 	}
