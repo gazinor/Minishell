@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/08 22:22:35 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/09 00:19:06 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,5 @@ void	init_data(t_data *data)
 {
 	data->pwd = NULL;
 	data->cmd_lst = NULL;
+	data->binary = NULL;
 }

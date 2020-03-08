@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/08 21:57:51 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/09 00:25:20 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,20 @@ void	try_exec(t_data *data, char *str)
 		exit(ret);
 	}
 	if (data->pid > 0)
-	{
 		wait(&status);
-	}
 	i = -1;
-	while (envp[++i])
+	while (envp && envp[++i])
 	{
 		free(envp[i]);
 		envp[i] = NULL;
 	}
 	free(envp);
-	free(data->binary);
 	envp = NULL;
-	data->binary = NULL;
+	if (data->binary)
+	{
+		free(data->binary);
+		data->binary = NULL;
+	}
 	data->ret = WEXITSTATUS(status);
 }
 

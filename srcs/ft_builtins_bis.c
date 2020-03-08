@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 00:21:06 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/08 22:27:10 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/09 00:26:36 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int		ft_norme_builtins4(char *str, t_data *data, int i)
 	else if (str[i] == '.' && (str[i + 1] == '/'))
 	{
 		data->binary = ft_strdup(str);
-		data->exec = data->binary;
+		data->exec = ft_strdup(data->binary);
 		data->option = ft_split(str, ' ');
 		try_exec(data, str);
 		return (1);

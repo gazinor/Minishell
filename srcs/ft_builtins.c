@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/05 22:23:39 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/09 00:24:57 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int		is_builtin(char *str, t_data *data)
 			return (1);
 		}
 		data->binary = ft_strdup(str);
-		data->exec = data->binary;
+		data->exec = ft_strdup(data->binary);
 		data->option = ft_split(str, ' ');
 		try_exec(data, str);
 		return (1);
