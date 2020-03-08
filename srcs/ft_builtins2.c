@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/04 21:47:14 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/08 23:04:50 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_export(char *str, t_env **env, t_data *data)
 	}
 	norme_ft_export(env, key, value);
 	add_new_elem(env, key, value);
+	free(key);
+	free(value);
 }
 
 void	ft_unset(char *str, t_data *data)
@@ -52,6 +54,7 @@ void	ft_unset(char *str, t_data *data)
 	prev = NULL;
 	copy = data->env;
 	norme_ft_unset(data, copy, prev, key);
+	free(key);
 }
 
 int		simple_quote(char *str, int *i)
