@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins2_bis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 01:04:52 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 01:56:14 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/08 22:26:30 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	add_new_elem(t_env **env, char *key, char *value)
 		env = &(*env)->next;
 	if (!(*env = malloc(sizeof(t_env))))
 		exit(1);
-	(*env)->key = key;
-	(*env)->value = value;
+	(*env)->key = ft_strdup(key);
+	(*env)->value = ft_strdup(value);
 	(*env)->next = NULL;
 }
 
@@ -51,13 +51,13 @@ void	display_sort(t_data *data)
 {
 	t_env	*cpy;
 	t_env	*head;
+	t_env	*tmp;
 
 	cpy = NULL;
 	head = data->env;
 	while (data->env)
 	{
-		add_new_elem(&cpy, ft_strdup(data->env->key),
-				ft_strdup(data->env->value));
+		add_new_elem(&cpy, data->env->key, data->env->value);
 		data->env = data->env->next;
 	}
 	data->env = head;
@@ -65,7 +65,11 @@ void	display_sort(t_data *data)
 	while (cpy)
 	{
 		ft_printf(1, "declare -x %s=%s\n", cpy->key, cpy->value);
+		free(cpy->key);
+		free(cpy->value);
+		tmp = cpy;
 		cpy = cpy->next;
+		free(tmp);
 	}
 }
 

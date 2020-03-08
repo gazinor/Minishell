@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 00:21:06 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/06 01:44:12 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/08 22:27:10 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		ft_norme_builtins1(char *str, t_data *data, int i)
 {
 	char	*tmp;
+
 	if (str[i] == 'c' && str[i + 1] == 'd' && (str[i + 2] == ' ' ||
 				str[i + 2] == '\t' || str[i + 2] == '\0'))
 	{
