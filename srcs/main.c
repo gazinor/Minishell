@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/09 00:31:34 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/09 01:01:15 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*is_exec(char *str, t_data *data)
 
 	i = -1;
 	get_exec(str, data);
-	while (data->paths[++i])
+	while (data->paths && data->paths[++i])
 	{
 		if ((dir = opendir(data->paths[i])) == NULL)
 			perror("opendir() error");
@@ -221,7 +221,6 @@ int		main(int ac, char **av, char **envp)
 	head = data->cmd_lst;
 	while ((ret = get_next_line(0, &data->line)) > 0)
 	{
-		get_paths(data);
 		if (g_data.token == 1)
 		{
 			g_data.token = 0;
@@ -246,6 +245,7 @@ int		main(int ac, char **av, char **envp)
 			ft_ptvirgule(data);
 			while (data->cmd_lst)
 			{
+				get_paths(data);
 				i = 0;
 				skip_white(data->cmd_lst->cmd, &i);
 				tmp = ft_strdup(data->cmd_lst->cmd + i);
@@ -296,9 +296,10 @@ int		main(int ac, char **av, char **envp)
 				i = -1;
 				if (data->paths)
 				{
-					while (data->paths && data->paths[++i])
+					while(data->paths[++i])
 						free(data->paths[i]);
 					free(data->paths);
+					data->paths = NULL;
 				}
 			}
 			ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);

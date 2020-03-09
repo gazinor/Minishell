@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/09 00:19:06 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/09 01:02:22 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,24 @@ void	init_env(t_env **env, char **envp)
 	}
 }
 
-void	get_paths(t_data *data)
+int		get_paths(t_data *data)
 {
 	char	*not_split;
+	int		i;
 
+	i = -1;
+	if (data->paths)
+	{
+		while(data->paths[++i])
+			free(data->paths[i]);
+		free(data->paths);
+		data->paths = NULL;
+	}
 	if ((not_split = find_key_value(data->env, "PATH")) == NULL)
-		ft_printf(2, "Sorry j'ai pas trouver le path.\n");
+		return (-1);
 	data->paths = ft_split(not_split, ':');
 	free(not_split);
+	return (0);
 }
 
 char	*find_key_value(t_env *env, char *key)
@@ -65,4 +75,5 @@ void	init_data(t_data *data)
 	data->pwd = NULL;
 	data->cmd_lst = NULL;
 	data->binary = NULL;
+	data->paths = NULL;
 }
