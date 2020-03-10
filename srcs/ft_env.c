@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/09 01:02:22 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/10 02:25:07 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,7 @@ void	init_env(t_env **env, char **envp)
 int		get_paths(t_data *data)
 {
 	char	*not_split;
-	int		i;
 
-	i = -1;
-	if (data->paths)
-	{
-		while(data->paths[++i])
-			free(data->paths[i]);
-		free(data->paths);
-		data->paths = NULL;
-	}
 	if ((not_split = find_key_value(data->env, "PATH")) == NULL)
 		return (-1);
 	data->paths = ft_split(not_split, ':');
@@ -76,4 +67,21 @@ void	init_data(t_data *data)
 	data->cmd_lst = NULL;
 	data->binary = NULL;
 	data->paths = NULL;
+	data->option = NULL;
+	data->token = 0;
+	g_data.token2 = 0;
+	data->line = NULL;
+	data->ret = 0;
+	data->head_file = NULL;
+}
+
+void	set_up_all(t_data *data, t_cmd **head, char **envp)
+{
+	init_env(&data->env, envp);
+	init_data(data);
+	where_am_i(data);
+	ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
+	*head = data->cmd_lst;
 }

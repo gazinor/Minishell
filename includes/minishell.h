@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/09 00:40:24 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/10 02:29:06 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,13 @@ void				norme_ft_unset(t_data *data, t_env *copy, t_env *prev,
 int					norme_ft_redir(t_data *data, char *str, int *i, int *j);
 int					ft_add_filename(t_data *data, char *str, int *i, int *j);
 void				free_lst(t_file *file);
+void				free_tab(char ***tab);
+void				free_string(char **str);
+void				get_exec(char *str, t_data *data);
+char				*get_option(char *str);
+char				*is_exec(char *str, t_data *data);
+void				set_up_all(t_data *data, t_cmd **head, char **envp);
+void				handle_sigquit(int signum);
+void				handle_sigint(int signum);
 
 #endif
