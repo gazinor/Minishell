@@ -36,7 +36,8 @@ TMP		 =	main.c \
 			ft_redir.c \
 			ft_redir2.c \
 			ft_free.c \
-			ft_exec.c
+			ft_exec.c \
+			main_loop.c
 SRC_NAME =	$(TMP) $(GNL)
 SRC      =	$(addprefix $(SRC_PATH)/,$(SRC_NAME))
 

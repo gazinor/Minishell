@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/10 02:29:06 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/10 05:37:41 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int					check_line(t_data *data);
 int					ft_dollar(t_data *data, int ret);
 void				dollar_case(char *str, int *i, t_data *data, int check);
 void				skip_white(char *str, int *i);
-void				ft_ptvirgule(t_data *data);
+int					ft_ptvirgule(t_data *data);
 int					ft_redir(t_data *data, char *str);
 int					true_redir(char *str, int check, int *fd);
 int					skip_char(char *str, int *i, char c);
@@ -127,5 +127,8 @@ char				*is_exec(char *str, t_data *data);
 void				set_up_all(t_data *data, t_cmd **head, char **envp);
 void				handle_sigquit(int signum);
 void				handle_sigint(int signum);
+void				main_loop(t_data *data, t_cmd *head, t_cmd *prev);
+void				check_ls(char *str, t_data *data);
+void				free_lst_cmd(t_cmd **cmd);
 
 #endif
