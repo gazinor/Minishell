@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_norme.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 18:11:44 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/10 20:08:19 by gaefourn         ###   ########.fr       */
+/*   Created: 2020/03/10 19:58:08 by gaefourn          #+#    #+#             */
+/*   Updated: 2020/03/10 20:08:11 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
-# include <stddef.h>
+#include "get_next_line.h"
+#include "minishell.h"
 
-int		get_next_line(int fd, char **line);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strdup(const char *s1);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-void	norme_gnl(char **buff_read, char **buff, char **tmp);
-
-#endif
+void	norme_gnl(char **buff_read, char **buff, char **tmp)
+{
+	if (g_data.token == 1 && !*buff_read[0])
+	{
+		if (*buff)
+			free(*buff);
+		*buff = ft_strdup("");
+	}
+	if (*buff == NULL)
+		*buff = ft_strdup(*buff_read);
+	else
+	{
+		*tmp = ft_strjoin(*buff, *buff_read);
+		free(*buff);
+		*buff = *tmp;
+	}
+}

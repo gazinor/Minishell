@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:28:45 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/04 22:50:59 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:07:33 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,29 +88,17 @@ int			get_next_line(int fd, char **line)
 	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0
 			|| !(buff_read = malloc(sizeof(*buff_read) * (BUFFER_SIZE + 1))))
 		return (-1);
+	tmp = NULL;
 	while ((ret = read(fd, buff_read, BUFFER_SIZE)) > 0)
 	{
 		buff_read[ret] = '\0';
-		if (g_data.token == 1 && !buff_read[0])
-		{
-			if (buff)
-				free(buff);
-			buff = ft_strdup("");
-		}
-		if (buff == NULL)
-			buff = ft_strdup(buff_read);
-		else
-		{
-			tmp = ft_strjoin(buff, buff_read);
-			free(buff);
-			buff = tmp;
-		}
+		norme_gnl(&buff_read, &buff, &tmp);
 		if (!buff)
 			return (-1);
 		if (ft_find_char(buff, '\n') != -1)
 			break ;
 		else
-			ft_printf(1 ,"  \e[D\e[D");
+			ft_printf(1, "  \e[D\e[D");
 	}
 	return (ft_out(&buff, line, &buff_read, ret));
 }

@@ -17,7 +17,8 @@ HEADER   =	$(addprefix $(HEADER_P)/,$(HEADER_N))
 #	Sources   #
 GNL_PATH =	gnl
 GNL_NAME =	get_next_line.c \
-			get_next_line_utils.c
+			get_next_line_utils.c \
+			get_next_norme.c
 GNL		 =	$(addprefix $(GNL_PATH)/,$(GNL_NAME))
 
 SRC_PATH =	./srcs
