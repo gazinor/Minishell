@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 03:18:45 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:34:22 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int		ft_backslash(t_data *data, int ret)
 	char	*cpy;
 	char	*tmp;
 
-	cpy = NULL;
 	cpy = ft_substr(data->line, 0, ret - 1);
 	tmp = ft_strjoin(cpy, &data->line[ret]);
 	free(cpy);
 	cpy = tmp;
+	free_string(&data->line);
 	data->line = ft_strdup(cpy);
 	free(cpy);
 	return (1);

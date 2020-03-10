@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/10 05:36:37 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:30:24 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	free_and_next(t_data *data, t_cmd *prev)
 	prev = data->cmd_lst;
 	data->cmd_lst = data->cmd_lst->next;
 	free(prev);
+	prev = NULL;
 	free_string(&data->exec);
 	free_tab(&data->paths);
 	free_tab(&data->option);
@@ -94,6 +95,7 @@ void	main_loop(t_data *data, t_cmd *head, t_cmd *prev)
 			ft_printf(2, "Minishell: %d command not found\n", data->ret);
 			data->ret = 127;
 			ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
+			free_string(&data->line);
 			continue ;
 		}
 		if (ret != 2)
