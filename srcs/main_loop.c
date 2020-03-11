@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/11 00:04:31 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/11 02:23:12 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	free_and_next(t_data *data, t_cmd *prev)
 {
 	ft_clear_file_lst(&data->head_file, data);
-	free_string(&data->cmd_lst->cmd);
+	free_string(&data->cmd_lst->pipe->cmd);
 	prev = data->cmd_lst;
 	data->cmd_lst = data->cmd_lst->next;
 	free(prev);
@@ -48,27 +48,31 @@ void	loop_cmd(t_data *data, t_cmd *head, char *tmp, t_cmd *prev)
 	}
 	while (data->cmd_lst)
 	{
-		get_paths(data);
-		update_line(&data->cmd_lst->cmd, tmp);
-		if (data->pwd == NULL)
-			ft_pwd(data->cmd_lst->cmd, data);
-		if (ft_redir(data, data->cmd_lst->cmd) == -1)
+		while (data->cmd_lst->pipe)
 		{
-			ft_clear_file_lst(&data->head_file, data);
-			break ;
-		}
-		if (is_builtin(data->cmd_lst->cmd, data) == 1)
-			;
-		else if ((data->binary = is_exec(data->cmd_lst->cmd, data)) != NULL)
-		{
-			check_ls(data->cmd_lst->cmd, data);
-			try_exec(data, data->cmd_lst->cmd);
-		}
-		else if (data->cmd_lst->cmd[0])
-		{
-			data->option = ft_split(data->cmd_lst->cmd, ' ');
-			data->ret = 127;
-			ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
+			get_paths(data);
+			update_line(&data->cmd_lst->pipe->cmd, tmp);
+			if (data->pwd == NULL)
+				ft_pwd(data->cmd_lst->pipe->cmd, data);
+			if (ft_redir(data, data->cmd_lst->pipe->cmd) == -1)
+			{
+				ft_clear_file_lst(&data->head_file, data);
+				break ;
+			}
+			if (is_builtin(data->cmd_lst->pipe->cmd, data) == 1)
+				;
+			else if ((data->binary = is_exec(data->cmd_lst->pipe->cmd, data)) != NULL)
+			{
+				check_ls(data->cmd_lst->pipe->cmd, data);
+				try_exec(data, data->cmd_lst->pipe->cmd);
+			}
+			else if (data->cmd_lst->pipe->cmd[0])
+			{
+				data->option = ft_split(data->cmd_lst->pipe->cmd, ' ');
+				data->ret = 127;
+				ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
+			}
+			data->cmd_lst->pipe = data->cmd_lst->pipe->next;
 		}
 		free_and_next(data, prev);
 	}

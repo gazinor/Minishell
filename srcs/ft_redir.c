@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:58:32 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 03:43:08 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/11 01:21:05 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*add_lstfile(t_file **file, t_data *data)
 	if (!((*file) = malloc(sizeof(t_file))))
 		exit(-1);
 	if (!data->head_file)
-		data->head_file = data->cmd_lst->file;
+		data->head_file = data->cmd_lst->pipe->file;
 	(*file)->filename = NULL;
 	(*file)->type = -1;
 	(*file)->fd = -1;
@@ -60,7 +60,7 @@ int		ft_add_filename(t_data *data, char *str, int *i, int *j)
 {
 	t_file	*file;
 
-	file = add_lstfile(&data->cmd_lst->file, data);
+	file = add_lstfile(&data->cmd_lst->pipe->file, data);
 	if (str[*i] == '>' && str[*i + 1] && str[*i + 1] != '>')
 		file->type = 1;
 	else if (str[*i] == '>' && str[*i + 1] && str[*i + 1] == '>')
@@ -86,13 +86,13 @@ int		handle_redir(t_data *data)
 	int	i;
 
 	i = 0;
-	data->cmd_lst->file = data->head_file;
-	while (data->cmd_lst->file)
+	data->cmd_lst->pipe->file = data->head_file;
+	while (data->cmd_lst->pipe->file)
 	{
-		if (true_redir(data->cmd_lst->file->filename, data->cmd_lst->file->type,
-				&data->cmd_lst->file->fd) == -1)
+		if (true_redir(data->cmd_lst->pipe->file->filename, data->cmd_lst->pipe->file->type,
+				&data->cmd_lst->pipe->file->fd) == -1)
 			return (-1);
-		data->cmd_lst->file = data->cmd_lst->file->next;
+		data->cmd_lst->pipe->file = data->cmd_lst->pipe->file->next;
 	}
 	return (0);
 }
@@ -114,7 +114,7 @@ int		ft_redir(t_data *data, char *str)
 				return (-1);
 		if (str[i] == '>' || str[i] == '<')
 		{
-			ft_free_and_reset(&data->cmd_lst->cmd, i);
+			ft_free_and_reset(&data->cmd_lst->pipe->cmd, i);
 			break ;
 		}
 	}

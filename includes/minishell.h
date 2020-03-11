@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/11 00:53:42 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/11 02:16:27 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct		s_pipe
 {
 	char			*cmd;
 	struct s_file	*file;
-	struct s_cmd	*next;
+	struct s_pipe	*next;
 }					t_pipe;
 
 typedef struct		s_cmd
@@ -136,5 +136,6 @@ void				handle_sigint(int signum);
 void				main_loop(t_data *data, t_cmd *head, t_cmd *prev);
 void				check_ls(char *str, t_data *data);
 void				free_lst_cmd(t_cmd **cmd);
+void				count_pipe(t_pipe *pipe, char *str);
 
 #endif
