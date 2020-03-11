@@ -6,14 +6,16 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/11 03:22:52 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/12 00:11:22 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_and_next(t_data *data, t_cmd *prev)
+void	free_and_next(t_data *data)
 {
+	t_cmd	*prev;
+
 	ft_clear_file_lst(&data->head_file, data);
 //	free_string(&data->cmd_lst->pipe->cmd);
 	prev = data->cmd_lst;
@@ -36,7 +38,64 @@ void	update_line(char **line, char *tmp)
 	*line = tmp;
 }
 
-void	loop_cmd(t_data *data, t_cmd *head, char *tmp, t_cmd *prev)
+int		display_output(t_data *data, char *tmp)
+{
+	get_paths(data);
+	update_line(&data->cmd_lst->pipe->cmd, tmp);
+	if (data->pwd == NULL)
+		ft_pwd(data->cmd_lst->pipe->cmd, data);
+	if (ft_redir(data, data->cmd_lst->pipe->cmd) == -1)
+	{
+		ft_clear_file_lst(&data->head_file, data);
+		return (-1);
+	}
+	if (is_builtin(data->cmd_lst->pipe->cmd, data) == 1)
+		;
+	else if ((data->binary = is_exec(data->cmd_lst->pipe->cmd, data)) != NULL)
+	{
+		check_ls(data->cmd_lst->pipe->cmd, data);
+		try_exec(data, data->cmd_lst->pipe->cmd);
+	}
+	else if (data->cmd_lst->pipe->cmd[0])
+	{
+		data->option = ft_split(data->cmd_lst->pipe->cmd, ' ');
+		data->ret = 127;
+		ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
+	}
+	return (0);
+}
+
+void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp)
+{
+	int		fd[2];
+	pid_t	pid1;
+	pid_t	pid2;
+	int		status;
+
+	pipe(fd);
+	if (!(pid1 = fork()))
+	{
+		ft_printf(2, "pipe : |%s|\n", pipes->cmd);
+		close(fd[0]);
+		dup2(fd[1], 1);
+		exit(display_output(data, tmp));
+	}
+	if (!(pid2 = fork()))
+	{
+		close(fd[1]);
+		dup2(fd[0], 0);
+		if (pipes->next)
+			ft_pipe(pipes->next, data, tmp);
+		else
+			exit(display_output(data, tmp));
+	}
+	close(fd[0]);
+	close(fd[1]);
+	wait(NULL);
+	waitpid(pid2, &status, 0);
+}
+
+void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
 {
 	while (check_line(data) != 0)
 		;
@@ -48,39 +107,18 @@ void	loop_cmd(t_data *data, t_cmd *head, char *tmp, t_cmd *prev)
 	}
 	while (data->cmd_lst)
 	{
-		while (data->cmd_lst->pipe)
-		{
-			get_paths(data);
-			update_line(&data->cmd_lst->pipe->cmd, tmp);
-			if (data->pwd == NULL)
-				ft_pwd(data->cmd_lst->pipe->cmd, data);
-			if (ft_redir(data, data->cmd_lst->pipe->cmd) == -1)
-			{
-				ft_clear_file_lst(&data->head_file, data);
+		if (data->cmd_lst->pipe->next)
+			ft_pipe(data->cmd_lst->pipe, data, tmp);
+		else
+			if (display_output(data, tmp) == -1)
 				break ;
-			}
-			if (is_builtin(data->cmd_lst->pipe->cmd, data) == 1)
-				;
-			else if ((data->binary = is_exec(data->cmd_lst->pipe->cmd, data)) != NULL)
-			{
-				check_ls(data->cmd_lst->pipe->cmd, data);
-				try_exec(data, data->cmd_lst->pipe->cmd);
-			}
-			else if (data->cmd_lst->pipe->cmd[0])
-			{
-				data->option = ft_split(data->cmd_lst->pipe->cmd, ' ');
-				data->ret = 127;
-				ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
-			}
-			data->cmd_lst->pipe = data->cmd_lst->pipe->next;
-		}
-		free_and_next(data, prev);
+		free_and_next(data);
 	}
 	ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	data->cmd_lst = head;
 }
 
-void	main_loop(t_data *data, t_cmd *head, t_cmd *prev)
+void	main_loop(t_data *data, t_cmd *head)
 {
 	int		ret;
 	char	*tmp;
@@ -103,7 +141,7 @@ void	main_loop(t_data *data, t_cmd *head, t_cmd *prev)
 			continue ;
 		}
 		if (ret != 2)
-			loop_cmd(data, head, tmp, prev);
+			loop_cmd(data, head, tmp);
 		else
 			ft_printf(1, "  \e[D\e[D");
 		free_string(&data->line);

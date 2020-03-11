@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/10 03:38:46 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/11 23:14:43 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,11 @@ int		main(int ac, char **av, char **envp)
 {
 	t_data	*data;
 	t_cmd	*head;
-	t_cmd	*prev;
 
 	data = &g_data;
 	(void)ac;
 	(void)av;
-	prev = NULL;
 	set_up_all(data, &head, envp);
-	main_loop(data, head, prev);
+	main_loop(data, head);
 	return (42);
 }
