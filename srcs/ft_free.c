@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 22:44:08 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/11 02:19:46 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/11 02:56:24 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	free_string(char **str)
 void	free_lst_cmd(t_cmd **cmd)
 {
 	t_cmd	*prev;
+	t_pipe	*pipe;
 
 	while (*cmd)
 	{
@@ -64,7 +65,10 @@ void	free_lst_cmd(t_cmd **cmd)
 		{
 			free_lst((*cmd)->pipe->file);
 			free_string(&(*cmd)->pipe->cmd);
+			pipe = (*cmd)->pipe;
 			(*cmd)->pipe = (*cmd)->pipe->next;
+			free(pipe);
+			pipe = NULL;
 		}
 		*cmd = (*cmd)->next;
 		free(prev);

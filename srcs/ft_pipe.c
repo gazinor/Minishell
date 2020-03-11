@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 01:30:15 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/11 02:13:25 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/11 03:06:52 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,29 @@ char	*add_pipe(t_pipe **pipe, char *str)
 	return ((*pipe)->cmd);
 }
 
-void	count_pipe(t_pipe *pipe, char *str)
+int		count_pipe(t_pipe **pipe, char *str)
 {
 	int		i;
 	char	*tmp;
 
 	i = -1;
 	tmp = NULL;
-	if (skip_char(str, &i, '|') == -1)
-	{
-		add_pipe(&pipe, ft_strdup(str));
-		return ;
-	}
 	while (str[++i])
 	{
 		if (str[i] == '|' && str[i + 1] == '|' && str[i + 2])
 		{
 			ft_printf(2, "Minishell: syntax error near unexpected token `||'\n");
 			free_string(&tmp);
-			break;
+			return (-1);
 		}
 		else if (str[i] == '|')
 		{
-			if (!*add_pipe(&pipe, ft_substr(str, 0, i)))
+			if (!*add_pipe(pipe, ft_substr(str, 0, i)))
 				{
-					ft_printf(2, "Minishell: syntax error near unexpected token `|'\n");
+					ft_printf(2,
+						"Minishell: syntax error near unexpected token `|'\n");
 					free_string(&tmp);
-					break;
+					return (-1);
 				}
 			tmp = ft_strdup(str + i + 1);
 			str = ft_strdup(tmp);
@@ -67,4 +63,6 @@ void	count_pipe(t_pipe *pipe, char *str)
 			i = -1;
 		}
 	}
+	add_pipe(pipe, ft_substr(str, 0, i));
+	return (0);
 }

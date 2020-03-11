@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/11 02:16:27 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/11 03:03:43 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,6 @@ void				handle_sigint(int signum);
 void				main_loop(t_data *data, t_cmd *head, t_cmd *prev);
 void				check_ls(char *str, t_data *data);
 void				free_lst_cmd(t_cmd **cmd);
-void				count_pipe(t_pipe *pipe, char *str);
+int					count_pipe(t_pipe **pipe, char *str);
 
 #endif
