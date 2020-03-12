@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 02:54:57 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/12 03:43:03 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,40 +65,6 @@ int		display_output(t_data *data, char *tmp)
 	return (0);
 }
 
-void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp, int check)
-{
-	int		fd[2];
-	pid_t	pid1;
-	pid_t	pid2;
-	int		status;
-
-	pipe(fd);
-	if (!(pid1 = fork()))
-	{
-		close(fd[0]);
-		dup2(fd[1], 1);
-		exit(display_output(data, tmp));
-	}
-	if (!(pid2 = fork()))
-	{
-		close(fd[1]);
-		dup2(fd[0], 0);
-		if (pipes->next)
-		{
-			data->cmd_lst->pipe = data->cmd_lst->pipe->next;
-			ft_pipe(pipes->next, data, tmp, check + 1);
-		}
-		else
-			exit(display_output(data, tmp));
-	}
-	close(fd[0]);
-	close(fd[1]);
-	wait(NULL);
-	waitpid(pid2, &status, 0);
-	if (check != 0)
-		exit(status);
-}
-
 void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
 {
 	while (check_line(data) != 0)
@@ -114,7 +80,7 @@ void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
 		if (data->cmd_lst->pipe->next)
 			ft_pipe(data->cmd_lst->pipe, data, tmp, 0);
 		else if (display_output(data, tmp) == -1)
-				break ;
+			break ;
 		free_and_next(data);
 	}
 	data->cmd_lst = head;
@@ -134,14 +100,8 @@ void	main_loop(t_data *data, t_cmd *head)
 			ret == 2 && data->line[0] == '\0' ? ft_exit(data) : 1;
 		}
 		update_line(&data->line, tmp);
-		if (data->line[0] == '$' && data->line[1] == '?')
-		{
-			ft_printf(2, "Minishell: %d command not found\n", data->ret);
-			data->ret = 127;
-			ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
-			free_string(&data->line);
+		if (norme_ft_main_loop(data) == -1)
 			continue ;
-		}
 		if (ret != 2)
 			loop_cmd(data, head, tmp);
 		else

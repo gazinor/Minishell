@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 01:30:15 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 03:24:07 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/12 04:54:51 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,58 @@ int		count_pipe(t_pipe **pipe, char *str)
 	tmp = NULL;
 	while (str[++i])
 	{
-		if (str[i] == '|' && str[i + 1] == '|' && str[i + 2])
-		{
-			ft_printf(2, "Minishell: syntax error near unexpected token `||'\n");
-			free_string(&tmp);
+		if (norme_ft_count_pipe(str, i, tmp) == -1)
 			return (-1);
-		}
 		else if (str[i] == '|')
 		{
 			if (!*add_pipe(pipe, ft_substr(str, 0, i)))
-				{
-					ft_printf(2,
-						"Minishell: syntax error near unexpected token `|'\n");
-					free_string(&tmp);
-					return (-1);
-				}
-			tmp = ft_strdup(str + i + 1);
-			free_string(&str);
-			str = ft_strdup(tmp);
-			free_string(&tmp);
-			i = -1;
+			{
+				ft_printf(2,
+					"Minishell: syntax error near unexpected token `|'\n");
+				free_string(&tmp);
+				return (-1);
+			}
+			norme_ft_count_pipe2(&str, &i);
 		}
 	}
 	add_pipe(pipe, ft_substr(str, 0, i));
 	return (0);
+}
+
+void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp, int check)
+{
+	int		fd[2];
+	pid_t	pid1;
+	pid_t	pid2;
+	int		status;
+
+	pipe(fd);
+	if (!(pid1 = fork()))
+	{
+		close(fd[0]);
+		dup2(fd[1], 1);
+		exit(display_output(data, tmp));
+	}
+	wait(NULL);
+	if (!(pid2 = fork()))
+	{
+		close(fd[1]);
+		dup2(fd[0], 0);
+		if (pipes->next)
+		{
+			data->cmd_lst->pipe = data->cmd_lst->pipe->next;
+			ft_pipe(pipes->next, data, tmp, check + 1);
+		}
+		else
+		{
+			data->cmd_lst->pipe = data->cmd_lst->pipe->next;
+			exit(display_output(data, tmp));
+		}
+	}
+	close(fd[0]);
+	close(fd[1]);
+	wait(NULL);
+	waitpid(pid2, &status, 0);
+	if (check != 0)
+		exit(status);
 }
