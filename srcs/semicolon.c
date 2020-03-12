@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/12 04:54:36 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/12 05:23:25 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*add_cmd(t_cmd **cmd_lst, char *str)
 		return (NULL);
 	if (str[i] == '\0')
 		return ("");
-	//free_string(&str);
 	return ((*cmd_lst)->pipe->cmd);
 }
 

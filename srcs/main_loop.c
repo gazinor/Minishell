@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 03:43:03 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/12 06:21:33 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	main_loop(t_data *data, t_cmd *head)
 		else
 			ft_printf(1, "  \e[D\e[D");
 		free_string(&data->line);
+		free_string(&data->value);
 		ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	}
 	if (ret == 0)

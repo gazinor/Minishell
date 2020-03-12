@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/10 19:34:22 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/12 06:24:58 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,21 @@ int		check_line(t_data *data)
 	return (0);
 }
 
-void	norme_ft_dollar(t_data *data, char *cpy, char *cpy2, int i)
+void	norme_ft_dollar(t_data *data, char **cpy, char **cpy2, int i)
 {
 	char *tmp;
 	char *tmp2;
 
-	cpy2 = ft_strdup(data->line + i);
-	tmp = ft_strjoin(cpy, data->value);
-	free(cpy);
-	cpy = tmp;
-	tmp2 = ft_strjoin(cpy, cpy2);
-	free(cpy);
-	free(cpy2);
-	cpy = tmp2;
-	data->line = ft_strdup(cpy);
-	free(cpy);
+	*cpy2 = ft_strdup(data->line + i);
+	tmp = ft_strjoin(*cpy, data->value);
+	free(*cpy);
+	*cpy = tmp;
+	tmp2 = ft_strjoin(*cpy, *cpy2);
+	free(*cpy);
+	free(*cpy2);
+	*cpy = tmp2;
+	data->line = ft_strdup(*cpy);
+	free(*cpy);
 }
 
 int		ft_dollar(t_data *data, int ret)
@@ -89,6 +89,6 @@ int		ft_dollar(t_data *data, int ret)
 			&& data->line[i] != '$' && data->line[i] != '"' &&
 			data->line[i] != '\'')
 		i++;
-	norme_ft_dollar(data, cpy, cpy2, i);
+	norme_ft_dollar(data, &cpy, &cpy2, i);
 	return (1);
 }

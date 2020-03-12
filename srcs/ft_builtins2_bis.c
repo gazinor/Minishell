@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 01:04:52 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/08 22:26:30 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/12 06:00:21 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,22 @@ void	skip_white(char *str, int *i)
 		++*i;
 }
 
-char	*get_next_word(char *str, int *i)
+char	*get_next_word(char *str, int *i, char **word)
 {
-	int	j;
+	int		j;
 
 	if (str[++*i] == ' ' || !str[*i])
-		return (ft_strdup("$"));
+	{
+		*word = ft_strdup("$");
+		return (NULL);
+	}
 	--*i;
 	j = 0;
 	while (str[++*i] && str[*i] != ' ' && str[*i] != '\t' &&
 			str[*i] != '"' && str[*i] != '\'' &&
 			str[*i] != '/' && str[*i] != '$')
 		++j;
-	return (ft_substr(str, *i - j, j));
+	*word = ft_substr(str, *i - j, j);
+	free(str);
+	return (NULL);
 }

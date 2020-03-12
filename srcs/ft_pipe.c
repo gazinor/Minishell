@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 01:30:15 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 04:54:51 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/12 05:46:39 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		count_pipe(t_pipe **pipe, char *str)
 		}
 	}
 	add_pipe(pipe, ft_substr(str, 0, i));
+	free_string(&str);
 	return (0);
 }
 
@@ -85,10 +86,7 @@ void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp, int check)
 			ft_pipe(pipes->next, data, tmp, check + 1);
 		}
 		else
-		{
-			data->cmd_lst->pipe = data->cmd_lst->pipe->next;
 			exit(display_output(data, tmp));
-		}
 	}
 	close(fd[0]);
 	close(fd[1]);
