@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 00:11:22 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/12 01:31:02 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	free_and_next(t_data *data)
 	t_cmd	*prev;
 
 	ft_clear_file_lst(&data->head_file, data);
-//	free_string(&data->cmd_lst->pipe->cmd);
 	prev = data->cmd_lst;
 	data->cmd_lst = data->cmd_lst->next;
 	free(prev);
@@ -65,7 +64,7 @@ int		display_output(t_data *data, char *tmp)
 	return (0);
 }
 
-void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp)
+void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp, int check)
 {
 	int		fd[2];
 	pid_t	pid1;
@@ -75,7 +74,6 @@ void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp)
 	pipe(fd);
 	if (!(pid1 = fork()))
 	{
-		ft_printf(2, "pipe : |%s|\n", pipes->cmd);
 		close(fd[0]);
 		dup2(fd[1], 1);
 		exit(display_output(data, tmp));
@@ -85,7 +83,10 @@ void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp)
 		close(fd[1]);
 		dup2(fd[0], 0);
 		if (pipes->next)
-			ft_pipe(pipes->next, data, tmp);
+		{
+			data->cmd_lst->pipe = data->cmd_lst->pipe->next;
+			ft_pipe(pipes->next, data, tmp, check + 1);
+		}
 		else
 			exit(display_output(data, tmp));
 	}
@@ -93,6 +94,8 @@ void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp)
 	close(fd[1]);
 	wait(NULL);
 	waitpid(pid2, &status, 0);
+	if (check != 0)
+		exit(status);
 }
 
 void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
@@ -108,13 +111,11 @@ void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
 	while (data->cmd_lst)
 	{
 		if (data->cmd_lst->pipe->next)
-			ft_pipe(data->cmd_lst->pipe, data, tmp);
-		else
-			if (display_output(data, tmp) == -1)
+			ft_pipe(data->cmd_lst->pipe, data, tmp, 0);
+		else if (display_output(data, tmp) == -1)
 				break ;
 		free_and_next(data);
 	}
-	ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	data->cmd_lst = head;
 }
 
@@ -145,6 +146,7 @@ void	main_loop(t_data *data, t_cmd *head)
 		else
 			ft_printf(1, "  \e[D\e[D");
 		free_string(&data->line);
+		ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	}
 	if (ret == 0)
 		ft_exit(data);
