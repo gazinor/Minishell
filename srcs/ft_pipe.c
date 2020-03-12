@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 01:30:15 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/11 03:06:52 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/12 03:24:07 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int		count_pipe(t_pipe **pipe, char *str)
 					return (-1);
 				}
 			tmp = ft_strdup(str + i + 1);
+			free_string(&str);
 			str = ft_strdup(tmp);
 			free_string(&tmp);
 			i = -1;

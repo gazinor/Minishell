@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 01:31:02 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/03/12 02:54:57 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	free_and_next(t_data *data)
 	t_cmd	*prev;
 
 	ft_clear_file_lst(&data->head_file, data);
+	free_pipe(&data->cmd_lst->pipe);
 	prev = data->cmd_lst;
 	data->cmd_lst = data->cmd_lst->next;
 	free(prev);
