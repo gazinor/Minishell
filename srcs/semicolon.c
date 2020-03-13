@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/12 05:23:25 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/13 03:53:37 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*add_cmd(t_cmd **cmd_lst, char *str)
 
 	i = 0;
 	skip_white(str, &i);
+	if (str[i] == '\0')
+		return ("");
 	while ((*cmd_lst))
 		cmd_lst = &(*cmd_lst)->next;
 	if (!((*cmd_lst) = malloc(sizeof(t_cmd))))
@@ -26,8 +28,6 @@ char	*add_cmd(t_cmd **cmd_lst, char *str)
 	(*cmd_lst)->next = NULL;
 	if (count_pipe(&(*cmd_lst)->pipe, str) == -1)
 		return (NULL);
-	if (str[i] == '\0')
-		return ("");
 	return ((*cmd_lst)->pipe->cmd);
 }
 
