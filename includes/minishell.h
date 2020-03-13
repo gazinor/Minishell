@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 06:18:00 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/12 23:32:08 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void				ft_export(char *str, t_env **env, t_data *data);
 void				add_new_elem(t_env **env, char *key, char *value);
 void				ft_unset(char *str, t_data *data);
 void				ft_echo(char *str, t_data *data);
-void				ft_exit(t_data *data);
+void				ft_exit(t_data *data, char *str);
 void				init_data(t_data *data);
 void				try_exec(t_data *data, char *str);
 int					check_line(t_data *data);
@@ -144,5 +144,6 @@ int					norme_ft_main_loop(t_data *data);
 int					display_output(t_data *data, char *tmp);
 void				norme_ft_count_pipe2(char **str, int *i);
 int					norme_ft_count_pipe(char *str, int i, char *tmp);
+void				ft_atoi_exit(char *str, int i);
 
 #endif

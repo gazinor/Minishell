@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/11 00:10:24 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/13 00:30:09 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,13 @@ void	ft_env(t_data *data)
 	}
 }
 
-void	ft_exit(t_data *data)
+void	ft_exit(t_data *data, char *str)
 {
 	(void)data;
 	ft_printf(1, "exit\n");
-	exit(0);
+	if (!str)
+		exit(0);
+	ft_atoi_exit(str, 4);
 }
 
 int		is_builtin(char *str, t_data *data)

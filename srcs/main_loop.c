@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 06:21:33 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/03/13 00:55:26 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
 		free_and_next(data);
 	}
 	data->cmd_lst = head;
+	ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 }
 
 void	main_loop(t_data *data, t_cmd *head)
@@ -97,7 +98,7 @@ void	main_loop(t_data *data, t_cmd *head)
 		if (g_data.token == 1)
 		{
 			g_data.token = 0;
-			ret == 2 && data->line[0] == '\0' ? ft_exit(data) : 1;
+			ret == 2 && data->line[0] == '\0' ? ft_exit(data, NULL) : 1;
 		}
 		update_line(&data->line, tmp);
 		if (norme_ft_main_loop(data) == -1)
@@ -108,8 +109,7 @@ void	main_loop(t_data *data, t_cmd *head)
 			ft_printf(1, "  \e[D\e[D");
 		free_string(&data->line);
 		free_string(&data->value);
-		ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	}
 	if (ret == 0)
-		ft_exit(data);
+		ft_exit(data, NULL);
 }
