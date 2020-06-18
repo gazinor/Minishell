@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/11 00:53:42 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/18 16:24:49 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,10 @@ typedef struct		s_file
 	struct s_file	*next;
 }					t_file;
 
-typedef struct		s_pipe
+typedef struct		s_cmd
 {
 	char			*cmd;
 	struct s_file	*file;
-	struct s_cmd	*next;
-}					t_pipe;
-
-typedef struct		s_cmd
-{
-	t_pipe			*pipe;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -59,6 +53,7 @@ typedef struct		s_env
 
 typedef struct		s_data
 {
+	char			*tmp;
 	char			*here;
 	t_env			*env;
 	t_env			*cpy;

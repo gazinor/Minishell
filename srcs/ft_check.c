@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/10 19:34:22 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/18 14:57:40 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ int		check_line(t_data *data)
 
 	ret = -1;
 	while (data->line[++ret])
+	{
 		if (data->line[ret] == '\\')
 			ft_backslash(data, ret + 1);
-	ret = -1;
-	while (data->line[++ret])
-	{
 		if (data->line[ret] == '\'')
 			while (data->line[++ret] && data->line[ret] != '\'')
 				;
