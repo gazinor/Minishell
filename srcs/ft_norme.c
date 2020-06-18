@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/12 03:27:28 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 04:16:32 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/18 19:32:47 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		norme_ft_main_loop(t_data *data)
 		data->ret = 127;
 		ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 		free_string(&data->line);
+		free_string(&data->value);
 		return (-1);
 	}
 	return (0);

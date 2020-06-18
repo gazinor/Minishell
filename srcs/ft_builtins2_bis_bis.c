@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 01:08:47 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 06:19:19 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/18 19:11:18 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,11 @@ void	dollar_case(char *str, int *i, t_data *data, int check)
 {
 	char	*word;
 
-	get_next_word(str, i, &word);
+	word = get_next_word(str, i);
 	if (check == 1 && ft_strcmp(word, "$") == 0)
 		ft_printf(1, "%s", word);
-	if (!find_key_value(data->env, word, 2))
-	{
-		free_string(&data->value);
-		free_string(&word);
+	if (!(data->value = find_key_value(data->env, word)))
 		return ;
-	}
 	else
 		check == 1 ? ft_printf(1, "%s ", data->value) : 1;
 	skip_white(str, i);

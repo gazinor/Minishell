@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/13 03:09:02 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/18 19:30:43 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	update_line(char **line, char *tmp)
 
 	i = 0;
 	skip_white(*line, &i);
+	free_string(&tmp);
 	tmp = ft_strdup(*line + i);
 	free_string(line);
 	*line = tmp;

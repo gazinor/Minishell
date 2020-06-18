@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/18 17:59:09 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/18 19:16:44 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, int n);
 int					check_char(char *str, char c);
 int					get_paths(t_data *data);
-char				*find_key_value(t_env *env, char *key, int i);
+char				*find_key_value(t_env *env, char *key);
 char				**ft_split_env(t_env *env);
 void				ft_export(char *str, t_env **env, t_data *data);
 void				add_new_elem(t_env **env, char *key, char *value);
@@ -116,7 +116,7 @@ int					ft_norme_builtins4(char *str, t_data *data, int i);
 void				ft_env(t_data *data);
 void				ft_cd(char *str, char **here, t_data *data);
 void				display_sort(t_data *data);
-char				*get_next_word(char *str, int *i, char **word);
+char				*get_next_word(char *str, int *i);
 void				norme_ft_echo(char *str, int *i, t_data *data);
 int					simple_quote(char *str, int *i);
 int					double_quote(char *str, int *i, t_data *data);
