@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/11 23:14:43 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/18 18:01:45 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,59 @@
 
 t_data	g_data;
 
+void	ft_strdupv2(char *str, t_data *data)
+{
+	char	*cpy;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if ((str[i] == '"' || str[i] == '\'') && ++j)
+			continue ;
+	}
+	if (!(cpy = malloc(sizeof(char) * ((i - j) + 1))))
+		return ;
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+			continue ;
+		cpy[j] = str[i];
+		j++;
+	}
+	cpy[i] = '\0';
+	data->tmp = cpy;
+}
+
 void	check_ls(char *str, t_data *data)
 {
 	int		i;
 	char	*tmp;
+	char	*cpy;
 
 	i = 0;
+	ft_strdupv2(str, data);
+	cpy = ft_strdup(data->tmp);
 	skip_white(str, &i);
-	if (str[i] == 'l' && str[i + 1] == 's' &&
-			(str[i + 2] == ' ' || str[i + 2] == '\0'))
+	if (cpy[i] == 'l' && cpy[i + 1] == 's' &&
+			(cpy[i + 2] == ' ' || cpy[i + 2] == '\0'))
 	{
-		tmp = join_n_free(join_n_free(ft_substr(str, i, i + 2),
-					ft_strdup(" -G"), 0), ft_strdup(str + i + 2), 0);
+		tmp = join_n_free(join_n_free(ft_substr(cpy, i, i + 2),
+					ft_strdup(" -G"), 0), ft_strdup(cpy + i + 2), 0);
 		data->option = ft_split(tmp, ' ');
+		free_string(&data->tmp);
+		free_string(&cpy);
 		free(tmp);
 		return ;
 	}
 	else
-		data->option = ft_split(str, ' ');
+		data->option = ft_split(cpy, ' ');
+	free_string(&data->tmp);
+	free_string(&cpy);
 	return ;
 }
 
@@ -54,10 +89,12 @@ int		main(int ac, char **av, char **envp)
 {
 	t_data	*data;
 	t_cmd	*head;
+	t_cmd	*prev;
 
 	data = &g_data;
 	(void)ac;
 	(void)av;
+	prev = NULL;
 	set_up_all(data, &head, envp);
 	main_loop(data, head);
 	return (42);

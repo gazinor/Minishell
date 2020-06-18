@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/12 23:32:08 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/18 17:59:09 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct		s_env
 
 typedef struct		s_data
 {
+	char			*tmp;
 	char			*here;
 	t_env			*env;
 	t_env			*cpy;
