@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/13 00:30:09 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/22 22:17:15 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_cd(char *str, char **here, t_data *data)
 	if (chdir(str + i) == -1)
 	{
 		if (str[i] != '\0')
-			ft_printf(2, "cd: %s: %s\n", strerror(errno), *ft_split(str, ' '));
+			norme_ft_cd(str);
 		else
 			ft_printf(2, "cd: %s\n", strerror(errno));
 		if (data->here)

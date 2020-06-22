@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/18 19:30:43 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/22 22:26:36 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void	main_loop(t_data *data, t_cmd *head)
 			loop_cmd(data, head, tmp);
 		else
 			ft_printf(1, "  \e[D\e[D");
+		if (data->line && data->line[0] == '\0')
+			free_string(&data->usefull_var);
 		free_string(&data->line);
 		free_string(&data->value);
 	}

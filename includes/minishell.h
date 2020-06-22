@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/22 19:16:40 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/22 22:16:08 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct		s_data
 	pid_t			pid1;
 	pid_t			pid2;
 	int				status;
+	char			*usefull_var;
 	char			*tmp;
 	char			*here;
 	t_env			*env;
@@ -153,5 +154,6 @@ int					ft_norme_pipe(char **str, int *i, char **tmp, t_pipe **pipe);
 char				*add_pipe(t_pipe **pipe, char *str);
 void				ft_norme_main_pipe(t_pipe *pipes, t_data *data, int check,
 			char *tmp);
+void				norme_ft_cd(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/13 03:53:37 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/22 21:36:11 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ int		ft_ptvirgule(t_data *data)
 			norme_ft_ptvirgule2(&data->line, &i);
 		}
 	}
-	if (!(save = add_cmd(&data->cmd_lst, ft_substr(data->line, 0, i))))
+	data->usefull_var = ft_substr(data->line, 0, i);
+	if (!(save = add_cmd(&data->cmd_lst, data->usefull_var)))
 		return (-1);
 	return (0);
 }

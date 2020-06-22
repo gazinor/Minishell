@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/18 19:20:44 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/22 21:35:44 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	init_data(t_data *data)
 	data->line = NULL;
 	data->ret = 0;
 	data->head_file = NULL;
+	data->usefull_var = NULL;
 }
 
 void	set_up_all(t_data *data, t_cmd **head, char **envp)
