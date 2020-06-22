@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 01:30:15 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/22 18:42:31 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/22 19:22:48 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,12 @@ int		count_pipe(t_pipe **pipe, char *str)
 void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp, int check)
 {
 	int		fd[2];
-	pid_t	pid1;
-	pid_t	pid2;
-	int		status;
 
 	pipe(fd);
 	if (pipes->next)
 	{
-		if (!(pid1 = fork()))
+		if (!(data->pid1 = fork()) && close(fd[0]) != -1)
 		{
-			close(fd[0]);
 			dup2(fd[1], 1);
 			exit(display_output(data, tmp));
 		}
@@ -79,22 +75,15 @@ void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp, int check)
 	else
 		exit(display_output(data, tmp));
 	wait(NULL);
-	if (!(pid2 = fork()))
+	if (!(data->pid2 = fork()) && close(fd[1]) != -1)
 	{
-		close(fd[1]);
 		dup2(fd[0], 0);
-		if (pipes->next)
-		{
-			data->cmd_lst->pipe = data->cmd_lst->pipe->next;
-			ft_pipe(pipes->next, data, tmp, check + 1);
-		}
-		else
-			exit(display_output(data, tmp));
+		ft_norme_main_pipe(pipes, data, check, tmp);
 	}
 	close(fd[0]);
 	close(fd[1]);
 	wait(NULL);
-	waitpid(pid2, &status, 0);
+	waitpid(data->pid2, &data->status, 0);
 	if (check != 0)
-		exit(status);
+		exit(data->status);
 }
