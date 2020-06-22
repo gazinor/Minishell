@@ -31,7 +31,7 @@ TMP		 =	main.c \
 			ft_builtins2.c \
 			ft_builtins2_bis.c \
 			ft_builtins2_bis_bis.c \
-			ft_builtins2_bismillah.c \
+			ft_builtins2v4.c \
 			ft_check.c \
 			semicolon.c \
 			ft_redir.c \
@@ -40,6 +40,7 @@ TMP		 =	main.c \
 			ft_exec.c \
 			main_loop.c \
 			ft_pipe.c \
+			ft_pipes2.c \
 			ft_norme.c \
 			for_exit.c
 

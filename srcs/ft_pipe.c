@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 01:30:15 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/13 03:27:44 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/22 18:42:31 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,22 @@ char	*add_pipe(t_pipe **pipe, char *str)
 int		count_pipe(t_pipe **pipe, char *str)
 {
 	int		i;
+	int		check;
 	char	*tmp;
 
 	i = -1;
+	check = 0;
 	tmp = NULL;
 	while (str[++i])
 	{
 		if (norme_ft_count_pipe(str, i, tmp) == -1)
 			return (-1);
-		else if (str[i] == '|')
+		if (str[i] == '"')
+			check += 1;
+		else if (str[i] == '|' && check % 2 == 0)
 		{
-			if (!*add_pipe(pipe, ft_substr(str, 0, i)))
-			{
-				ft_printf(2,
-					"Minishell: syntax error near unexpected token `|'\n");
-				free_string(&tmp);
+			if (ft_norme_pipe(&str, &i, &tmp, pipe) == -1)
 				return (-1);
-			}
-			norme_ft_count_pipe2(&str, &i);
 		}
 	}
 	add_pipe(pipe, ft_substr(str, 0, i));
