@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/18 19:09:51 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/22 23:09:01 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	norme_ft_dollar(t_data *data, char **cpy, char **cpy2, int i)
 	free(*cpy);
 	free(*cpy2);
 	*cpy = tmp2;
+	free_string(&data->line);
 	data->line = ft_strdup(*cpy);
 	free(*cpy);
 }
