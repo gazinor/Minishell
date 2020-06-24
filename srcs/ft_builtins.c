@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/22 22:17:15 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/24 18:59:11 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		is_builtin(char *str, t_data *data)
 {
 	int i;
 
-	i = 0;
+	i = 0;	
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
 	if (ft_norme_builtins1(str, data, i) == 1 ||
@@ -104,7 +104,7 @@ int		is_builtin(char *str, t_data *data)
 			return (1);
 		}
 		data->exec = ft_strdup(str);
-		data->option = ft_split(str, ' ');
+		data->option = ft_splitv2(str, ' ');
 		data->binary = ft_strdup(data->option[0]);
 		try_exec(data, str);
 		return (1);

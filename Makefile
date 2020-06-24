@@ -24,6 +24,7 @@ GNL		 =	$(addprefix $(GNL_PATH)/,$(GNL_NAME))
 SRC_PATH =	./srcs
 TMP		 =	main.c \
 			ft_split.c \
+			ft_splitv2.c \
 			ft_builtins.c \
 			ft_builtins_bis.c \
 		 	ft_utils.c \

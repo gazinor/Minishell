@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/12 03:27:28 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/22 22:17:46 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/24 18:19:07 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	norme_ft_cd(char *str)
 {
 	char	**tab;
 
-	tab = ft_split(str, ' ');
+	tab = ft_splitv2(str, ' ');
 	ft_printf(2, "cd: %s: %s\n", strerror(errno), tab[0]);
 	free_tab(&tab);
 }

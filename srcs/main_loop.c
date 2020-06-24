@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/22 22:26:36 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/24 18:59:18 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		display_output(t_data *data, char *tmp)
 	}
 	else if (data->cmd_lst->pipe->cmd[0])
 	{
-		data->option = ft_split(data->cmd_lst->pipe->cmd, ' ');
+		data->option = ft_splitv2(data->cmd_lst->pipe->cmd, ' ');
 		data->ret = 127;
 		ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
 	}
