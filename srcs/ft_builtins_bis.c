@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 00:10:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/24 18:28:52 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/24 19:55:40 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ft_norme_builtins1(char *str, t_data *data, int i)
 				str[i + 2] == '\t' || str[i + 2] == '\0'))
 	{
 		if (where_am_i(data) != -1)
-			ft_cd(str + i + 2, &data->here, data);
+			ft_cd(data->option[1], &data->here, data);
 		else if (str[i + 2] == ' ' && str[i + 3] == '.' && (str[i + 4] == '\0'
 					|| str[i + 4] == ' '))
 		{
@@ -106,7 +106,7 @@ int		ft_norme_builtins4(char *str, t_data *data, int i)
 	else if (str[i] == '.' && (str[i + 1] == '/'))
 	{
 		data->exec = ft_strdup(str);
-		data->option = ft_splitv2(str, ' ');
+		data->option = ft_splitv2(str, ' ', data);
 		data->binary = ft_strdup(data->option[0]);
 		try_exec(data, str);
 		return (1);

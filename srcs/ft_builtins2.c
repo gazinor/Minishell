@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/24 18:18:35 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/24 19:56:17 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_export(char *str, t_env **env, t_data *data)
 	char	*value;
 	int		egal;
 
-	data->option = ft_splitv2(str, ' ');
+	data->option = ft_splitv2(str, ' ', data);
 	if (!data->option[1])
 	{
 		display_sort(data);
@@ -46,7 +46,7 @@ void	ft_unset(char *str, t_data *data)
 	t_env	*copy;
 	char	*key;
 
-	data->option = ft_splitv2(str, ' ');
+	data->option = ft_splitv2(str, ' ', data);
 	if (data->option[1])
 		key = ft_strdup(data->option[1]);
 	else

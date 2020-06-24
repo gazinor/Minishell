@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:51:33 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/24 18:21:41 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/24 19:54:50 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,17 @@ static	void	*ft_erase(char **strs, int i)
 	free(strs);
 	return (NULL);
 }
-char			**ft_splitv2(const char *s, char c)
+char			**ft_splitv2(const char *s, char c, t_data *data)
 {
 	char	**strs;
 	int		len;
 	int		i;
 	int		j;
 	int		k;
+
 	if (!s)
 		return (NULL);
+	free_tab(&data->option);
 	len = konte_mo(s, c);
 	if (!(strs = malloc(sizeof(char*) * (len + 1))))
 		return (NULL);

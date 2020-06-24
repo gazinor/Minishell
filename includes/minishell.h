@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/24 18:56:16 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/24 19:58:15 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct		s_data
 extern t_data	g_data;
 
 char				**ft_split(const char *s, char c);
-char				**ft_splitv2(const char *s, char c);
+char				**ft_splitv2(const char *s, char c, t_data *data);
 void				ft_pwd(char *line, t_data *data);
 int					is_builtin(char *str, t_data *data);
 void				init_env(t_env **env, char **envp);
@@ -156,7 +156,7 @@ int					ft_norme_pipe(char **str, int *i, char **tmp, t_pipe **pipe);
 char				*add_pipe(t_pipe **pipe, char *str);
 void				ft_norme_main_pipe(t_pipe *pipes, t_data *data, int check,
 			char *tmp);
-void				norme_ft_cd(char *str);
+void				norme_ft_cd(char *str, t_data *data);
 void				ft_strdupv2(char *str, t_data *data);
 
 #endif

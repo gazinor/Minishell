@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/24 18:39:49 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/24 19:54:16 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ void	check_ls(char *str, t_data *data)
 	{
 		tmp = join_n_free(join_n_free(ft_substr(cpy, i, i + 2),
 					ft_strdup(" -G"), 0), ft_strdup(cpy + i + 2), 0);
-		data->option = ft_splitv2(tmp, ' ');
+		data->option = ft_splitv2(tmp, ' ', data);
 		free_string(&data->tmp);
 		free_string(&cpy);
 		free(tmp);
 		return ;
 	}
 	else
-		data->option = ft_splitv2(cpy, ' ');
+		data->option = ft_splitv2(cpy, ' ', data);
 	free_string(&data->tmp);
 	free_string(&cpy);
 	return ;

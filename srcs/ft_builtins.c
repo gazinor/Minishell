@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/24 18:59:11 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/24 19:58:39 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_cd(char *str, char **here, t_data *data)
 	if (chdir(str + i) == -1)
 	{
 		if (str[i] != '\0')
-			norme_ft_cd(str);
+			norme_ft_cd(str, data);
 		else
 			ft_printf(2, "cd: %s\n", strerror(errno));
 		if (data->here)
@@ -104,7 +104,7 @@ int		is_builtin(char *str, t_data *data)
 			return (1);
 		}
 		data->exec = ft_strdup(str);
-		data->option = ft_splitv2(str, ' ');
+		data->option = ft_splitv2(str, ' ', data);
 		data->binary = ft_strdup(data->option[0]);
 		try_exec(data, str);
 		return (1);
