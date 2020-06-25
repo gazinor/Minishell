@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/24 19:58:39 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/25 13:46:57 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	ft_pwd(char *line, t_data *data)
 	str = getcwd(str, 0);
 	if (str != NULL)
 	{
-		free(data->pwd);
+		free_string(&data->pwd);
 		data->pwd = NULL;
 		data->pwd = ft_strdup(str);
 		if (j != 0)
 			ft_printf(1, "%s\n", data->pwd);
-		free(str);
+		free_string(&str);
 		str = NULL;
 		j++;
 	}
@@ -52,7 +52,7 @@ void	ft_cd(char *str, char **here, t_data *data)
 			ft_printf(2, "cd: %s\n", strerror(errno));
 		if (data->here)
 		{
-			free(data->here);
+			free_string(&data->here);
 			data->here = NULL;
 			where_am_i(data);
 		}

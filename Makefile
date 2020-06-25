@@ -28,6 +28,7 @@ TMP		 =	main.c \
 			ft_builtins.c \
 			ft_builtins_bis.c \
 		 	ft_utils.c \
+		 	ft_utils2.c \
 			ft_env.c \
 			ft_builtins2.c \
 			ft_builtins2_bis.c \

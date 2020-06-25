@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/24 19:56:17 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/25 13:48:57 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	ft_export(char *str, t_env **env, t_data *data)
 	}
 	norme_ft_export(env, key, value);
 	add_new_elem(env, key, value);
-	free(key);
-	free(value);
+	free_string(&key);
+	free_string(&value);
 }
 
 void	ft_unset(char *str, t_data *data)
@@ -54,7 +54,7 @@ void	ft_unset(char *str, t_data *data)
 	prev = NULL;
 	copy = data->env;
 	norme_ft_unset(data, copy, prev, key);
-	free(key);
+	free_string(&key);
 }
 
 int		simple_quote(char *str, int *i)

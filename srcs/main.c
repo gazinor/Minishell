@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/24 19:54:16 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/25 13:40:23 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	check_ls(char *str, t_data *data)
 		data->option = ft_splitv2(tmp, ' ', data);
 		free_string(&data->tmp);
 		free_string(&cpy);
-		free(tmp);
+		free_string(&tmp);
 		return ;
 	}
 	else

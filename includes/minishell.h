@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/24 19:58:15 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/25 14:49:38 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,5 +158,6 @@ void				ft_norme_main_pipe(t_pipe *pipes, t_data *data, int check,
 			char *tmp);
 void				norme_ft_cd(char *str, t_data *data);
 void				ft_strdupv2(char *str, t_data *data);
+char				*quote_ereaser(char *str, char c);
 
 #endif

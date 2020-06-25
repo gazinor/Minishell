@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 22:44:08 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/22 21:27:30 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/25 13:42:15 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_lst(t_file *file)
 {
 	t_file *prev;
 
+	if (!file)
+		return ;
 	while (file)
 	{
 		prev = file;
@@ -57,6 +59,8 @@ void	free_pipe(t_pipe **pipe)
 {
 	t_pipe	*tmp;
 
+	if (!*pipe)
+		return ;
 	while (*pipe)
 	{
 		free_lst((*pipe)->file);
@@ -72,6 +76,8 @@ void	free_lst_cmd(t_cmd **cmd)
 {
 	t_cmd	*prev;
 
+	if (!*cmd)
+		return ;
 	while (*cmd)
 	{
 		prev = *cmd;
