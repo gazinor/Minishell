@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/22 23:09:01 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/25 16:41:49 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int		ft_backslash(t_data *data, int ret)
 
 	cpy = ft_substr(data->line, 0, ret - 1);
 	tmp = ft_strjoin(cpy, &data->line[ret]);
-	free(cpy);
+	free_string(&cpy);
 	cpy = tmp;
 	free_string(&data->line);
 	data->line = ft_strdup(cpy);
-	free(cpy);
+	free_string(&cpy);
 	return (1);
 }
 
@@ -56,15 +56,15 @@ void	norme_ft_dollar(t_data *data, char **cpy, char **cpy2, int i)
 
 	*cpy2 = ft_strdup(data->line + i);
 	tmp = ft_strjoin(*cpy, data->value);
-	free(*cpy);
+	free_string(cpy);
 	*cpy = tmp;
 	tmp2 = ft_strjoin(*cpy, *cpy2);
-	free(*cpy);
-	free(*cpy2);
+	free_string(cpy);
+	free_string(cpy2);
 	*cpy = tmp2;
 	free_string(&data->line);
 	data->line = ft_strdup(*cpy);
-	free(*cpy);
+	free_string(cpy);
 }
 
 int		ft_dollar(t_data *data, int ret)

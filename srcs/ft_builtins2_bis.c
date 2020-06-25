@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 01:04:52 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/22 18:30:15 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/25 16:45:59 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void	display_sort(t_data *data)
 	while (cpy)
 	{
 		ft_printf(1, "declare -x %s=%s\n", cpy->key, cpy->value);
-		free(cpy->key);
-		free(cpy->value);
+		free_string(&cpy->key);
+		free_string(&cpy->value);
 		tmp = cpy;
 		cpy = cpy->next;
-		free(tmp);
+		free(&tmp);
 	}
 }
 

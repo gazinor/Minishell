@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtins2_bismillah.c                           :+:      :+:    :+:   */
+/*   ft_builtins2v4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 02:23:14 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/04 02:38:20 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/25 16:40:02 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	norme_ft_export(t_env **env, char *key, char *value)
 	{
 		if (key && value && ft_strcmp((*env)->key, key) == 0)
 		{
-			free((*env)->value);
+			free_string(&(*env)->value);
 			(*env)->value = value;
 			return ;
 		}
@@ -38,8 +38,8 @@ void	norme_ft_unset(t_data *data, t_env *copy, t_env *prev, char *key)
 		}
 		if (ft_strcmp(copy->key, key) == 0 && key)
 		{
-			free(copy->value);
-			free(copy->key);
+			free_string(&copy->value);
+			free_string(&copy->key);
 			if (prev)
 				prev->next = prev->next->next;
 			free(copy);

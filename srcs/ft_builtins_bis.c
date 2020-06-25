@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 00:10:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/24 19:55:40 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/25 17:52:41 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_norme_builtins1(char *str, t_data *data, int i)
 			{
 				tmp = ft_strjoin(ft_strjoin(data->pwd, "/"), data->here);
 				ft_cd(tmp, &data->here, data);
-				free(tmp);
+				free_string(&tmp);
 			}
 		}
 		else

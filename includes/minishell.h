@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/25 14:49:38 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/25 17:04:26 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ typedef struct		s_data
 	int				ret;
 	char			*value;
 	char			**quote;
+	char			*ultimate_check;
+	char			**ultimate_tab;
 	t_cmd			*cmd_lst;
 	t_file			*head_file;
 }					t_data;
@@ -159,5 +161,6 @@ void				ft_norme_main_pipe(t_pipe *pipes, t_data *data, int check,
 void				norme_ft_cd(char *str, t_data *data);
 void				ft_strdupv2(char *str, t_data *data);
 char				*quote_ereaser(char *str, char c);
+int					ultimate_check(t_data *data);
 
 #endif

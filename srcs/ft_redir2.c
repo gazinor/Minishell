@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:49:49 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/05 22:53:12 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/25 16:43:43 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_free_and_reset(char **str, int i)
 	char	*tmp;
 
 	tmp = ft_substr(*str, 0, i);
-	free(*str);
+	free_string(str);
 	*str = tmp;
 }
 

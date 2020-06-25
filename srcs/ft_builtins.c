@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/25 13:46:57 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/25 17:57:56 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		is_builtin(char *str, t_data *data)
 {
 	int i;
 
-	i = 0;	
+	i = 0;
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
 	if (ft_norme_builtins1(str, data, i) == 1 ||

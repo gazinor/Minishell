@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 22:44:08 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/25 13:42:15 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/25 17:01:18 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_tab(char ***tab)
 		i = -1;
 		while ((*tab)[++i])
 		{
-			free((*tab)[i]);
+			free_string(&(*tab)[i]);
 			(*tab)[i] = NULL;
 		}
 		free(*tab);

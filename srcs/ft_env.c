@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/22 21:35:44 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/25 17:06:22 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		get_paths(t_data *data)
 	if ((not_split = find_key_value(data->env, "PATH")) == NULL)
 		return (-1);
 	data->paths = ft_split(not_split, ':');
-	free(not_split);
+	free_string(&not_split);
 	return (0);
 }
 
@@ -74,6 +74,7 @@ void	init_data(t_data *data)
 	data->ret = 0;
 	data->head_file = NULL;
 	data->usefull_var = NULL;
+	data->ultimate_tab = NULL;
 }
 
 void	set_up_all(t_data *data, t_cmd **head, char **envp)
