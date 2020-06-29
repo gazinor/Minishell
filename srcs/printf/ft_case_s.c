@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_case_s.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: glaurent <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 04:32:29 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/01 18:51:18 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/29 21:19:07 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*ft_strndup(char *str, int n)
 	int		i;
 	int		size;
 
+	dest = NULL;
 	size = ft_strlen(str);
 	if (!str)
 	{
@@ -25,8 +26,9 @@ char	*ft_strndup(char *str, int n)
 			return (NULL);
 		str = "(null)\0";
 	}
-	if (!(dest = malloc(sizeof(char) * (size + 1))))
-		return (NULL);
+	if (!dest)
+		if (!(dest = malloc(sizeof(char) * (size + 1))))
+			return (NULL);
 	i = -1;
 	while (++i < n && i < size)
 		dest[i] = str[i];

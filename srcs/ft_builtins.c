@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/25 17:57:56 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/29 23:02:10 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	ft_cd(char *str, char **here, t_data *data)
 			where_am_i(data);
 		}
 		data->ret = 1;
+		printf("ft_cd = 1\n");
 	}
 	else
 		where_am_i(data);
@@ -91,10 +92,10 @@ int		is_builtin(char *str, t_data *data)
 	i = 0;
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
-	if (ft_norme_builtins1(str, data, i) == 1 ||
+	if ((ft_norme_builtins1(str, data, i) == 1 ||
 		ft_norme_builtins2(str, data, i) == 1 ||
 		ft_norme_builtins3(str, data, i) == 1 ||
-		ft_norme_builtins4(str, data, i) == 1)
+		ft_norme_builtins4(str, data, i) == 1) && !(data->ret = 0))
 		return (1);
 	else if (str[i] == '/')
 	{
@@ -109,6 +110,5 @@ int		is_builtin(char *str, t_data *data)
 		try_exec(data, str);
 		return (1);
 	}
-	data->ret = 0;
 	return (0);
 }

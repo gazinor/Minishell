@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/29 20:46:46 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/29 23:56:24 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		display_output(t_data *data, char *tmp)
 	}
 	else if (data->cmd_lst->pipe->cmd[0])
 	{
-		data->ultimate_tab = ft_splitv2(data->line, ' ', data);
+		data->ultimate_tab = ft_splitv2(data->cmd_lst->pipe->cmd, ' ', data);
 		data->option = ft_splitv2(data->cmd_lst->pipe->cmd, ' ', data);
 		if (ultimate_check(data) == -1)
 		{
@@ -85,7 +85,11 @@ void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
 	while (data->cmd_lst)
 	{
 		if (data->cmd_lst->pipe->next)
+		{
+			ft_printf(2, "%d\n", data->ret);
 			ft_pipe(data->cmd_lst->pipe, data, tmp, 0);
+			ft_printf(2, "%d\n", data->ret);
+		}
 		else if (display_output(data, tmp) == -1)
 			break ;
 		free_and_next(data);
@@ -118,6 +122,7 @@ void	main_loop(t_data *data, t_cmd *head)
 			free_string(&data->usefull_var);
 		free_string(&data->line);
 		free_string(&data->value);
+		free_string(&tmp);
 	}
 	if (ret == 0)
 		ft_exit(data, NULL);

@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/25 17:04:26 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/29 23:43:39 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct		s_data
 	char			**ultimate_tab;
 	t_cmd			*cmd_lst;
 	t_file			*head_file;
+	int				retpipe;
 }					t_data;
 
 extern t_data	g_data;
@@ -162,5 +163,6 @@ void				norme_ft_cd(char *str, t_data *data);
 void				ft_strdupv2(char *str, t_data *data);
 char				*quote_ereaser(char *str, char c);
 int					ultimate_check(t_data *data);
+char				*ft_ultimate_norme(char *tmp, t_data *data);
 
 #endif

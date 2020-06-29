@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 00:10:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/25 17:52:41 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/29 22:39:49 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		ft_norme_builtins1(char *str, t_data *data, int i)
 				ft_cd(data->pwd, &data->here, data);
 			else
 			{
-				tmp = ft_strjoin(ft_strjoin(data->pwd, "/"), data->here);
+				tmp = ft_ultimate_norme(NULL, data);
 				ft_cd(tmp, &data->here, data);
 				free_string(&tmp);
 			}

@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 21:54:08 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/24 14:13:59 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/29 23:02:14 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	try_exec(t_data *data, char *str)
 	(void)str;
 	envp = ft_split_env(data->env);
 	data->pid = fork();
-	data->ret = 0;
 	if (data->pid == 0)
 	{
 		errno = 0;

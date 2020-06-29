@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:51:33 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/29 20:35:15 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/29 21:21:45 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char			**ft_splitv2(const char *s, char c, t_data *data)
 	{
 		while (s[j] == c && s[j])
 			++j;
-		if (s[j + 1] && (s[j] == '"' || s[j] == '\'') && ++j)
+		if ((s[j] == '"' || s[j] == '\'') && ++j)
 		{
 			k = j;
 			skip_char((char *)s, &j, s[j - 1]);
