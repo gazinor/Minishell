@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/29 23:56:24 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 00:48:52 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,7 @@ void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
 	while (data->cmd_lst)
 	{
 		if (data->cmd_lst->pipe->next)
-		{
-			ft_printf(2, "%d\n", data->ret);
 			ft_pipe(data->cmd_lst->pipe, data, tmp, 0);
-			ft_printf(2, "%d\n", data->ret);
-		}
 		else if (display_output(data, tmp) == -1)
 			break ;
 		free_and_next(data);

@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 01:04:52 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/25 16:45:59 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 01:08:48 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	display_sort(t_data *data)
 		free_string(&cpy->value);
 		tmp = cpy;
 		cpy = cpy->next;
-		free(&tmp);
+		free(tmp);
 	}
 }
 

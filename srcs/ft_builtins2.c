@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/25 13:48:57 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/30 01:14:00 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void	ft_export(char *str, t_env **env, t_data *data)
 		value = ft_strdup(data->option[1] + egal + 1);
 	}
 	else
-	{
-		ft_printf(2, "Minishell: Bad assignement.\n");
 		return ;
-	}
 	norme_ft_export(env, key, value);
 	add_new_elem(env, key, value);
 	free_string(&key);

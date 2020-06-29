@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 19:10:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/29 23:59:17 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 00:48:07 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ void	ft_norme_main_pipe(t_pipe *pipes, t_data *data, int check, char *tmp)
 		ft_pipe(pipes->next, data, tmp, check + 1);
 	}
 	else
-		exit(display_output(data, tmp));
+	{
+		display_output(data, tmp);
+		exit(data->ret);
+	}
 }

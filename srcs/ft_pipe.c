@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 01:30:15 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/29 23:59:21 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 01:01:55 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,15 @@ void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp, int check)
 		if (!(data->pid1 = fork()) && close(fd[0]) != -1)
 		{
 			dup2(fd[1], 1);
-			exit(display_output(data, tmp));
+			display_output(data, tmp);
+			exit(data->ret);
 		}
 	}
 	else
-		exit(display_output(data, tmp));
+	{
+		display_output(data, tmp);
+		exit(data->ret);
+	}
 	wait(NULL);
 	if (!(data->pid2 = fork()) && close(fd[1]) != -1)
 	{
@@ -82,8 +86,8 @@ void	ft_pipe(t_pipe *pipes, t_data *data, char *tmp, int check)
 	}
 	close(fd[0]);
 	close(fd[1]);
-	wait(NULL);
-	waitpid(data->pid2, &data->status, 0);
+	waitpid(data->pid2, &data->ret, 0);
+	data->ret /= 256;
 	if (check != 0)
-		exit(data->status);
+		exit(data->ret);
 }
