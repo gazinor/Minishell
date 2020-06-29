@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/25 17:55:45 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/29 20:46:46 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int		display_output(t_data *data, char *tmp)
 			data->ret = 127;
 			ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
 		}
-		free_tab(&data->ultimate_tab);
 		free_string(&data->ultimate_check);
 	}
 	return (0);
