@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:49:49 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/05 22:53:12 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 02:11:34 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		true_redir(char *str, int check, int *fd)
+int		true_redir(char *str, int check, int *fd, t_data *data)
 {
 	errno = 0;
 	if (check == 1)
@@ -24,6 +24,7 @@ int		true_redir(char *str, int check, int *fd)
 		if ((*fd = open(str, O_RDONLY)) == -1)
 		{
 			ft_printf(2, "Minishell: %s: %s\n", str, strerror(errno));
+			data->ret = 1;
 			return (-1);
 		}
 		dup2(*fd, 0);
@@ -32,6 +33,7 @@ int		true_redir(char *str, int check, int *fd)
 	if (*fd < 0)
 	{
 		ft_printf(2, "Minishell: %s: %s\n", str, strerror(errno));
+		data->ret = 1;
 		return (-1);
 	}
 	dup2(*fd, 1);
@@ -43,7 +45,7 @@ void	ft_free_and_reset(char **str, int i)
 	char	*tmp;
 
 	tmp = ft_substr(*str, 0, i);
-	free(*str);
+	free_string(str);
 	*str = tmp;
 }
 

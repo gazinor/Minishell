@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:09:28 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/05 22:21:49 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/25 16:44:40 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,11 @@ int		where_am_i(t_data *data)
 		while (str[i] != '/' && str[i])
 			i--;
 		here = ft_strdup(str + i + 1);
-		free(str);
-		str = NULL;
+		free_string(&str);
 		if (data->here)
-			free(data->here);
+			free_string(&data->here);
 		data->here = ft_strdup(here);
-		free(here);
-		here = NULL;
+		free_string(&here);
 		return (1);
 	}
 	return (-1);

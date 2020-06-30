@@ -24,21 +24,29 @@ GNL		 =	$(addprefix $(GNL_PATH)/,$(GNL_NAME))
 SRC_PATH =	./srcs
 TMP		 =	main.c \
 			ft_split.c \
+			ft_splitv2.c \
 			ft_builtins.c \
 			ft_builtins_bis.c \
 		 	ft_utils.c \
+		 	ft_utils2.c \
 			ft_env.c \
 			ft_builtins2.c \
 			ft_builtins2_bis.c \
 			ft_builtins2_bis_bis.c \
-			ft_builtins2_bismillah.c \
+			ft_builtins2v4.c \
 			ft_check.c \
 			semicolon.c \
 			ft_redir.c \
 			ft_redir2.c \
 			ft_free.c \
 			ft_exec.c \
-			main_loop.c
+			main_loop.c \
+			ft_pipe.c \
+			ft_pipes2.c \
+			ft_norme.c \
+			ft_norme2.c \
+			for_exit.c
+
 SRC_NAME =	$(TMP) $(GNL)
 SRC      =	$(addprefix $(SRC_PATH)/,$(SRC_NAME))
 

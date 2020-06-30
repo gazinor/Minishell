@@ -6,16 +6,22 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2020/06/30 04:56:54 by glaurent         ###   ########.fr       */
+=======
 /*   Updated: 2020/03/10 19:30:24 by gaefourn         ###   ########.fr       */
+>>>>>>> origin
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_and_next(t_data *data, t_cmd *prev)
+void	free_and_next(t_data *data)
 {
+	t_cmd	*prev;
+
 	ft_clear_file_lst(&data->head_file, data);
-	free_string(&data->cmd_lst->cmd);
+	free_pipe(&data->cmd_lst->pipe);
 	prev = data->cmd_lst;
 	data->cmd_lst = data->cmd_lst->next;
 	free(prev);
@@ -31,12 +37,48 @@ void	update_line(char **line, char *tmp)
 
 	i = 0;
 	skip_white(*line, &i);
+	free_string(&tmp);
 	tmp = ft_strdup(*line + i);
 	free_string(line);
 	*line = tmp;
 }
 
-void	loop_cmd(t_data *data, t_cmd *head, char *tmp, t_cmd *prev)
+int		display_output(t_data *data, char *tmp)
+{
+	get_paths(data);
+	data->option = ft_splitv2(data->cmd_lst->pipe->cmd, ' ', data);
+	update_line(&data->cmd_lst->pipe->cmd, tmp);
+	if (data->pwd == NULL)
+		ft_pwd(data->cmd_lst->pipe->cmd, data);
+	if (ft_redir(data, data->cmd_lst->pipe->cmd) == -1)
+	{
+		ft_clear_file_lst(&data->head_file, data);
+		return (-1);
+	}
+	if (is_builtin(data->cmd_lst->pipe->cmd, data) == 1)
+		;
+	else if ((data->binary = is_exec(data->cmd_lst->pipe->cmd, data)) != NULL)
+	{
+		check_ls(data->cmd_lst->pipe->cmd, data);
+		try_exec(data, data->cmd_lst->pipe->cmd);
+	}
+	else if (data->cmd_lst->pipe->cmd[0])
+	{
+		data->ultimate_tab = ft_splitv2(data->cmd_lst->pipe->cmd, ' ', data);
+		data->option = ft_splitv2(data->cmd_lst->pipe->cmd, ' ', data);
+		if ((data->ufree = ultimate_check(data)) < 0)
+		{
+			data->ret = 127;
+			data->ufree == -1 ? free_tab(&data->ultimate_tab) : 0;
+			data->ufree == -1 ? free(data->ultimate_tab) : 0;
+			ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
+		}
+		free_string(&data->ultimate_check);
+	}
+	return (0);
+}
+
+void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
 {
 	while (check_line(data) != 0)
 		;
@@ -48,35 +90,17 @@ void	loop_cmd(t_data *data, t_cmd *head, char *tmp, t_cmd *prev)
 	}
 	while (data->cmd_lst)
 	{
-		get_paths(data);
-		update_line(&data->cmd_lst->cmd, tmp);
-		if (data->pwd == NULL)
-			ft_pwd(data->cmd_lst->cmd, data);
-		if (ft_redir(data, data->cmd_lst->cmd) == -1)
-		{
-			ft_clear_file_lst(&data->head_file, data);
+		if (data->cmd_lst->pipe->next)
+			ft_pipe(data->cmd_lst->pipe, data, tmp, 0);
+		else if (display_output(data, tmp) == -1)
 			break ;
-		}
-		if (is_builtin(data->cmd_lst->cmd, data) == 1)
-			;
-		else if ((data->binary = is_exec(data->cmd_lst->cmd, data)) != NULL)
-		{
-			check_ls(data->cmd_lst->cmd, data);
-			try_exec(data, data->cmd_lst->cmd);
-		}
-		else if (data->cmd_lst->cmd[0])
-		{
-			data->option = ft_split(data->cmd_lst->cmd, ' ');
-			data->ret = 127;
-			ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
-		}
-		free_and_next(data, prev);
+		free_and_next(data);
 	}
-	ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 	data->cmd_lst = head;
+	ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 }
 
-void	main_loop(t_data *data, t_cmd *head, t_cmd *prev)
+void	main_loop(t_data *data, t_cmd *head)
 {
 	int		ret;
 	char	*tmp;
@@ -87,23 +111,21 @@ void	main_loop(t_data *data, t_cmd *head, t_cmd *prev)
 		if (g_data.token == 1)
 		{
 			g_data.token = 0;
-			ret == 2 && data->line[0] == '\0' ? ft_exit(data) : 1;
+			ret == 2 && data->line[0] == '\0' ? ft_exit(data, NULL) : 1;
 		}
 		update_line(&data->line, tmp);
-		if (data->line[0] == '$' && data->line[1] == '?')
-		{
-			ft_printf(2, "Minishell: %d command not found\n", data->ret);
-			data->ret = 127;
-			ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
-			free_string(&data->line);
+		if (norme_ft_main_loop(data) == -1)
 			continue ;
-		}
 		if (ret != 2)
-			loop_cmd(data, head, tmp, prev);
+			loop_cmd(data, head, tmp);
 		else
 			ft_printf(1, "  \e[D\e[D");
+		if (data->line && data->line[0] == '\0')
+			free_string(&data->uvar);
 		free_string(&data->line);
+		free_string(&data->value);
+		free_string(&tmp);
 	}
 	if (ret == 0)
-		ft_exit(data);
+		ft_exit(data, NULL);
 }

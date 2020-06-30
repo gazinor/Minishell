@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins2_bis_bis.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaefourn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 01:08:47 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/05 02:09:34 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/29 23:46:35 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ void	dollar_case(char *str, int *i, t_data *data, int check)
 	if (check == 1 && ft_strcmp(word, "$") == 0)
 		ft_printf(1, "%s", word);
 	if (!(data->value = find_key_value(data->env, word)))
+	{
+		free_string(&word);
 		return ;
+	}
 	else
 		check == 1 ? ft_printf(1, "%s ", data->value) : 1;
 	skip_white(str, i);
 	--*i;
-	free(word);
+	free_string(&word);
 }
 
 char	*join_n_free(char *s1, char *s2, int size)
@@ -34,8 +37,8 @@ char	*join_n_free(char *s1, char *s2, int size)
 
 	(void)size;
 	cpy = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
+	free_string(&s1);
+	free_string(&s2);
 	s1 = NULL;
 	s2 = NULL;
 	return (cpy);

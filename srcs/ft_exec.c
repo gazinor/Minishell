@@ -6,7 +6,11 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 21:54:08 by gaefourn          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2020/06/29 23:02:14 by gaefourn         ###   ########.fr       */
+=======
 /*   Updated: 2020/06/18 15:58:54 by glaurent         ###   ########.fr       */
+>>>>>>> origin
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +57,11 @@ void	try_exec(t_data *data, char *str)
 	(void)str;
 	envp = ft_split_env(data->env);
 	data->pid = fork();
-	data->ret = 0;
 	if (data->pid == 0)
 	{
 		errno = 0;
 		if ((ret = execve(data->binary, data->option, envp)) != 0)
-			ft_printf(2, "Minishell: %s: %s\n", data->exec,
+			ft_printf(2, "Minishell: %s: %s\n", data->option[0],
 					strerror(errno));
 		free_tab(&data->option);
 		data->ret = ret;

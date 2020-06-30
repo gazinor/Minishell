@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 00:10:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/11 00:11:57 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/29 22:39:49 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ft_norme_builtins1(char *str, t_data *data, int i)
 				str[i + 2] == '\t' || str[i + 2] == '\0'))
 	{
 		if (where_am_i(data) != -1)
-			ft_cd(str + i + 2, &data->here, data);
+			ft_cd(data->option[1], &data->here, data);
 		else if (str[i + 2] == ' ' && str[i + 3] == '.' && (str[i + 4] == '\0'
 					|| str[i + 4] == ' '))
 		{
@@ -28,9 +28,9 @@ int		ft_norme_builtins1(char *str, t_data *data, int i)
 				ft_cd(data->pwd, &data->here, data);
 			else
 			{
-				tmp = ft_strjoin(ft_strjoin(data->pwd, "/"), data->here);
+				tmp = ft_ultimate_norme(NULL, data);
 				ft_cd(tmp, &data->here, data);
-				free(tmp);
+				free_string(&tmp);
 			}
 		}
 		else
@@ -73,7 +73,7 @@ int		ft_norme_builtins3(char *str, t_data *data, int i)
 			str[i + 3] == 't' && (str[i + 4] == ' ' ||
 				str[i + 4] == '\t' || str[i + 4] == '\0'))
 	{
-		ft_exit(data);
+		ft_exit(data, str);
 		return (1);
 	}
 	else if (str[i] == 'e' && str[i + 1] == 'x' && str[i + 2] == 'p' &&
@@ -106,7 +106,7 @@ int		ft_norme_builtins4(char *str, t_data *data, int i)
 	else if (str[i] == '.' && (str[i + 1] == '/'))
 	{
 		data->exec = ft_strdup(str);
-		data->option = ft_split(str, ' ');
+		data->option = ft_splitv2(str, ' ', data);
 		data->binary = ft_strdup(data->option[0]);
 		try_exec(data, str);
 		return (1);

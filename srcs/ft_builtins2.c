@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/03/08 23:04:50 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 01:49:40 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,26 @@ void	ft_export(char *str, t_env **env, t_data *data)
 	char	*value;
 	int		egal;
 
-	data->option = ft_split(str, ' ');
+	data->option = ft_splitv2(str, ' ', data);
 	if (!data->option[1])
 	{
 		display_sort(data);
 		return ;
 	}
-	if (data->option && (egal = check_char(data->option[1], '=')) != -1)
+	if (data->option && (egal = check_char(data->option[1], '=')) > 0)
+		norme_ft_export_bis(data, &key, &value, egal);
+	else if (data->option && egal == 0)
 	{
-		key = ft_substr(data->option[1], 0, egal);
-		value = ft_strdup(data->option[1] + egal + 1);
-	}
-	else
-	{
-		ft_printf(2, "Minishell: Bad assignement.\n");
+		ft_printf(2, "\rMinishell: export: `%s': not a valid identifier\n",
+				data->option[1]);
 		return ;
 	}
-	norme_ft_export(env, key, value);
-	add_new_elem(env, key, value);
-	free(key);
-	free(value);
+	else
+		return ;
+	if (!norme_ft_export(env, key, value))
+		add_new_elem(env, key, value);
+	free_string(&key);
+	free_string(&value);
 }
 
 void	ft_unset(char *str, t_data *data)
@@ -46,7 +46,7 @@ void	ft_unset(char *str, t_data *data)
 	t_env	*copy;
 	char	*key;
 
-	data->option = ft_split(str, ' ');
+	data->option = ft_splitv2(str, ' ', data);
 	if (data->option[1])
 		key = ft_strdup(data->option[1]);
 	else
@@ -54,7 +54,7 @@ void	ft_unset(char *str, t_data *data)
 	prev = NULL;
 	copy = data->env;
 	norme_ft_unset(data, copy, prev, key);
-	free(key);
+	free_string(&key);
 }
 
 int		simple_quote(char *str, int *i)

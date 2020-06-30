@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 22:44:08 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/10 05:59:58 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/25 17:01:18 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_lst(t_file *file)
 {
 	t_file *prev;
 
+	if (!file)
+		return ;
 	while (file)
 	{
 		prev = file;
@@ -36,7 +38,7 @@ void	free_tab(char ***tab)
 		i = -1;
 		while ((*tab)[++i])
 		{
-			free((*tab)[i]);
+			free_string(&(*tab)[i]);
 			(*tab)[i] = NULL;
 		}
 		free(*tab);
@@ -53,15 +55,33 @@ void	free_string(char **str)
 	}
 }
 
+void	free_pipe(t_pipe **pipe)
+{
+	t_pipe	*tmp;
+
+	if (!*pipe)
+		return ;
+	while (*pipe)
+	{
+		free_lst((*pipe)->file);
+		free_string(&(*pipe)->cmd);
+		tmp = *pipe;
+		*pipe = (*pipe)->next;
+		free(tmp);
+		tmp = NULL;
+	}
+}
+
 void	free_lst_cmd(t_cmd **cmd)
 {
 	t_cmd	*prev;
 
+	if (!*cmd)
+		return ;
 	while (*cmd)
 	{
 		prev = *cmd;
-		free_lst((*cmd)->file);
-		free_string(&(*cmd)->cmd);
+		free_pipe(&(*cmd)->pipe);
 		*cmd = (*cmd)->next;
 		free(prev);
 		prev = NULL;

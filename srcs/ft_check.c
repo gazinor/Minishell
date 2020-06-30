@@ -6,7 +6,11 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2020/06/25 16:41:49 by gaefourn         ###   ########.fr       */
+=======
 /*   Updated: 2020/06/18 14:57:40 by glaurent         ###   ########.fr       */
+>>>>>>> origin
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +23,11 @@ int		ft_backslash(t_data *data, int ret)
 
 	cpy = ft_substr(data->line, 0, ret - 1);
 	tmp = ft_strjoin(cpy, &data->line[ret]);
-	free(cpy);
+	free_string(&cpy);
 	cpy = tmp;
 	free_string(&data->line);
 	data->line = ft_strdup(cpy);
-	free(cpy);
+	free_string(&cpy);
 	return (1);
 }
 
@@ -49,21 +53,22 @@ int		check_line(t_data *data)
 	return (0);
 }
 
-void	norme_ft_dollar(t_data *data, char *cpy, char *cpy2, int i)
+void	norme_ft_dollar(t_data *data, char **cpy, char **cpy2, int i)
 {
 	char *tmp;
 	char *tmp2;
 
-	cpy2 = ft_strdup(data->line + i);
-	tmp = ft_strjoin(cpy, data->value);
-	free(cpy);
-	cpy = tmp;
-	tmp2 = ft_strjoin(cpy, cpy2);
-	free(cpy);
-	free(cpy2);
-	cpy = tmp2;
-	data->line = ft_strdup(cpy);
-	free(cpy);
+	*cpy2 = ft_strdup(data->line + i);
+	tmp = ft_strjoin(*cpy, data->value);
+	free_string(cpy);
+	*cpy = tmp;
+	tmp2 = ft_strjoin(*cpy, *cpy2);
+	free_string(cpy);
+	free_string(cpy2);
+	*cpy = tmp2;
+	free_string(&data->line);
+	data->line = ft_strdup(*cpy);
+	free_string(cpy);
 }
 
 int		ft_dollar(t_data *data, int ret)
@@ -87,6 +92,6 @@ int		ft_dollar(t_data *data, int ret)
 			&& data->line[i] != '$' && data->line[i] != '"' &&
 			data->line[i] != '\'')
 		i++;
-	norme_ft_dollar(data, cpy, cpy2, i);
+	norme_ft_dollar(data, &cpy, &cpy2, i);
 	return (1);
 }
