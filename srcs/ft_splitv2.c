@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:51:33 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 04:46:56 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/30 19:21:16 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char			**ft_splitv2(const char *s, char c, t_data *data)
 		return (NULL);
 	i = 0;
 	j = 0;
+	printf("str : |%s|\n", s);
 	while (s[j])
 	{
 		while (s[j] == c && s[j])
@@ -111,5 +112,8 @@ char			**ft_splitv2(const char *s, char c, t_data *data)
 		}
 	}
 	strs[i] = NULL;
+	i = -1;
+	while (strs[++i])
+		printf("%d : |%s|\n", i, strs[i]);
 	return (strs);
 }

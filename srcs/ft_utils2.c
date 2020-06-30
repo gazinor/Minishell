@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 14:26:19 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/30 05:39:30 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/30 19:39:47 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*quote_ereaser(char *str)
 int		relink(t_data *data)
 {
 	char	*str;
-	char	*cpy;
 	int		i;
 	
 	i = 0;
@@ -82,9 +81,10 @@ int		relink(t_data *data)
 		}
 		else
 		{
-			cpy = ft_strjoin(str, " ");
-			free_string(&str);
-			str = join_n_free(cpy, data->ultimate_tab[i], 1);
+			str = join_n_free(str, " ", 42);
+			str = join_n_free(str, "\"", 42);
+			str = join_n_free(str, data->ultimate_tab[i], 1);
+			str = join_n_free(str, "\"", 42);
 		}
 		i++;
 	}
@@ -97,6 +97,7 @@ int		relink(t_data *data)
 int		ultimate_check(t_data *data)
 {
 	free_string(&data->exec);
+	printf("ultimate check\n");
 	if (relink(data) == -1)
 		return (-1);
 	if (is_builtin(data->ultimate_check, data) == 1)
