@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 21:17:55 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 22:08:57 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,6 @@ char				*quote_ereaser(char *str);
 int					ultimate_check(t_data *data);
 char				*ft_ultimate_norme(char *tmp, t_data *data);
 void				norme_ft_export_bis(t_data *data, char **key, char **value, int egal);
+void				la_norme(t_data *data, char *tmp);
 
 #endif

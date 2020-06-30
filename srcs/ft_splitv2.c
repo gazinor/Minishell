@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:51:33 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 20:24:27 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/30 22:52:47 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static	int		konte_mo(const char *s, char c)
 {
 	int		kont;
 	int		i;
+
 	kont = 0;
 	i = 0;
 	while (s[i])
@@ -28,7 +29,7 @@ static	int		konte_mo(const char *s, char c)
 			continue ;
 		}
 		while (s[i] == c && s[i])
-				++i;
+			++i;
 		while (s[i] != c && s[i])
 		{
 			++kont;
@@ -38,11 +39,13 @@ static	int		konte_mo(const char *s, char c)
 	}
 	return (kont);
 }
+
 static	char	*ft_strcdup(const char *s, char c)
 {
 	char	*dest;
 	int		i;
 	int		cont;
+
 	i = -1;
 	cont = 0;
 	while (s[cont] != c && s[cont])
@@ -54,6 +57,7 @@ static	char	*ft_strcdup(const char *s, char c)
 	dest[cont] = '\0';
 	return (dest);
 }
+
 static	void	*ft_erase(char **strs, int i)
 {
 	while (strs[i])
@@ -64,6 +68,7 @@ static	void	*ft_erase(char **strs, int i)
 	free(strs);
 	return (NULL);
 }
+
 char			**ft_splitv2(const char *s, char c, t_data *data)
 {
 	char	**strs;

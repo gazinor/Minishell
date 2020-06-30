@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/25 16:41:49 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 22:31:58 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ int		ft_dollar(t_data *data, int ret)
 	if (data->line[i] == '$' && (data->line[i + 1] == ' ' ||
 			data->line[i + 1] == '"' || data->line[i + 1] == '\0' ||
 			data->line[i + 1] == '?'))
+	{
+		free_string(&cpy);
 		return (0);
+	}
 	if (data->line[i] == '$')
 		i++;
 	while (data->line[i] && data->line[i] != ' ' && data->line[i] != '/'
