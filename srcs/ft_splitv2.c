@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:51:33 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/29 21:21:45 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 04:46:56 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char			**ft_splitv2(const char *s, char c, t_data *data)
 			++j;
 		if ((s[j] == '"' || s[j] == '\'') && ++j)
 		{
-			k = j;
+			k = j - 1;
 			skip_char((char *)s, &j, s[j - 1]);
 			while (s[j] && s[++j] != c && s[j])
 				if ((s[j] == '"' || s[j] == '\'') && s[j + 1])
@@ -95,8 +95,7 @@ char			**ft_splitv2(const char *s, char c, t_data *data)
 					skip_char((char *)s, &j, s[j - 1]);
 				}
 			strs[i] = ft_substr(s, k, (j - k));
-			strs[i] = quote_ereaser(strs[i], '"');
-			strs[i] = quote_ereaser(strs[i], '\'');
+			strs[i] = quote_ereaser(strs[i]);
 			++i;
 			if (s[j])
 				++j;
@@ -111,6 +110,6 @@ char			**ft_splitv2(const char *s, char c, t_data *data)
 				++j;
 		}
 	}
-	strs[i] = 0;
+	strs[i] = NULL;
 	return (strs);
 }

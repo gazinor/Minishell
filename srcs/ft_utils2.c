@@ -6,13 +6,13 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 14:26:19 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/29 20:48:13 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 05:02:30 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*quote_ereaser(char *str, char c)
+char	*quote_ereaser(char *str)
 {
 	int 	i;
 	int		j;
@@ -22,22 +22,37 @@ char	*quote_ereaser(char *str, char c)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] != c)
-			j++;
-		i++;
+		if (str[i] == '"' || str[i++] == '\'')
+		{
+			skip_char(str, &i, str[i - 1]);
+			j -= 2;
+		}
+		if (str[i])
+			i++;
 	}
-	if (!(cpy = malloc(sizeof(char) * (j + 1))))
+	if (!(cpy = malloc(sizeof(char) * (i + j + 1))))
 		return (NULL);
 	i = 0;
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] != c)
-		{
-			cpy[j] = str[i];
-			j++;
-		}
-		i++;
+		if (str[i] == '"' && ++i)
+			while (str[i] && str[i] != '"')
+			{
+				cpy[j] = str[i];
+				j++;
+				i++;
+			}
+		else if (str[i] == '\'' && ++i)
+			while (str[i] && str[i] != '\'')
+			{
+				printf("char : %c\n", str[i]);
+				cpy[j] = str[i];
+				j++;
+				i++;
+			}
+		if (str[i])
+			i++;
 	}
 	cpy[j] = '\0';
 	free_string(&str);
@@ -94,5 +109,5 @@ int		ultimate_check(t_data *data)
 		return (0);
 	}
 	free_string(&data->exec);
-	return (-1);
+	return (-42);
 }

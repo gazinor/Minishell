@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/30 00:43:00 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 03:22:18 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,21 +79,23 @@ int		ft_ptvirgule(t_data *data)
 	{
 		if (norme_ft_ptvirgule(data, &i) == -1)
 			return (-1);
-		if (data->line[i] == ';')
+		if (data->line[i] == ';' && (data->uvar = ft_substr(data->line, 0, i)))
 		{
-			if (!(save = add_cmd(&data->cmd_lst, ft_substr(data->line, 0, i))))
+			
+			if (!(save = add_cmd(&data->cmd_lst, data->uvar)))
 				return (-1);
 			else if (!*save)
 			{
 				ft_printf(2,
 						"Minishell: syntax error near unexpected token `;'\n");
+				free_string(&data->uvar);
 				return (-1);
 			}
 			norme_ft_ptvirgule2(&data->line, &i);
 		}
 	}
-	data->usefull_var = ft_substr(data->line, 0, i);
-	if (!(save = add_cmd(&data->cmd_lst, data->usefull_var)))
+	data->uvar = ft_substr(data->line, 0, i);
+	if (!(save = add_cmd(&data->cmd_lst, data->uvar)))
 		return (-1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 00:48:52 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 04:56:54 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,11 @@ int		display_output(t_data *data, char *tmp)
 	{
 		data->ultimate_tab = ft_splitv2(data->cmd_lst->pipe->cmd, ' ', data);
 		data->option = ft_splitv2(data->cmd_lst->pipe->cmd, ' ', data);
-		if (ultimate_check(data) == -1)
+		if ((data->ufree = ultimate_check(data)) < 0)
 		{
 			data->ret = 127;
+			data->ufree == -1 ? free_tab(&data->ultimate_tab) : 0;
+			data->ufree == -1 ? free(data->ultimate_tab) : 0;
 			ft_printf(2, "Minishell: command not found: %s\n", data->option[0]);
 		}
 		free_string(&data->ultimate_check);
@@ -115,7 +117,7 @@ void	main_loop(t_data *data, t_cmd *head)
 		else
 			ft_printf(1, "  \e[D\e[D");
 		if (data->line && data->line[0] == '\0')
-			free_string(&data->usefull_var);
+			free_string(&data->uvar);
 		free_string(&data->line);
 		free_string(&data->value);
 		free_string(&tmp);
