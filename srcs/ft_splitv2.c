@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:51:33 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 19:50:50 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/30 20:24:27 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ char			**ft_splitv2(const char *s, char c, t_data *data)
 		{
 			if (!(strs[i] = ft_strcdup(s + j, c)))
 				return (ft_erase(strs, i));
+			strs[i] = quote_ereaser(strs[i]);
 			++i;
 			while (s[j] != c && s[j])
 				++j;
