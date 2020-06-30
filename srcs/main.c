@@ -6,11 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2020/06/25 13:40:23 by glaurent         ###   ########.fr       */
-=======
-/*   Updated: 2020/06/18 16:40:46 by glaurent         ###   ########.fr       */
->>>>>>> origin
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +49,13 @@ void	check_ls(char *str, t_data *data)
 	char	*cpy;
 
 	i = 0;
-<<<<<<< HEAD
 	cpy = ft_strdup(str);
 	skip_white(str, &i);
-=======
-	ft_strdupv2(str, data);
-	cpy = ft_strdup(data->tmp);
-	skip_white(cpy, &i);
->>>>>>> origin
 	if (cpy[i] == 'l' && cpy[i + 1] == 's' &&
 			(cpy[i + 2] == ' ' || cpy[i + 2] == '\0'))
 	{
 		tmp = join_n_free(join_n_free(ft_substr(cpy, i, i + 2),
 					ft_strdup(" -G"), 0), ft_strdup(cpy + i + 2), 0);
-<<<<<<< HEAD
 		data->option = ft_splitv2(tmp, ' ', data);
 		free_string(&data->tmp);
 		free_string(&cpy);
@@ -75,16 +64,6 @@ void	check_ls(char *str, t_data *data)
 	}
 	else
 		data->option = ft_splitv2(cpy, ' ', data);
-=======
-		data->option = ft_split(tmp, ' ');
-		free_string(&data->tmp);
-		free_string(&cpy);
-		free(tmp);
-		return ;
-	}
-	else
-		data->option = ft_split(cpy, ' ');
->>>>>>> origin
 	free_string(&data->tmp);
 	free_string(&cpy);
 	return ;
