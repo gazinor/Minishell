@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 05:40:06 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/30 21:24:29 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,25 @@ void	ft_cd(char *str, char **here, t_data *data)
 
 	i = 0;
 	errno = 0;
-	while (str[i] == ' ' || str[i] == '\t')
+	if (!str && ++data->checkcd)
+		str = find_key_value(data->env, "HOME");
+	while ((str[i] == ' ' || str[i] == '\t') && str[i])
 		i++;
 	if (chdir(str + i) == -1)
 	{
-		if (str[i] != '\0')
-			norme_ft_cd(str, data);
-		else
+		str[i] != '\0' ? norme_ft_cd(str, data) :
 			ft_printf(2, "cd: %s\n", strerror(errno));
 		if (data->here)
 		{
 			free_string(&data->here);
-			data->here = NULL;
 			where_am_i(data);
 		}
 		data->ret = 1;
 	}
 	else
 		where_am_i(data);
+	if (data->checkcd != 0 && !(--data->checkcd))
+		free_string(&str);
 	(void)here;
 }
 

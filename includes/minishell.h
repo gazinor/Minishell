@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 04:51:52 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/30 21:17:55 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct		s_data
 	t_file			*head_file;
 	int				retpipe;
 	int				ufree;
+	int				checkcd;
 }					t_data;
 
 extern t_data	g_data;
