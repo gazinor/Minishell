@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/29 23:43:39 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 02:13:12 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void				dollar_case(char *str, int *i, t_data *data, int check);
 void				skip_white(char *str, int *i);
 int					ft_ptvirgule(t_data *data);
 int					ft_redir(t_data *data, char *str);
-int					true_redir(char *str, int check, int *fd);
+int					true_redir(char *str, int check, int *fd, t_data *data);
 int					skip_char(char *str, int *i, char c);
 void				ft_free_and_reset(char **str, int i);
 void				ft_clear_file_lst(t_file **file, t_data *data);
@@ -129,7 +129,7 @@ char				*get_next_word(char *str, int *i);
 void				norme_ft_echo(char *str, int *i, t_data *data);
 int					simple_quote(char *str, int *i);
 int					double_quote(char *str, int *i, t_data *data);
-void				norme_ft_export(t_env **env, char *key, char *value);
+int					norme_ft_export(t_env **env, char *key, char *value);
 void				norme_ft_unset(t_data *data, t_env *copy, t_env *prev,
 		char *key);
 int					norme_ft_redir(t_data *data, char *str, int *i, int *j);
@@ -164,5 +164,6 @@ void				ft_strdupv2(char *str, t_data *data);
 char				*quote_ereaser(char *str, char c);
 int					ultimate_check(t_data *data);
 char				*ft_ultimate_norme(char *tmp, t_data *data);
+void				norme_ft_export_bis(t_data *data, char **key, char **value, int egal);
 
 #endif

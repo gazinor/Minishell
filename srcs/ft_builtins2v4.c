@@ -6,24 +6,25 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 02:23:14 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/25 16:40:02 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 01:49:16 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	norme_ft_export(t_env **env, char *key, char *value)
+int		norme_ft_export(t_env **env, char *key, char *value)
 {
 	while (*env)
 	{
 		if (key && value && ft_strcmp((*env)->key, key) == 0)
 		{
 			free_string(&(*env)->value);
-			(*env)->value = value;
-			return ;
+			(*env)->value = ft_strdup(value);
+			return (1);
 		}
 		env = &(*env)->next;
 	}
+	return (0);
 }
 
 void	norme_ft_unset(t_data *data, t_env *copy, t_env *prev, char *key)
@@ -48,4 +49,10 @@ void	norme_ft_unset(t_data *data, t_env *copy, t_env *prev, char *key)
 		prev = copy;
 		copy = copy->next;
 	}
+}
+
+void	norme_ft_export_bis(t_data *data, char **key, char **value, int egal)
+{
+	*key = ft_substr(data->option[1], 0, egal);
+	*value = ft_strdup(data->option[1] + egal + 1);
 }

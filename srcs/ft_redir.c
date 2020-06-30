@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 19:58:32 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/03/13 02:42:19 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/30 02:12:43 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int		ft_add_filename(t_data *data, char *str, int *i, int *j)
 		ft_printf(2, "Minishell: syntax error near unexpected token `%c%c'\n",
 					str[*i] == '>' || str[*i] == '<' ? str[*i] : 0,
 				str[*i + 1] == '>' || str[*i + 1] == '<' ? str[*i + 1] : 0);
+		data->ret = 258;
 		return (-1);
 	}
 	++*j;
@@ -91,7 +92,7 @@ int		handle_redir(t_data *data)
 	{
 		if (true_redir(data->cmd_lst->pipe->file->filename,
 		data->cmd_lst->pipe->file->type,
-			&data->cmd_lst->pipe->file->fd) == -1)
+			&data->cmd_lst->pipe->file->fd, data) == -1)
 			return (-1);
 		data->cmd_lst->pipe->file = data->cmd_lst->pipe->file->next;
 	}

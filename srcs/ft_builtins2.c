@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:35:06 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/30 01:14:00 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/06/30 01:49:40 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,18 @@ void	ft_export(char *str, t_env **env, t_data *data)
 		display_sort(data);
 		return ;
 	}
-	if (data->option && (egal = check_char(data->option[1], '=')) != -1)
+	if (data->option && (egal = check_char(data->option[1], '=')) > 0)
+		norme_ft_export_bis(data, &key, &value, egal);
+	else if (data->option && egal == 0)
 	{
-		key = ft_substr(data->option[1], 0, egal);
-		value = ft_strdup(data->option[1] + egal + 1);
+		ft_printf(2, "\rMinishell: export: `%s': not a valid identifier\n",
+				data->option[1]);
+		return ;
 	}
 	else
 		return ;
-	norme_ft_export(env, key, value);
-	add_new_elem(env, key, value);
+	if (!norme_ft_export(env, key, value))
+		add_new_elem(env, key, value);
 	free_string(&key);
 	free_string(&value);
 }
