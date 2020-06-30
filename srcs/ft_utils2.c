@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 14:26:19 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/30 19:39:47 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/06/30 19:54:55 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ char	*quote_ereaser(char *str)
 				j++;
 				i++;
 			}
+		else
+		{
+			cpy[j] = str[i];
+			j++;
+		}
 		if (str[i])
 			i++;
 	}
@@ -97,7 +102,6 @@ int		relink(t_data *data)
 int		ultimate_check(t_data *data)
 {
 	free_string(&data->exec);
-	printf("ultimate check\n");
 	if (relink(data) == -1)
 		return (-1);
 	if (is_builtin(data->ultimate_check, data) == 1)
