@@ -6,39 +6,26 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 01:46:54 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/07/01 20:14:09 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/07/02 00:44:39 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_backslash_other(t_data *data, int ret)
+void	deal_with_backslashes(t_data *data, int *i)
 {
-	char	*cpy;
-	char	*tmp;
-
-	cpy = ft_substr(data->line, 0, ret - 1);
-	tmp = ft_strjoin(cpy, &data->line[ret]);
-	free_string(&cpy);
-	cpy = tmp;
-	free_string(&data->line);
-	data->line = ft_strdup(cpy);
-	free_string(&cpy);
-}
-
-char	*put_string_around(char *str, char *c, int pos, int keep)
-{
-	char	*cpy;
-	char	*cpy2;
-
-	cpy2 = ft_substr(str, pos, 1);
-	cpy = ft_substr(str, 0, pos - (keep == 0 ? 1 : 0));
-	cpy = join_n_free(cpy, c, 42);
-	cpy = join_n_free(cpy, cpy2, 1);
-	cpy = join_n_free(cpy, c, 42);
-	cpy = join_n_free(cpy, &str[pos + 1], 42);
-	free_string(&str);
-	return (cpy);
+	if (data->line[++*i] && data->line[*i] == '"')
+	{
+		data->line = put_string_around(
+	put_string_around(data->line, "\"", *i, 0), "\'", *i, 1);
+		*i += 3;
+	}
+	else
+	{
+		data->line = put_string_around(
+	put_string_around(data->line, "\"", *i, 1), "\"", *i + 1, 1);
+		*i += 4;
+	}
 }
 
 void	ft_backslash(t_data *data)
@@ -49,31 +36,20 @@ void	ft_backslash(t_data *data)
 	while (data->line[++i])
 	{
 		if (data->line[i] == '\'')
-		{
 			while (data->line[++i] && data->line[i] != '\'')
 				;
-		}
 		else if (data->line[i] == '"')
 		{
 			while (data->line[++i] && data->line[i] != '"')
 				if (data->line[i] == '\\')
-				{
-					if (data->line[++i] && data->line[i] == '"')
-					{
-						data->line = put_string_around(
-					put_string_around(data->line, "\"", i, 0), "\'", i, 1);
-						i += 3;
-					}
-					else
-					{
-						data->line = put_string_around(
-					put_string_around(data->line, "\"", i, 1), "\"", i + 1, 1);
-						i += 4;
-					}
-				}
+					deal_with_backslashes(data, &i);
 		}
-		else if (data->line[i] == '\\')
-			data->line = put_string_around(data->line, "\"", i + 1, 0);
+		else if (data->line[i] == '\\' && data->line[i + 1])
+		{
+			data->line = put_string_around(data->line,
+					data->line[i + 1] == '\'' ? "\"" : "'", i + 1, 0);
+			i += 2;
+		}
 	}
 }
 
