@@ -6,18 +6,18 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/07/01 01:22:18 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/01 23:00:35 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*add_cmd(t_cmd **cmd_lst, char *str)
+char	*add_cmd(t_cmd **cmd_lst, char **str)
 {
 	int i;
 
 	i = 0;
-	skip_white(str, &i);
+	skip_white(*str, &i);
 	if (str[i] == '\0')
 		return ("");
 	while ((*cmd_lst))
@@ -81,7 +81,7 @@ int		ft_ptvirgule(t_data *data)
 			return (-1);
 		if (data->line[i] == ';' && (data->uvar = ft_substr(data->line, 0, i)))
 		{
-			if (!(save = add_cmd(&data->cmd_lst, data->uvar)))
+			if (!(save = add_cmd(&data->cmd_lst, &data->uvar)))
 				return (-1);
 			else if (!*save)
 			{
@@ -93,7 +93,7 @@ int		ft_ptvirgule(t_data *data)
 		}
 	}
 	data->uvar = ft_substr(data->line, 0, i);
-	if (!(save = add_cmd(&data->cmd_lst, data->uvar)))
+	if (!(save = add_cmd(&data->cmd_lst, &data->uvar)))
 		return (return_value(data));
 	return (0);
 }

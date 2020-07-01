@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 01:30:15 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 22:08:40 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/01 23:02:39 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*add_pipe(t_pipe **pipe, char *str)
 	return ((*pipe)->cmd);
 }
 
-int		count_pipe(t_pipe **pipe, char *str)
+int		count_pipe(t_pipe **pipe, char **str)
 {
 	int		i;
 	int		check;
@@ -42,20 +42,20 @@ int		count_pipe(t_pipe **pipe, char *str)
 	i = -1;
 	check = 0;
 	tmp = NULL;
-	while (str[++i])
+	while ((*str)[++i])
 	{
-		if (norme_ft_count_pipe(str, i, tmp) == -1)
+		if (norme_ft_count_pipe(*str, i, tmp) == -1)
 			return (-1);
-		if (str[i] == '"')
+		if ((*str)[i] == '"' || (*str)[i] == '\'')
 			check += 1;
-		else if (str[i] == '|' && check % 2 == 0)
+		else if ((*str)[i] == '|' && check % 2 == 0)
 		{
-			if (ft_norme_pipe(&str, &i, &tmp, pipe) == -1)
+			if (ft_norme_pipe(str, &i, &tmp, pipe) == -1)
 				return (-1);
 		}
 	}
-	add_pipe(pipe, ft_substr(str, 0, i));
-	free_string(&str);
+	add_pipe(pipe, ft_substr(*str, 0, i));
+	free_string(str);
 	return (0);
 }
 

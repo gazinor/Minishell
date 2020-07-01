@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/12 03:27:28 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/29 23:02:15 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/01 23:04:28 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int		norme_ft_main_loop(t_data *data)
 
 int		norme_ft_count_pipe(char *str, int i, char *tmp)
 {
+	(void)tmp;
 	if (str[i] == '|' && str[i + 1] == '|' && str[i + 2])
 	{
 		ft_printf(2,
 			"Minishell: syntax error near unexpected token `||'\n");
-		free_string(&tmp);
 		return (-1);
 	}
 	return (0);
