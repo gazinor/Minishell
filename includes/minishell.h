@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 22:08:57 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/01 02:55:30 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@
 # include "../srcs/printf/ft_printf.h"
 
 struct dirent		*readdir(DIR *dir);
+
+typedef struct		s_s
+{
+	char	**strs;
+	int		len;
+	int		i;
+	int		j;
+	int		k;
+}					t_s;
 
 typedef struct		s_file
 {
@@ -157,16 +166,26 @@ int					display_output(t_data *data, char *tmp);
 void				norme_ft_count_pipe2(char **str, int *i);
 int					norme_ft_count_pipe(char *str, int i, char *tmp);
 void				ft_atoi_exit(char *str, int i);
-int					ft_norme_pipe(char **str, int *i, char **tmp, t_pipe **pipe);
+int					ft_norme_pipe(char **str, int *i, char **tmp,
+		t_pipe **pipe);
 char				*add_pipe(t_pipe **pipe, char *str);
 void				ft_norme_main_pipe(t_pipe *pipes, t_data *data, int check,
-			char *tmp);
+		char *tmp);
 void				norme_ft_cd(char *str, t_data *data);
 void				ft_strdupv2(char *str, t_data *data);
 char				*quote_ereaser(char *str);
 int					ultimate_check(t_data *data);
 char				*ft_ultimate_norme(char *tmp, t_data *data);
-void				norme_ft_export_bis(t_data *data, char **key, char **value, int egal);
+void				norme_ft_export_bis(t_data *data, char **key,
+		char **value, int egal);
 void				la_norme(t_data *data, char *tmp);
+void				norme_relink(char **str, int i, t_data *data);
+void				norme_quote_ereaser(char *str, char **cpy, int *i, int *j);
+int					return_value(t_data *data);
+void				norme_display_output(t_data *data);
+void				free_main_loop(t_data *data);
+void				norme_splitv2(t_s *t, char c, const char *s);
+int					norme_splitv2v2(t_s *t, char c, const char *s);
+void				init_t(t_s *t);
 
 #endif

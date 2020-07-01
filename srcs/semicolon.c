@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/30 21:01:15 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/01 01:22:18 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,19 @@ int		ft_ptvirgule(t_data *data)
 			return (-1);
 		if (data->line[i] == ';' && (data->uvar = ft_substr(data->line, 0, i)))
 		{
-			
 			if (!(save = add_cmd(&data->cmd_lst, data->uvar)))
 				return (-1);
 			else if (!*save)
 			{
 				ft_printf(2,
 						"Minishell: syntax error near unexpected token `;'\n");
-				free_string(&data->uvar);
-				return (-1);
+				return (return_value(data));
 			}
 			norme_ft_ptvirgule2(&data->line, &i);
 		}
 	}
 	data->uvar = ft_substr(data->line, 0, i);
 	if (!(save = add_cmd(&data->cmd_lst, data->uvar)))
-	{
-		free_string(&data->uvar);
-		return (-1);
-	}
+		return (return_value(data));
 	return (0);
 }

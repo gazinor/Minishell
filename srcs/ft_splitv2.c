@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:51:33 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 22:52:47 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/01 02:55:18 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,51 +71,29 @@ static	void	*ft_erase(char **strs, int i)
 
 char			**ft_splitv2(const char *s, char c, t_data *data)
 {
-	char	**strs;
-	int		len;
-	int		i;
-	int		j;
-	int		k;
+	t_s t;
 
 	if (!s)
 		return (NULL);
 	free_tab(&data->option);
-	len = konte_mo(s, c);
-	if (!(strs = malloc(sizeof(char*) * (len + 1))))
+	t.len = konte_mo(s, c);
+	if (!(t.strs = malloc(sizeof(char*) * (t.len + 1))))
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s[j])
+	init_t(&t);
+	while (s[t.j])
 	{
-		while (s[j] == c && s[j])
-			++j;
-		if ((s[j] == '"' || s[j] == '\'') && ++j)
-		{
-			k = j - 1;
-			skip_char((char *)s, &j, s[j - 1]);
-			while (s[j] && s[++j] != c && s[j])
-				if ((s[j] == '"' || s[j] == '\'') && s[j + 1])
-				{
-					++j;
-					skip_char((char *)s, &j, s[j - 1]);
-				}
-			strs[i] = ft_substr(s, k, (j - k));
-			strs[i] = quote_ereaser(strs[i]);
-			++i;
-			if (s[j])
-				++j;
+		if (norme_splitv2v2(&t, c, s) == -1)
 			continue ;
-		}
-		while (s[j] != c && s[j])
+		while (s[t.j] != c && s[t.j])
 		{
-			if (!(strs[i] = ft_strcdup(s + j, c)))
-				return (ft_erase(strs, i));
-			strs[i] = quote_ereaser(strs[i]);
-			++i;
-			while (s[j] != c && s[j])
-				++j;
+			if (!(t.strs[t.i] = ft_strcdup(s + t.j, c)))
+				return (ft_erase(t.strs, t.i));
+			t.strs[t.i] = quote_ereaser(t.strs[t.i]);
+			++t.i;
+			while (s[t.j] != c && s[t.j])
+				++t.j;
 		}
 	}
-	strs[i] = NULL;
-	return (strs);
+	t.strs[t.i] = NULL;
+	return (t.strs);
 }
