@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 00:21:40 by glaurent          #+#    #+#             */
-/*   Updated: 2020/07/01 23:00:35 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/01 23:45:26 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*add_cmd(t_cmd **cmd_lst, char **str)
 
 	i = 0;
 	skip_white(*str, &i);
-	if (str[i] == '\0')
+	if ((*str)[i] == '\0')
 		return ("");
 	while ((*cmd_lst))
 		cmd_lst = &(*cmd_lst)->next;
@@ -82,7 +82,7 @@ int		ft_ptvirgule(t_data *data)
 		if (data->line[i] == ';' && (data->uvar = ft_substr(data->line, 0, i)))
 		{
 			if (!(save = add_cmd(&data->cmd_lst, &data->uvar)))
-				return (-1);
+				return (return_value(data));
 			else if (!*save)
 			{
 				ft_printf(2,
