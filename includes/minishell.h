@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/07/02 00:05:41 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/07/02 19:06:20 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,5 +188,6 @@ void				norme_splitv2(t_s *t, char c, const char *s);
 int					norme_splitv2v2(t_s *t, char c, const char *s);
 void				init_t(t_s *t);
 char				*put_string_around(char *str, char *c, int pos, int keep);
+int					redir_error(t_data *data);
 
 #endif

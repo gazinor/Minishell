@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/24 17:51:33 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/07/01 02:55:18 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/02 19:43:59 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ static	char	*ft_strcdup(const char *s, char c)
 	i = -1;
 	cont = 0;
 	while (s[cont] != c && s[cont])
+	{
+		if ((s[cont] == '\'' || s[cont] == '"') && ++cont)
+			skip_char((char *)s, &cont, s[cont - 1]);
 		cont++;
+	}
 	if (!(dest = malloc(sizeof(char) * (cont + 1))))
 		return (NULL);
 	while (++i < cont)
@@ -84,7 +88,7 @@ char			**ft_splitv2(const char *s, char c, t_data *data)
 	{
 		if (norme_splitv2v2(&t, c, s) == -1)
 			continue ;
-		while (s[t.j] != c && s[t.j])
+		if (s[t.j] != c && s[t.j])
 		{
 			if (!(t.strs[t.i] = ft_strcdup(s + t.j, c)))
 				return (ft_erase(t.strs, t.i));

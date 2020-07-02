@@ -46,6 +46,7 @@ TMP		 =	main.c \
 			ft_norme.c \
 			ft_norme2.c \
 			ft_norme3.c \
+			ft_norme4.c \
 			for_exit.c
 
 SRC_NAME =	$(TMP) $(GNL)

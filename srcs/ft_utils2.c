@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/25 14:26:19 by glaurent          #+#    #+#             */
-/*   Updated: 2020/07/02 00:26:43 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/07/02 19:19:31 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*put_string_around(char *str, char *c, int pos, int keep)
 	char	*cpy;
 	char	*cpy2;
 
-	printf("str : ~%s~\n", str);
 	cpy2 = ft_substr(str, pos, 1);
 	cpy = ft_substr(str, 0, pos - (keep == 0 ? 1 : 0));
 	cpy = join_n_free(cpy, c, 42);
@@ -25,7 +24,6 @@ char	*put_string_around(char *str, char *c, int pos, int keep)
 	cpy = join_n_free(cpy, c, 42);
 	cpy = join_n_free(cpy, &str[pos + 1], 42);
 	free_string(&str);
-	printf("str : ~%s~\n", cpy);
 	return (cpy);
 }
 

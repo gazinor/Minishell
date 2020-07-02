@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:49:49 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 02:11:34 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/07/02 18:14:18 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	ft_clear_file_lst(t_file **file, t_data *data)
 		free(prev);
 		prev = NULL;
 	}
+	free_tab(&data->paths);
 }
 
 int		norme_ft_redir(t_data *data, char *str, int *i, int *j)

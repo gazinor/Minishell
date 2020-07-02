@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/07/01 01:39:18 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/02 19:05:39 by glaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ int		display_output(t_data *data, char *tmp)
 		ft_pwd(data->cmd_lst->pipe->cmd, data);
 	if (ft_redir(data, data->cmd_lst->pipe->cmd) == -1)
 	{
-		ft_clear_file_lst(&data->head_file, data);
-		return (-1);
+	//	ft_clear_file_lst(&data->head_file, data);
+	//	free_string(&data->cmd_lst->pipe->cmd);
+	//	free(data->cmd_lst->pipe);
+//		data->cmd_lst = data->cmd_lst->next;
+//		return (-1);
+		return (redir_error(data));
 	}
 	if (is_builtin(data->cmd_lst->pipe->cmd, data) == 1)
 		;
@@ -78,7 +82,7 @@ void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
 		if (data->cmd_lst->pipe->next)
 			ft_pipe(data->cmd_lst->pipe, data, tmp, 0);
 		else if (display_output(data, tmp) == -1)
-			break ;
+			continue ;
 		free_and_next(data);
 	}
 	data->cmd_lst = head;
