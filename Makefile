@@ -4,7 +4,7 @@ NAME     =	Minishell
 CC       =	gcc
 
 #	Flags     #
-CFLAGS   =	-Wall -Wextra -Werror -g3
+CFLAGS   =	-Wall -Wextra -Werror
 DEBUG	 = -g3 -fsanitize=address
 
 # 	Headers   #

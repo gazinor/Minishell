@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/07/02 19:05:39 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/07/02 20:27:33 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,7 @@ int		display_output(t_data *data, char *tmp)
 	if (data->pwd == NULL)
 		ft_pwd(data->cmd_lst->pipe->cmd, data);
 	if (ft_redir(data, data->cmd_lst->pipe->cmd) == -1)
-	{
-	//	ft_clear_file_lst(&data->head_file, data);
-	//	free_string(&data->cmd_lst->pipe->cmd);
-	//	free(data->cmd_lst->pipe);
-//		data->cmd_lst = data->cmd_lst->next;
-//		return (-1);
 		return (redir_error(data));
-	}
 	if (is_builtin(data->cmd_lst->pipe->cmd, data) == 1)
 		;
 	else if ((data->binary = is_exec(data->cmd_lst->pipe->cmd, data)) != NULL)
