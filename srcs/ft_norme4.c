@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 19:02:32 by glaurent          #+#    #+#             */
-/*   Updated: 2020/07/06 21:25:45 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/06 22:25:02 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,28 @@ void	lol(char **key, char **value)
 {
 	free_string(key);
 	free_string(value);
+}
+
+int		norme_env(t_data *data)
+{
+	if (data->option[1] && data->option[1][0] == '=')
+	{
+		ft_printf(2, "env: setenv %s: Invalid argument\n", data->option[1]);
+		data->check_ret = 1;
+		return (-1);
+	}
+	if (data->option[1] && check_char(data->option[1], '=') == -1)
+	{
+		if (open(data->option[1], O_APPEND) != -1 &&
+			data->option[1][ft_strlen(data->option[1]) - 1] == '/')
+		{
+			ft_printf(2, "env: %s: Permission denied\n", data->option[1]);
+			data->check_ret = 126;
+			return (-1);
+		}
+		ft_printf(2, "env: %s: No such file or directory\n", data->option[1]);
+		data->check_ret = 127;
+		return (-1);
+	}
+	return (0);
 }

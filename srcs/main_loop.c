@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/07/06 22:04:49 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/07/06 22:36:12 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	loop_cmd(t_data *data, t_cmd *head, char *tmp)
 	{
 		ft_printf(1, "\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", data->here);
 		free_lst_cmd(&data->cmd_lst);
+		data->ret = 258;
 		return ;
 	}
 	while (data->cmd_lst)

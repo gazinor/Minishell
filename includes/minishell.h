@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/07/06 21:25:28 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/06 22:22:10 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,5 +192,6 @@ char				*put_string_around(char *str, char *c, int pos, int keep);
 int					redir_error(t_data *data);
 int					check_string(char *str);
 void				lol(char **key, char **value);
+int					norme_env(t_data *data);
 
 #endif

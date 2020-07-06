@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/07/06 22:17:11 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/07/06 22:21:42 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,8 @@ void	ft_env(t_data *data)
 	t_env	*copy;
 
 	copy = data->env;
-	if (data->option[1] && data->option[1][0] == '=')
-	{
-		ft_printf(2, "env: setenv %s: Invalid argument\n", data->option[1]);
-		data->check_ret = 1;
+	if (norme_env(data) == -1)
 		return ;
-	}
-	if (data->option[1] && check_char(data->option[1], '=') == -1)
-	{
-		if (open(data->option[1], O_RDONLY) != -1 &&
-			data->option[1][ft_strlen(data->option[1]) - 1] == '/')
-		{
-			ft_printf(2, "env: %s: Permission denied\n", data->option[1]);
-			data->check_ret = 126;
-			return ;
-		}
-		ft_printf(2, "env: %s: No such file or directory\n", data->option[1]);
-		data->check_ret = 127;
-		return ;
-	}
 	while (copy)
 	{
 		ft_printf(1, "%s=%s\n", copy->key, copy->value);
