@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 02:23:14 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 01:49:16 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/07/06 21:20:04 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ void	norme_ft_unset(t_data *data, t_env *copy, t_env *prev, char *key)
 {
 	while (copy)
 	{
-		if (check_char(data->option[1], '=') != -1)
+		if (check_char(data->option[1], '=') != -1 ||
+			check_string(data->option[1]) <= -1)
 		{
 			ft_printf(2, "Minishell: unset: '%s': not a valid identifier\n",
 					data->option[1]);
+			data->check_ret = 1;
 			return ;
 		}
 		if (ft_strcmp(copy->key, key) == 0 && key)

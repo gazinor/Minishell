@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 19:06:18 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/07/02 19:06:20 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/07/06 21:25:28 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct		s_data
 	int				retpipe;
 	int				ufree;
 	int				checkcd;
+	int				check_ret;
 }					t_data;
 
 extern t_data	g_data;
@@ -189,5 +190,7 @@ int					norme_splitv2v2(t_s *t, char c, const char *s);
 void				init_t(t_s *t);
 char				*put_string_around(char *str, char *c, int pos, int keep);
 int					redir_error(t_data *data);
+int					check_string(char *str);
+void				lol(char **key, char **value);
 
 #endif

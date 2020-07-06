@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 02:16:51 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/07/02 20:27:33 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/06 20:29:05 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		display_output(t_data *data, char *tmp)
 	if (ft_redir(data, data->cmd_lst->pipe->cmd) == -1)
 		return (redir_error(data));
 	if (is_builtin(data->cmd_lst->pipe->cmd, data) == 1)
-		;
+		data->check_ret == 1 ? data->ret = 1 : 0;
 	else if ((data->binary = is_exec(data->cmd_lst->pipe->cmd, data)) != NULL)
 	{
 		check_ls(data->cmd_lst->pipe->cmd, data);
@@ -57,6 +57,7 @@ int		display_output(t_data *data, char *tmp)
 	}
 	else if (data->cmd_lst->pipe->cmd[0])
 		norme_display_output(data);
+	data->check_ret = 0;
 	return (0);
 }
 

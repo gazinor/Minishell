@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:04:46 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 21:24:29 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/06 20:24:29 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_cd(char *str, char **here, t_data *data)
 			free_string(&data->here);
 			where_am_i(data);
 		}
-		data->ret = 1;
+		data->check_ret = 1;
 	}
 	else
 		where_am_i(data);

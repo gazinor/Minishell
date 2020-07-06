@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 22:10:59 by gaefourn          #+#    #+#             */
-/*   Updated: 2020/06/30 21:18:17 by gaefourn         ###   ########.fr       */
+/*   Updated: 2020/07/06 20:22:41 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	init_data(t_data *data)
 	data->ultimate_check = NULL;
 	data->ultimate_tab = NULL;
 	data->checkcd = 0;
+	data->check_ret = 0;
 }
 
 void	set_up_all(t_data *data, t_cmd **head, char **envp)
