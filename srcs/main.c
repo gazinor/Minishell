@@ -6,7 +6,7 @@
 /*   By: gaefourn <gaefourn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 05:42:18 by glaurent          #+#    #+#             */
-/*   Updated: 2020/06/25 13:40:23 by glaurent         ###   ########.fr       */
+/*   Updated: 2020/07/06 22:38:33 by gaefourn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	handle_sigint(int signum)
 	(void)signum;
 	ft_printf(1, "\e[D\e[D  ");
 	ft_printf(1, "\n\e[38;5;128m➔\e[38;5;208;1m  %s\e[0m ", g_data.here);
+	g_data.ret = 1;
 	g_data.token = 1;
 }
 
